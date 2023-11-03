@@ -6,6 +6,7 @@ import {
 	IsEmail,
 	IsInt,
 	IsNumeric,
+	IsUrl,
 	Model,
 	PrimaryKey,
 	Table,
@@ -34,6 +35,7 @@ class User extends Model<User> {
 	@Column(DataType.STRING)
 	declare password: string;
 
+	@IsUrl
 	@Column(DataType.TEXT)
 	declare profile_image_url: string;
 
