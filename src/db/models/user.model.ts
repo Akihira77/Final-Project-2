@@ -13,8 +13,21 @@ import {
 	UpdatedAt,
 } from "sequelize-typescript";
 
+export interface IUser {
+	id: string;
+	email: string;
+	full_name: string;
+	username: string;
+	password: string;
+	profile_image_url: string;
+	age: number;
+	phone_number: string;
+	createdAt: Date;
+	updatedAt: Date;
+}
+
 @Table
-class User extends Model<User> {
+class User extends Model implements IUser {
 	@PrimaryKey
 	@Column(DataType.STRING)
 	declare id: string;
