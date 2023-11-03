@@ -1,7 +1,7 @@
 import { sequelize } from "../db/db.js";
 import { RegisterRequestDTO } from "../db/dtos/users/register-request.dto.js";
 import { IRegisterResponseDTO } from "../db/dtos/users/register-response.dto.js";
-import User, { IUser } from "../db/models/user.model.js";
+import User from "../db/models/user.model.js";
 import { v4 as uuidv4 } from "uuid";
 import { hashPassword } from "../utils/bcrypt.js";
 
