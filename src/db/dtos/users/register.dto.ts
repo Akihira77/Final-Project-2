@@ -11,3 +11,6 @@ export const RegisterRequestDTO = z.object({
 });
 
 export type RegisterRequestDtoType = z.infer<typeof RegisterRequestDTO>;
+
+export interface RegisterResponseDtoType
+	extends Omit<RegisterRequestDtoType, "password"> {}

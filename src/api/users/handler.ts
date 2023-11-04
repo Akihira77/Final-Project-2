@@ -4,13 +4,17 @@ import { StatusCodes } from "../../utils/constants.js";
 import {
 	RegisterRequestDTO,
 	RegisterRequestDtoType,
-} from "../../db/dtos/users/register-request.dto.js";
+} from "../../db/dtos/users/register.dto.js";
 import {
 	DeleteUserDTO,
 	DeleteUserDtoType,
-} from "../../db/dtos/users/delete-request.dto.js";
+} from "../../db/dtos/users/delete.dto.js";
 import { CustomAPIError, ZodSchemaError } from "../../errors/main.error.js";
 import { validateZodSchema } from "../../utils/validateZodSchema.js";
+import {
+	LoginRequestDTO,
+	LoginRequestDtoType,
+} from "../../db/dtos/users/login.dto.js";
 
 const userService = new UserService();
 
@@ -41,6 +45,29 @@ export const register = async (
 		const result = await userService.add(req.body);
 
 		res.status(StatusCodes.Created201).send({ user: result });
+		return;
+	} catch (error) {
+		throw error;
+	}
+};
+
+export const login = async (
+	req: Request<never, never, LoginRequestDtoType, never>,
+	res: Response
+) => {
+	try {
+		const validationResult = validateZodSchema(LoginRequestDTO, req.body);
+		if (!validationResult.success) {
+			throw new ZodSchemaError(validationResult.errors);
+		}
+
+		const result = await userService.login(req.body);
+
+		if (typeof result === "string") {
+			throw new CustomAPIError(result, StatusCodes.BadRequest400);
+		}
+
+		res.status(StatusCodes.Ok200).send({ token: result.token });
 		return;
 	} catch (error) {
 		throw error;

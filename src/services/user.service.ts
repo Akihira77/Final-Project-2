@@ -1,13 +1,17 @@
 import { sequelize } from "../db/db.js";
 import {
-	RegisterRequestDTO,
 	RegisterRequestDtoType,
-} from "../db/dtos/users/register-request.dto.js";
-import { RegisterResponseDtoType } from "../db/dtos/users/register-response.dto.js";
+	RegisterResponseDtoType,
+} from "../db/dtos/users/register.dto.js";
 import User from "../db/models/user.model.js";
 import { v4 as uuidv4 } from "uuid";
-import { hashPassword } from "../utils/bcrypt.js";
-import { DeleteUserDtoType } from "../db/dtos/users/delete-request.dto.js";
+import { hashPassword, validate } from "../utils/bcrypt.js";
+import { DeleteUserDtoType } from "../db/dtos/users/delete.dto.js";
+import {
+	LoginRequestDtoType,
+	LoginResponseDtoType,
+} from "../db/dtos/users/login.dto.js";
+import jwt from "jsonwebtoken";
 
 class UserService {
 	private readonly _userRepository;
@@ -29,6 +33,20 @@ class UserService {
 			return await this._userRepository.findByPk(id);
 		} catch (error) {
 			console.log(error);
+			throw error;
+		}
+	}
+
+	async findByEmail(email: string): Promise<User | null> {
+		try {
+			const user = await this._userRepository.findOne({
+				where: {
+					email,
+				},
+			});
+
+			return user;
+		} catch (error) {
 			throw error;
 		}
 	}
@@ -68,6 +86,30 @@ class UserService {
 			};
 		} catch (error) {
 			console.log(error);
+			throw error;
+		}
+	}
+
+	async login({
+		email,
+		password,
+	}: LoginRequestDtoType): Promise<LoginResponseDtoType> {
+		try {
+			const user = await this.findByEmail(email);
+			if (!user) {
+				return "Email or Password is incorrect";
+			}
+
+			const isMatch = await validate(password, user.password);
+			if (!isMatch) {
+				return "Email or Password is incorrect";
+			}
+
+			const payload = { userId: user.id, email: user.email };
+			const token = jwt.sign(payload, process.env.JWT_SECRET!);
+
+			return { token };
+		} catch (error) {
 			throw error;
 		}
 	}

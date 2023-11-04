@@ -7,3 +7,11 @@ export const LoginRequestDTO = z.object({
 
 export type LoginRequestDtoType = z.infer<typeof LoginRequestDTO>;
 
+export const LoginResponseDTO = z.union([
+	z.string(),
+	z.object({
+		token: z.string(),
+	}),
+]);
+
+export type LoginResponseDtoType = z.infer<typeof LoginResponseDTO>;
