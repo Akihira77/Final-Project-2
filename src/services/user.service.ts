@@ -1,6 +1,9 @@
 import { sequelize } from "../db/db.js";
-import { RegisterRequestDTO } from "../db/dtos/users/register-request.dto.js";
-import { IRegisterResponseDTO } from "../db/dtos/users/register-response.dto.js";
+import {
+	RegisterRequestDTO,
+	RegisterRequestDtoType,
+} from "../db/dtos/users/register-request.dto.js";
+import { RegisterResponseDtoType } from "../db/dtos/users/register-response.dto.js";
 import User from "../db/models/user.model.js";
 import { v4 as uuidv4 } from "uuid";
 import { hashPassword } from "../utils/bcrypt.js";
@@ -38,7 +41,7 @@ class UserService {
 		phone_number,
 		profile_image_url,
 		username,
-	}: RegisterRequestDTO): Promise<IRegisterResponseDTO> {
+	}: RegisterRequestDtoType): Promise<RegisterResponseDtoType> {
 		try {
 			const user = {
 				id: uuidv4(),

@@ -1,5 +1,4 @@
-import { IRegisterRequestDTO } from "./register-request.dto.js";
+import { RegisterRequestDtoType } from "./register-request.dto.js";
 
-export interface IRegisterResponseDTO
-	extends Omit<IRegisterRequestDTO, "password"> {}
-
+export interface RegisterResponseDtoType
+	extends Omit<RegisterRequestDtoType, "password"> {}

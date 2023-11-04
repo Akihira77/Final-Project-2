@@ -1,7 +1,10 @@
 import { Request, Response } from "express";
 import UserService from "../../services/user.service.js";
 import { StatusCodes } from "../../utils/constants.js";
-import { RegisterRequestDTO } from "../../db/dtos/users/register-request.dto.js";
+import {
+	RegisterRequestDTO,
+	RegisterRequestDtoType,
+} from "../../db/dtos/users/register-request.dto.js";
 import {
 	DeleteUserDTO,
 	DeleteUserDtoType,
@@ -23,10 +26,18 @@ export const findAllUser = async (req: Request, res: Response) => {
 };
 
 export const register = async (
-	req: Request<never, never, RegisterRequestDTO, never>,
+	req: Request<never, never, RegisterRequestDtoType, never>,
 	res: Response
 ) => {
 	try {
+		const validationResult = validateZodSchema(
+			RegisterRequestDTO,
+			req.body
+		);
+		if (!validationResult.success) {
+			throw new ZodSchemaError(validationResult.errors);
+		}
+
 		const result = await userService.add(req.body);
 
 		res.status(StatusCodes.Created201).send({ user: result });
