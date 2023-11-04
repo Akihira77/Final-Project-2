@@ -67,7 +67,21 @@ class UserService {
 			throw error;
 		}
 	}
+
+	async delete(userId: string): Promise<boolean> {
+		try {
+			const result = await this._userRepository.destroy({
+				where: {
+					id: userId,
+				},
+			});
+
+			return Boolean(result);
+		} catch (error) {
+			console.log(error);
+			throw error;
+		}
+	}
 }
 
 export default UserService;
-

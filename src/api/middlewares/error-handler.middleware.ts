@@ -9,6 +9,7 @@ export const ErrorHandlerMiddleware = async (
 	res: Response,
 	next: NextFunction
 ) => {
+	console.log("Catchin error from error handler middleware => ", err);
 	if (err instanceof ValidationError) {
 		res.status(StatusCodes.BadRequest400).send({
 			errors: validationSchema(err),
@@ -18,4 +19,3 @@ export const ErrorHandlerMiddleware = async (
 	res.status(StatusCodes.InternalServerError500).send({ err });
 	return;
 };
-
