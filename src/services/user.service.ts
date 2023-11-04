@@ -12,6 +12,10 @@ import {
 	LoginResponseDtoType,
 } from "../db/dtos/users/login.dto.js";
 import jwt from "jsonwebtoken";
+import {
+	EditUserRequestDtoType,
+	EditUserResponseDtoType,
+} from "../db/dtos/users/edit.dto.js";
 
 class UserService {
 	private readonly _userRepository;
@@ -125,6 +129,24 @@ class UserService {
 			return Boolean(result);
 		} catch (error) {
 			console.log(error);
+			throw error;
+		}
+	}
+
+	async edit(
+		request: EditUserRequestDtoType
+	): Promise<EditUserResponseDtoType> {
+		try {
+			const result = await this._userRepository.update(request, {
+				where: {
+					id: request.userId,
+				},
+				returning: true,
+			});
+
+			const user = result[1][0]!;
+			return { user: { ...user, userId: user.id } };
+		} catch (error) {
 			throw error;
 		}
 	}

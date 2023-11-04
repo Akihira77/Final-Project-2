@@ -15,6 +15,10 @@ import {
 	LoginRequestDTO,
 	LoginRequestDtoType,
 } from "../../db/dtos/users/login.dto.js";
+import {
+	EditUserRequestDTO,
+	EditUserRequestDtoType,
+} from "../../db/dtos/users/edit.dto.js";
 
 const userService = new UserService();
 
@@ -97,6 +101,43 @@ export const removeUser = async (
 		res.status(StatusCodes.Ok200).send({
 			message: "Your account has been successfully deleted",
 		});
+		return;
+	} catch (error) {
+		throw error;
+	}
+};
+
+export const updateUser = async (
+	req: Request<{ userId: string }, never, EditUserRequestDtoType, never>,
+	res: Response
+) => {
+	try {
+		if (!req.params.userId || req.params.userId === "") {
+			throw new CustomAPIError(
+				"User Id must be provided",
+				StatusCodes.BadRequest400
+			);
+		}
+
+		const validationResult = validateZodSchema(EditUserRequestDTO, {
+			...req.body,
+			userId: req.params.userId,
+		});
+		if (!validationResult.success) {
+			throw new ZodSchemaError(validationResult.errors);
+		}
+
+		const existedUser = await userService.findById(req.params.userId);
+		if (!existedUser) {
+			throw new CustomAPIError(
+				"User does not found",
+				StatusCodes.BadRequest400
+			);
+		}
+
+		const result = await userService.edit(req.body);
+
+		res.status(StatusCodes.Ok200).send({ user: result.user });
 		return;
 	} catch (error) {
 		throw error;
