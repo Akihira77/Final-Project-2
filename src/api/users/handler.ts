@@ -75,16 +75,16 @@ export const login = async (
 };
 
 export const removeUser = async (
-	req: Request<never, never, never, DeleteUserDtoType>,
+	req: Request<DeleteUserDtoType, never, never, never>,
 	res: Response
 ) => {
 	try {
-		const validationResult = validateZodSchema(DeleteUserDTO, req.query);
+		const validationResult = validateZodSchema(DeleteUserDTO, req.params);
 		if (!validationResult.success) {
 			throw new ZodSchemaError(validationResult.errors);
 		}
 
-		const { userId } = req.query;
+		const { userId } = req.params;
 		const result = await userService.delete({ userId });
 
 		if (!result) {
