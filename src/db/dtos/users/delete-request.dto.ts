@@ -1,11 +1,8 @@
-import { NotEmpty, NotNull } from "sequelize-typescript";
+import { z } from "zod";
 
-export interface IDeleteUserDTO {
-	userId: string;
-}
+export const DeleteUserDTO = z.object({
+	userId: z.string(),
+});
 
-export class DeleteUserDTO implements IDeleteUserDTO {
-	@NotEmpty
-	@NotNull
-	declare userId: string;
-}
+export type DeleteUserDtoType = z.infer<typeof DeleteUserDTO>;
+

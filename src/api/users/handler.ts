@@ -2,8 +2,12 @@ import { Request, Response } from "express";
 import UserService from "../../services/user.service.js";
 import { StatusCodes } from "../../utils/constants.js";
 import { RegisterRequestDTO } from "../../db/dtos/users/register-request.dto.js";
-import { DeleteUserDTO } from "../../db/dtos/users/delete-request.dto.js";
-import CustomAPIError from "../../errors/custom.error.js";
+import {
+	DeleteUserDTO,
+	DeleteUserDtoType,
+} from "../../db/dtos/users/delete-request.dto.js";
+import { CustomAPIError, ZodSchemaError } from "../../errors/main.error.js";
+import { validateZodSchema } from "../../utils/validateZodSchema.js";
 
 const userService = new UserService();
 
@@ -33,11 +37,17 @@ export const register = async (
 };
 
 export const removeUser = async (
-	req: Request<DeleteUserDTO, never, never, never>,
+	req: Request<DeleteUserDtoType, never, never, never>,
 	res: Response
 ) => {
 	try {
-		const result = await userService.delete(req.params.userId);
+		const validationResult = validateZodSchema(DeleteUserDTO, req.params);
+		if (!validationResult.success) {
+			throw new ZodSchemaError(validationResult.errors);
+		}
+
+		const { userId } = req.params;
+		const result = await userService.delete({ userId });
 
 		if (!result) {
 			throw new CustomAPIError(

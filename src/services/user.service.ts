@@ -4,6 +4,7 @@ import { IRegisterResponseDTO } from "../db/dtos/users/register-response.dto.js"
 import User from "../db/models/user.model.js";
 import { v4 as uuidv4 } from "uuid";
 import { hashPassword } from "../utils/bcrypt.js";
+import { DeleteUserDtoType } from "../db/dtos/users/delete-request.dto.js";
 
 class UserService {
 	private readonly _userRepository;
@@ -68,7 +69,7 @@ class UserService {
 		}
 	}
 
-	async delete(userId: string): Promise<boolean> {
+	async delete({ userId }: DeleteUserDtoType): Promise<boolean> {
 		try {
 			const result = await this._userRepository.destroy({
 				where: {
