@@ -1,4 +1,5 @@
 import {
+	AllowNull,
 	Column,
 	CreatedAt,
 	DataType,
@@ -8,6 +9,8 @@ import {
 	IsNumeric,
 	IsUrl,
 	Model,
+	NotEmpty,
+	NotNull,
 	PrimaryKey,
 	Table,
 	UpdatedAt,
@@ -29,26 +32,30 @@ export interface IUser {
 @Table
 class User extends Model implements IUser {
 	@PrimaryKey
+	@AllowNull(false)
 	@Column(DataType.STRING)
 	declare id: string;
 
 	@IsAlpha
+	@AllowNull(false)
 	@Column(DataType.STRING)
 	declare full_name: string;
 
 	@IsEmail
+	@AllowNull(false)
 	@Column(DataType.STRING)
 	declare email: string;
 
-	@IsAlpha
+	@AllowNull(false)
 	@Column(DataType.STRING)
 	declare username: string;
 
-	@IsAlpha
+	@AllowNull(false)
 	@Column(DataType.STRING)
 	declare password: string;
 
 	@IsUrl
+	@AllowNull(false)
 	@Column(DataType.TEXT)
 	declare profile_image_url: string;
 
@@ -57,6 +64,7 @@ class User extends Model implements IUser {
 	declare age: number;
 
 	@IsNumeric
+	@AllowNull(false)
 	@Column(DataType.STRING)
 	declare phone_number: string;
 
@@ -70,4 +78,3 @@ class User extends Model implements IUser {
 }
 
 export default User;
-

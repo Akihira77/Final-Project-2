@@ -134,18 +134,28 @@ class UserService {
 	}
 
 	async edit(
+		userId: string,
 		request: EditUserRequestDtoType
 	): Promise<EditUserResponseDtoType> {
 		try {
 			const result = await this._userRepository.update(request, {
 				where: {
-					id: request.userId,
+					id: userId,
 				},
 				returning: true,
 			});
 
 			const user = result[1][0]!;
-			return { user: { ...user, userId: user.id } };
+			return {
+				user: {
+					email: user.email,
+					full_name: user.full_name,
+					username: user.username,
+					profile_image_url: user.profile_image_url,
+					age: user.age,
+					phone_number: user.phone_number,
+				},
+			};
 		} catch (error) {
 			throw error;
 		}

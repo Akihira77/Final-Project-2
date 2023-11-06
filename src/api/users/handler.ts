@@ -119,10 +119,10 @@ export const updateUser = async (
 			);
 		}
 
-		const validationResult = validateZodSchema(EditUserRequestDTO, {
-			...req.body,
-			userId: req.params.userId,
-		});
+		const validationResult = validateZodSchema(
+			EditUserRequestDTO,
+			req.body
+		);
 		if (!validationResult.success) {
 			throw new ZodSchemaError(validationResult.errors);
 		}
@@ -135,7 +135,7 @@ export const updateUser = async (
 			);
 		}
 
-		const result = await userService.edit(req.body);
+		const result = await userService.edit(req.params.userId, req.body);
 
 		res.status(StatusCodes.Ok200).send({ user: result.user });
 		return;
