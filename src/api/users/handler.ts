@@ -89,6 +89,15 @@ export const removeUser = async (
 		}
 
 		const { userId } = req.params;
+		const userIdFromPayload = req.user.userId;
+
+		if (userId !== userIdFromPayload) {
+			throw new CustomAPIError(
+				"Invalid Credentials",
+				StatusCodes.Forbidden403
+			);
+		}
+
 		const result = await userService.delete({ userId });
 
 		if (!result) {
@@ -132,6 +141,14 @@ export const updateUser = async (
 			throw new CustomAPIError(
 				"User does not found",
 				StatusCodes.BadRequest400
+			);
+		}
+
+		const userIdFromPayload = req.user.userId;
+		if (req.params.userId !== userIdFromPayload) {
+			throw new CustomAPIError(
+				"Invalid Credentials",
+				StatusCodes.Forbidden403
 			);
 		}
 

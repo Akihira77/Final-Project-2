@@ -16,6 +16,7 @@ import {
 	EditUserRequestDtoType,
 	EditUserResponseDtoType,
 } from "../db/dtos/users/edit.dto.js";
+import { jwtSign } from "../utils/jwt.js";
 
 class UserService {
 	private readonly _userRepository;
@@ -109,8 +110,11 @@ class UserService {
 				return "Email or Password is incorrect";
 			}
 
-			const payload = { userId: user.id, email: user.email };
-			const token = jwt.sign(payload, process.env.JWT_SECRET!);
+			const token = jwtSign({
+				userId: user.id,
+				email: user.email,
+				full_name: user.full_name,
+			});
 
 			return { token };
 		} catch (error) {
