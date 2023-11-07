@@ -35,6 +35,16 @@ export class PhotoService {
 		}
 	}
 
+	async findById(photoId: string): Promise<Photo | null> {
+		try {
+			const photo = await this._photoRepository.findByPk(photoId);
+
+			return photo;
+		} catch (error) {
+			throw error;
+		}
+	}
+
 	async add(
 		userId: string,
 		{ caption, title, poster_image_url }: CreatePhotoRequestDtoType
@@ -53,6 +63,34 @@ export class PhotoService {
 				poster_image_url: photo.poster_image_url,
 				title: photo.title,
 				UserId: photo.UserId,
+			};
+		} catch (error) {
+			throw error;
+		}
+	}
+
+	async edit(
+		photoId: string,
+		request: EditPhotoRequestDtoType
+	): Promise<EditPhotoResponseDtoType> {
+		try {
+			const result = await this._photoRepository.update(request, {
+				where: {
+					id: photoId,
+				},
+				returning: true,
+			});
+
+			const photo = result[1][0]!;
+
+			return {
+				id: photo.id,
+				title: photo.title,
+				caption: photo.caption,
+				poster_image_url: photo.poster_image_url,
+				UserId: photo.UserId,
+				createdAt: photo.createdAt,
+				updatedAt: photo.updatedAt,
 			};
 		} catch (error) {
 			throw error;
