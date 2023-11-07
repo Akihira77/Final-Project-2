@@ -1,9 +1,11 @@
 import {
 	AllowNull,
 	AutoIncrement,
+	BelongsTo,
 	Column,
 	CreatedAt,
 	DataType,
+	ForeignKey,
 	IsUrl,
 	Model,
 	NotEmpty,
@@ -11,6 +13,7 @@ import {
 	Table,
 	UpdatedAt,
 } from "sequelize-typescript";
+import User from "./user.model.js";
 
 export interface IPhoto {
 	id: number;
@@ -18,6 +21,7 @@ export interface IPhoto {
 	caption: string;
 	poster_image_url: string;
 	UserId: string;
+	user: User;
 	createdAt: Date;
 	updatedAt: Date;
 }
@@ -47,8 +51,12 @@ export class Photo extends Model implements IPhoto {
 	declare poster_image_url: string;
 
 	@AllowNull(false)
+	@ForeignKey(() => User)
 	@Column(DataType.STRING)
 	declare UserId: string;
+
+	@BelongsTo(() => User)
+	declare user: User;
 
 	@AllowNull(false)
 	@CreatedAt

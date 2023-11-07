@@ -3,6 +3,7 @@ import {
 	Column,
 	CreatedAt,
 	DataType,
+	HasMany,
 	IsAlpha,
 	IsEmail,
 	IsInt,
@@ -15,6 +16,7 @@ import {
 	Table,
 	UpdatedAt,
 } from "sequelize-typescript";
+import { Photo } from "./photo.model.js";
 
 export interface IUser {
 	id: string;
@@ -67,6 +69,9 @@ class User extends Model implements IUser {
 	@AllowNull(false)
 	@Column(DataType.STRING)
 	declare phone_number: string;
+
+	@HasMany(() => Photo)
+	declare photos: Photo[];
 
 	@CreatedAt
 	@Column(DataType.DATE)
