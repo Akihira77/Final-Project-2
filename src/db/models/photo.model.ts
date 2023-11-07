@@ -7,11 +7,11 @@ import {
 	DataType,
 	ForeignKey,
 	IsUrl,
-	Model,
 	NotEmpty,
 	PrimaryKey,
 	Table,
 	UpdatedAt,
+	Model,
 } from "sequelize-typescript";
 import User from "./user.model.js";
 
@@ -27,7 +27,7 @@ export interface IPhoto {
 }
 
 @Table
-export class Photo extends Model implements IPhoto {
+class Photo extends Model implements IPhoto {
 	@PrimaryKey
 	@AllowNull(false)
 	@AutoIncrement
@@ -69,3 +69,4 @@ export class Photo extends Model implements IPhoto {
 	declare updatedAt: Date;
 }
 
+export default Photo;

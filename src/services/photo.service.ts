@@ -2,20 +2,22 @@ import {
 	CreatePhotoRequestDtoType,
 	CreatePhotoResponseDtoType,
 } from "./../db/dtos/photos/create.dto";
-import { sequelize } from "../db/db.js";
-import { Photo } from "../db/models/photo.model.js";
+import Photo from "../db/models/photo.model.js";
 import User from "../db/models/user.model.js";
+import { sequelize } from "../db/db.js";
 
 export class PhotoService {
 	private readonly _photoRepository;
+	private readonly _userRepository;
 	constructor() {
 		this._photoRepository = sequelize.getRepository(Photo);
+		this._userRepository = sequelize.getRepository(User);
 	}
 
 	async findAll(): Promise<Photo[]> {
 		try {
 			const photos = await this._photoRepository.findAll({
-				include: User,
+				include: this._userRepository,
 			});
 
 			return photos;
@@ -24,13 +26,13 @@ export class PhotoService {
 		}
 	}
 
-	async add({
-		caption,
-		title,
-		poster_image_url,
-	}: CreatePhotoRequestDtoType): Promise<CreatePhotoResponseDtoType> {
+	async add(
+		userId: string,
+		{ caption, title, poster_image_url }: CreatePhotoRequestDtoType
+	): Promise<CreatePhotoResponseDtoType> {
 		try {
 			const photo = await this._photoRepository.create({
+				UserId: userId,
 				title,
 				caption,
 				poster_image_url,

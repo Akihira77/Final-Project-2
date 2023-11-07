@@ -9,14 +9,12 @@ import {
 	IsInt,
 	IsNumeric,
 	IsUrl,
-	Model,
-	NotEmpty,
-	NotNull,
 	PrimaryKey,
 	Table,
 	UpdatedAt,
+	Model,
 } from "sequelize-typescript";
-import { Photo } from "./photo.model.js";
+import Photo from "./photo.model.js";
 
 export interface IUser {
 	id: string;
