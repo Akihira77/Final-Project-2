@@ -7,71 +7,60 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-import { AllowNull, Column, CreatedAt, DataType, HasMany, IsAlpha, IsEmail, IsInt, IsNumeric, IsUrl, PrimaryKey, Table, UpdatedAt, Model, } from "sequelize-typescript";
-import Photo from "./photo.model.js";
-let User = class User extends Model {
+import { AllowNull, AutoIncrement, BelongsTo, Column, CreatedAt, DataType, ForeignKey, IsUrl, NotEmpty, PrimaryKey, Table, UpdatedAt, Model, } from "sequelize-typescript";
+import User from "./user.model.js";
+let Photo = class Photo extends Model {
 };
 __decorate([
     PrimaryKey,
     AllowNull(false),
-    Column(DataType.STRING),
-    __metadata("design:type", String)
-], User.prototype, "id", void 0);
-__decorate([
-    IsAlpha,
-    AllowNull(false),
-    Column(DataType.STRING),
-    __metadata("design:type", String)
-], User.prototype, "full_name", void 0);
-__decorate([
-    IsEmail,
-    AllowNull(false),
-    Column(DataType.STRING),
-    __metadata("design:type", String)
-], User.prototype, "email", void 0);
-__decorate([
-    AllowNull(false),
-    Column(DataType.STRING),
-    __metadata("design:type", String)
-], User.prototype, "username", void 0);
-__decorate([
-    AllowNull(false),
-    Column(DataType.STRING),
-    __metadata("design:type", String)
-], User.prototype, "password", void 0);
-__decorate([
-    IsUrl,
-    AllowNull(false),
-    Column(DataType.TEXT),
-    __metadata("design:type", String)
-], User.prototype, "profile_image_url", void 0);
-__decorate([
-    IsInt,
+    AutoIncrement,
     Column(DataType.INTEGER),
     __metadata("design:type", Number)
-], User.prototype, "age", void 0);
+], Photo.prototype, "id", void 0);
 __decorate([
-    IsNumeric,
     AllowNull(false),
+    NotEmpty,
     Column(DataType.STRING),
     __metadata("design:type", String)
-], User.prototype, "phone_number", void 0);
+], Photo.prototype, "title", void 0);
 __decorate([
-    HasMany(() => Photo),
-    __metadata("design:type", Array)
-], User.prototype, "photos", void 0);
+    AllowNull(false),
+    NotEmpty,
+    Column(DataType.STRING),
+    __metadata("design:type", String)
+], Photo.prototype, "caption", void 0);
 __decorate([
+    AllowNull(false),
+    NotEmpty,
+    IsUrl,
+    Column(DataType.STRING),
+    __metadata("design:type", String)
+], Photo.prototype, "poster_image_url", void 0);
+__decorate([
+    AllowNull(false),
+    ForeignKey(() => User),
+    Column(DataType.STRING),
+    __metadata("design:type", String)
+], Photo.prototype, "UserId", void 0);
+__decorate([
+    BelongsTo(() => User),
+    __metadata("design:type", User)
+], Photo.prototype, "user", void 0);
+__decorate([
+    AllowNull(false),
     CreatedAt,
     Column(DataType.DATE),
     __metadata("design:type", Date)
-], User.prototype, "createdAt", void 0);
+], Photo.prototype, "createdAt", void 0);
 __decorate([
+    AllowNull(false),
     UpdatedAt,
     Column(DataType.DATE),
     __metadata("design:type", Date)
-], User.prototype, "updatedAt", void 0);
-User = __decorate([
+], Photo.prototype, "updatedAt", void 0);
+Photo = __decorate([
     Table
-], User);
-export default User;
-//# sourceMappingURL=user.model.js.map
+], Photo);
+export default Photo;
+//# sourceMappingURL=photo.model.js.map

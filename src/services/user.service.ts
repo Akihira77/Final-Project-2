@@ -1,4 +1,3 @@
-import { sequelize } from "../db/db.js";
 import {
 	RegisterRequestDtoType,
 	RegisterResponseDtoType,
@@ -17,6 +16,7 @@ import {
 	EditUserResponseDtoType,
 } from "../db/dtos/users/edit.dto.js";
 import { jwtSign } from "../utils/jwt.js";
+import { sequelize } from "../db/db.js";
 
 class UserService {
 	private readonly _userRepository;
