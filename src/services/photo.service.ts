@@ -1,0 +1,51 @@
+import {
+	CreatePhotoRequestDtoType,
+	CreatePhotoResponseDtoType,
+} from "./../db/dtos/photos/create.dto";
+import { sequelize } from "../db/db.js";
+import { Photo } from "../db/models/photo.model.js";
+import User from "../db/models/user.model.js";
+
+export class PhotoService {
+	private readonly _photoRepository;
+	constructor() {
+		this._photoRepository = sequelize.getRepository(Photo);
+	}
+
+	async findAll(): Promise<Photo[]> {
+		try {
+			const photos = await this._photoRepository.findAll({
+				include: User,
+			});
+
+			return photos;
+		} catch (error) {
+			throw error;
+		}
+	}
+
+	async add({
+		caption,
+		title,
+		poster_image_url,
+	}: CreatePhotoRequestDtoType): Promise<CreatePhotoResponseDtoType> {
+		try {
+			const photo = await this._photoRepository.create({
+				title,
+				caption,
+				poster_image_url,
+			});
+
+			return {
+				id: photo.id,
+				caption: photo.caption,
+				poster_image_url: photo.poster_image_url,
+				title: photo.title,
+				UserId: photo.UserId,
+			};
+		} catch (error) {
+			throw error;
+		}
+	}
+}
+
