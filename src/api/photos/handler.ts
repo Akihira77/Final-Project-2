@@ -6,7 +6,11 @@ import {
 	CreatePhotoRequestDtoType,
 } from "../../db/dtos/photos/create.dto.js";
 import { validateZodSchema } from "../../utils/validateZodSchema.js";
-import { ZodSchemaError } from "../../errors/main.error.js";
+import { CustomAPIError, ZodSchemaError } from "../../errors/main.error.js";
+import {
+	EditPhotoRequestDTO,
+	EditPhotoRequestDtoType,
+} from "../../db/dtos/photos/edit.dto.js";
 
 const photoService = new PhotoService();
 
@@ -37,6 +41,35 @@ export const addPhoto = async (
 		const result = await photoService.add(req.user.userId, req.body);
 
 		res.status(StatusCodes.Created201).send({ ...result });
+		return;
+	} catch (error) {
+		throw error;
+	}
+};
+
+export const removePhoto = async (
+	req: Request<{ photoId: string }, never, never, never>,
+	res: Response
+) => {
+	try {
+		if (!req.params.photoId || req.params.photoId === "") {
+			throw new CustomAPIError(
+				"PhotoId must be provided",
+				StatusCodes.BadRequest400
+			);
+		}
+
+		const result = await photoService.delete(req.params.photoId);
+		if (!result) {
+			throw new CustomAPIError(
+				"Photo does not found",
+				StatusCodes.NotFound404
+			);
+		}
+
+		res.status(StatusCodes.Ok200).send({
+			message: "Your photo has been successfully deleted",
+		});
 		return;
 	} catch (error) {
 		throw error;

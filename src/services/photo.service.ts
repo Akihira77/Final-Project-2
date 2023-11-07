@@ -5,6 +5,10 @@ import {
 import Photo from "../db/models/photo.model.js";
 import User from "../db/models/user.model.js";
 import { sequelize } from "../db/db.js";
+import {
+	EditPhotoRequestDtoType,
+	EditPhotoResponseDtoType,
+} from "../db/dtos/photos/edit.dto.js";
 
 export class PhotoService {
 	private readonly _photoRepository;
@@ -17,7 +21,12 @@ export class PhotoService {
 	async findAll(): Promise<Photo[]> {
 		try {
 			const photos = await this._photoRepository.findAll({
-				include: this._userRepository,
+				include: [
+					{
+						model: this._userRepository,
+						attributes: ["id", "username", "profile_image_url"],
+					},
+				],
 			});
 
 			return photos;
@@ -45,6 +54,18 @@ export class PhotoService {
 				title: photo.title,
 				UserId: photo.UserId,
 			};
+		} catch (error) {
+			throw error;
+		}
+	}
+
+	async delete(photoId: string): Promise<boolean> {
+		try {
+			const result = await this._photoRepository.destroy({
+				where: { id: photoId },
+			});
+
+			return Boolean(result);
 		} catch (error) {
 			throw error;
 		}
