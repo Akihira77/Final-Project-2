@@ -6,6 +6,7 @@ import cors from "cors";
 import userEndpoints from "../api/users/endpoints.js";
 import { ErrorHandlerMiddleware } from "../api/middlewares/error-handler.middleware.js";
 import photoEndpoints from "../api/photos/endpoints.js";
+import authMiddleware from "../api/middlewares/auth.middleware.js";
 export const startServer = () => {
     const app = express();
     app.use(express.json());
@@ -13,7 +14,7 @@ export const startServer = () => {
     app.use(morgan("dev"));
     app.use(cors());
     app.use("/api/users", userEndpoints);
-    app.use("/api/photos", photoEndpoints);
+    app.use("/api/photos", authMiddleware, photoEndpoints);
     app.all("*", (req, res) => {
         res.status(StatusCodes.NotFound404).send({
             msg: "Route does not match anything",

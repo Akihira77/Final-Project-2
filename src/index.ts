@@ -5,7 +5,7 @@ import { startServer } from "./utils/server.js";
 const app = startServer();
 const port = Number(PORT || 7000);
 
-sequelize.sync().then(() => {
+sequelize.sync({ benchmark: true, alter: false, force: false }).then(() => {
 	app.listen(port, () => {
 		console.log(`Server is listening to port ${port}`);
 	});

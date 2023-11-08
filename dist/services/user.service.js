@@ -1,8 +1,8 @@
-import { sequelize } from "../db/db.js";
 import User from "../db/models/user.model.js";
 import { v4 as uuidv4 } from "uuid";
 import { hashPassword, validate } from "../utils/bcrypt.js";
 import { jwtSign } from "../utils/jwt.js";
+import { sequelize } from "../db/db.js";
 class UserService {
     _userRepository;
     constructor() {
