@@ -1,30 +1,32 @@
 "use strict";
 module.exports = {
     async up(queryInterface, Sequelize) {
-        await queryInterface.createTable("Photos", {
+        await queryInterface.createTable("Comments", {
             id: {
                 primaryKey: true,
                 allowNull: false,
                 autoIncrement: true,
                 type: Sequelize.INTEGER,
             },
-            title: {
+            comment: {
                 allowNull: false,
                 type: Sequelize.STRING,
-            },
-            caption: {
-                allowNull: false,
-                type: Sequelize.TEXT,
-            },
-            poster_image_url: {
-                allowNull: false,
-                type: Sequelize.TEXT,
             },
             UserId: {
                 type: Sequelize.STRING,
                 allowNull: false,
                 references: {
                     model: "Users",
+                    key: "id",
+                },
+                onDelete: "CASCADE",
+                onUpdate: "CASCADE",
+            },
+            PhotoId: {
+                type: Sequelize.INTEGER,
+                allowNull: false,
+                references: {
+                    model: "Photos",
                     key: "id",
                 },
                 onDelete: "CASCADE",
@@ -42,8 +44,8 @@ module.exports = {
         });
     },
     async down(queryInterface, Sequelize) {
-        await queryInterface.dropTable("Photos");
+        await queryInterface.dropTable("Comments");
     },
 };
 export {};
-//# sourceMappingURL=20231106034749-Photo.cjs.map
+//# sourceMappingURL=20231108085236-Comment.cjs.map
