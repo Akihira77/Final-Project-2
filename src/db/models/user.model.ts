@@ -13,6 +13,7 @@ import {
 	Table,
 	UpdatedAt,
 	Model,
+	Unique,
 } from "sequelize-typescript";
 import Photo from "./photo.model.js";
 
@@ -43,10 +44,12 @@ class User extends Model implements IUser {
 
 	@IsEmail
 	@AllowNull(false)
+	@Unique
 	@Column(DataType.STRING)
 	declare email: string;
 
 	@AllowNull(false)
+	@Unique
 	@Column(DataType.STRING)
 	declare username: string;
 
@@ -60,6 +63,7 @@ class User extends Model implements IUser {
 	declare profile_image_url: string;
 
 	@IsInt
+	@AllowNull(false)
 	@Column(DataType.INTEGER)
 	declare age: number;
 
