@@ -7,23 +7,23 @@ import {
 } from "../../db/dtos/comments/create.dto.js";
 import { validateZodSchema } from "../../utils/validateZodSchema.js";
 import { CustomAPIError, ZodSchemaError } from "../../errors/main.error.js";
-// import {
-// 	EditCommentRequestDTO,
-// 	EditCommentRequestDtoType,
-// } from "../../db/dtos/photos/edit.dto.js";
+import {
+	EditCommentRequestDTO,
+	EditCommentRequestDtoType,
+} from "../../db/dtos/comments/edit.dto.js";
 
 const commentService = new CommentService();
 
-// export const findAllPhoto = async (req: Request, res: Response) => {
-// 	try {
-// 		const photos = await photoService.findAll();
+export const findAllComment = async (req: Request, res: Response) => {
+	try {
+		const comments = await commentService.findAll();
 
-// 		res.status(StatusCodes.Ok200).send({ photos });
-// 		return;
-// 	} catch (error) {
-// 		throw error;
-// 	}
-// };
+		res.status(StatusCodes.Ok200).send({ comments });
+		return;
+	} catch (error) {
+		throw error;
+	}
+};
 
 export const addComment = async (
 	req: Request<never, never, CreateCommentRequestDtoType, never>,
@@ -47,63 +47,63 @@ export const addComment = async (
 	}
 };
 
-// export const updatePhoto = async (
-// 	req: Request<{ photoId: string }, never, EditPhotoRequestDtoType, never>,
-// 	res: Response
-// ) => {
-// 	try {
-// 		const validationResult = validateZodSchema(
-// 			EditPhotoRequestDTO,
-// 			req.body
-// 		);
-// 		if (!validationResult.success) {
-// 			throw new ZodSchemaError(validationResult.errors);
-// 		}
+export const updateComment = async (
+	req: Request<{ commentId: string }, never, EditCommentRequestDtoType, never>,
+	res: Response
+) => {
+	try {
+		const validationResult = validateZodSchema(
+			EditCommentRequestDTO,
+			req.body
+		);
+		if (!validationResult.success) {
+			throw new ZodSchemaError(validationResult.errors);
+		}
 
-// 		const existedPhoto = await photoService.findById(req.params.photoId);
+		const existedComment = await commentService.findById(req.params.commentId);
 
-// 		if (!existedPhoto) {
-// 			throw new CustomAPIError(
-// 				"Photo does not found",
-// 				StatusCodes.NotFound404
-// 			);
-// 		}
+		if (!existedComment) {
+			throw new CustomAPIError(
+				"Comment does not found",
+				StatusCodes.NotFound404
+			);
+		}
 
-// 		const result = await photoService.edit(req.params.photoId, req.body);
+		const result = await commentService.edit(req.params.commentId, req.body);
 
-// 		res.status(StatusCodes.Ok200).send({ photo: result });
-// 		return;
-// 	} catch (error) {
-// 		throw error;
-// 	}
-// };
+		res.status(StatusCodes.Ok200).send({ comment: result });
+		return;
+	} catch (error) {
+		throw error;
+	}
+};
 
-// export const removePhoto = async (
-// 	req: Request<{ photoId: string }, never, never, never>,
-// 	res: Response
-// ) => {
-// 	try {
-// 		if (!req.params.photoId || req.params.photoId === "") {
-// 			throw new CustomAPIError(
-// 				"PhotoId must be provided",
-// 				StatusCodes.BadRequest400
-// 			);
-// 		}
+export const removeComment = async (
+	req: Request<{ commentId: string }, never, never, never>,
+	res: Response
+) => {
+	try {
+		if (!req.params.commentId || req.params.commentId === "") {
+			throw new CustomAPIError(
+				"CommentId must be provided",
+				StatusCodes.BadRequest400
+			);
+		}
 
-// 		const result = await photoService.delete(req.params.photoId);
-// 		if (!result) {
-// 			throw new CustomAPIError(
-// 				"Photo does not found",
-// 				StatusCodes.NotFound404
-// 			);
-// 		}
+		const result = await commentService.delete(req.params.commentId);
+		if (!result) {
+			throw new CustomAPIError(
+				"Comment does not found",
+				StatusCodes.NotFound404
+			);
+		}
 
-// 		res.status(StatusCodes.Ok200).send({
-// 			message: "Your photo has been successfully deleted",
-// 		});
-// 		return;
-// 	} catch (error) {
-// 		throw error;
-// 	}
-// };
+		res.status(StatusCodes.Ok200).send({
+			message: "Your comment has been successfully deleted",
+		});
+		return;
+	} catch (error) {
+		throw error;
+	}
+};
 

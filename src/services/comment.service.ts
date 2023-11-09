@@ -6,11 +6,10 @@ import Comment from "../db/models/comment.model.js";
 import Photo from "../db/models/photo.model.js";
 import User from "../db/models/user.model.js";
 import { sequelize } from "../db/db.js";
-import { date } from "zod";
-// import {
-// 	EditCommentRequestDtoType,
-// 	EditCommentResponseDtoType,
-// } from "../db/dtos/comments/edit.dto.js";
+import {
+	EditCommentRequestDtoType,
+	EditCommentResponseDtoType,
+} from "../db/dtos/comments/edit.dto.js";
 
 export class CommentService {
 	private readonly _commentRepository;
@@ -22,32 +21,36 @@ export class CommentService {
 		this._photoRepository = sequelize.getRepository(Photo);
 	}
 
-	// async findAll(): Promise<Photo[]> {
-	// 	try {
-	// 		const photos = await this._photoRepository.findAll({
-	// 			include: [
-	// 				{
-	// 					model: this._userRepository,
-	// 					attributes: ["id", "username", "profile_image_url"],
-	// 				},
-	// 			],
-	// 		});
+	async findAll(): Promise<Comment[]> {
+		try {
+			const comment = await this._commentRepository.findAll({
+				include: [
+					{
+						model: this._userRepository,
+						attributes: ["id", "username", "profile_image_url", "phone_number"],
+					},
+					{
+						model: this._photoRepository,
+						attributes: ["id", "title", "caption", "poster_image_url"],
+					},
+				],
+			});
 
-	// 		return photos;
-	// 	} catch (error) {
-	// 		throw error;
-	// 	}
-	// }
+			return comment;
+		} catch (error) {
+			throw error;
+		}
+	}
 
-	// async findById(photoId: string): Promise<Photo | null> {
-	// 	try {
-	// 		const photo = await this._photoRepository.findByPk(photoId);
+	async findById(commentId: string): Promise<Comment | null> {
+		try {
+			const comment = await this._commentRepository.findByPk(commentId);
 
-	// 		return photo;
-	// 	} catch (error) {
-	// 		throw error;
-	// 	}
-	// }
+			return comment;
+		} catch (error) {
+			throw error;
+		}
+	}
 
 	async add(
 		userId: string,
@@ -73,44 +76,43 @@ export class CommentService {
 		}
 	}
 
-// 	async edit(
-// 		photoId: string,
-// 		request: EditPhotoRequestDtoType
-// 	): Promise<EditPhotoResponseDtoType> {
-// 		try {
-// 			const result = await this._photoRepository.update(request, {
-// 				where: {
-// 					id: photoId,
-// 				},
-// 				returning: true,
-// 			});
+	async edit(
+		commentId: string,
+		request: EditCommentRequestDtoType
+	): Promise<EditCommentResponseDtoType> {
+		try {
+			const result = await this._commentRepository.update(request, {
+				where: {
+					id: commentId,
+				},
+				returning: true,
+			});
 
-// 			const photo = result[1][0]!;
+			const comment = result[1][0]!;
 
-// 			return {
-// 				id: photo.id,
-// 				title: photo.title,
-// 				caption: photo.caption,
-// 				poster_image_url: photo.poster_image_url,
-// 				UserId: photo.UserId,
-// 				createdAt: photo.createdAt,
-// 				updatedAt: photo.updatedAt,
-// 			};
-// 		} catch (error) {
-// 			throw error;
-// 		}
-// 	}
+			return {
+				id: comment.id,
+				comment: comment.comment,
+				UserId: comment.UserId,
+				PhotoId: comment.PhotoId,
+				updatedAt: comment.updatedAt,
+				createdAt: comment.createdAt,
+			};
+		} catch (error) {
+			throw error;
+		}
+	}
 
-// 	async delete(photoId: string): Promise<boolean> {
-// 		try {
-// 			const result = await this._photoRepository.destroy({
-// 				where: { id: photoId },
-// 			});
+	async delete(commentId: string): Promise<boolean> {
+		try {
+			const result = await this._commentRepository.destroy({
+				where: { id: commentId },
+			});
 
-// 			return Boolean(result);
-// 		} catch (error) {
-// 			throw error;
-// 		}
-// 	}
+			return Boolean(result);
+		} catch (error) {
+			throw error;
+		}
+	}
 }
 

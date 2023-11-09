@@ -11,6 +11,35 @@ export class CommentService {
         this._userRepository = sequelize.getRepository(User);
         this._photoRepository = sequelize.getRepository(Photo);
     }
+    async findAll() {
+        try {
+            const comment = await this._commentRepository.findAll({
+                include: [
+                    {
+                        model: this._userRepository,
+                        attributes: ["id", "username", "profile_image_url", "phone_number"],
+                    },
+                    {
+                        model: this._photoRepository,
+                        attributes: ["id", "title", "caption", "poster_image_url"],
+                    },
+                ],
+            });
+            return comment;
+        }
+        catch (error) {
+            throw error;
+        }
+    }
+    async findById(commentId) {
+        try {
+            const comment = await this._commentRepository.findByPk(commentId);
+            return comment;
+        }
+        catch (error) {
+            throw error;
+        }
+    }
     async add(userId, { comment, PhotoId }) {
         try {
             const komen = await this._commentRepository.create({
@@ -26,6 +55,39 @@ export class CommentService {
                 createdAt: komen.createdAt,
                 updatedAt: komen.updatedAt
             };
+        }
+        catch (error) {
+            throw error;
+        }
+    }
+    async edit(commentId, request) {
+        try {
+            const result = await this._commentRepository.update(request, {
+                where: {
+                    id: commentId,
+                },
+                returning: true,
+            });
+            const comment = result[1][0];
+            return {
+                id: comment.id,
+                comment: comment.comment,
+                UserId: comment.UserId,
+                PhotoId: comment.PhotoId,
+                updatedAt: comment.updatedAt,
+                createdAt: comment.createdAt,
+            };
+        }
+        catch (error) {
+            throw error;
+        }
+    }
+    async delete(commentId) {
+        try {
+            const result = await this._commentRepository.destroy({
+                where: { id: commentId },
+            });
+            return Boolean(result);
         }
         catch (error) {
             throw error;
