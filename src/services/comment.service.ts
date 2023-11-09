@@ -21,13 +21,14 @@ export class CommentService {
 		this._photoRepository = sequelize.getRepository(Photo);
 	}
 
-	async findAll(): Promise<Comment[]> {
+	async findAll(userId: string): Promise<Comment[]> {
 		try {
 			const comment = await this._commentRepository.findAll({
 				include: [
 					{
 						model: this._userRepository,
 						attributes: ["id", "username", "profile_image_url", "phone_number"],
+						where: { id: userId } 
 					},
 					{
 						model: this._photoRepository,

@@ -7,7 +7,7 @@ import { EditCommentRequestDTO, } from "../../db/dtos/comments/edit.dto.js";
 const commentService = new CommentService();
 export const findAllComment = async (req, res) => {
     try {
-        const comments = await commentService.findAll();
+        const comments = await commentService.findAll(req.user.userId);
         res.status(StatusCodes.Ok200).send({ comments });
         return;
     }
