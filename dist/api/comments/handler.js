@@ -35,11 +35,11 @@ export const updateComment = async (req, res) => {
         if (!validationResult.success) {
             throw new ZodSchemaError(validationResult.errors);
         }
-        const existedComment = await commentService.findById(req.params.commentId);
+        const existedComment = await commentService.findById(req.params.commentId, req.user.userId);
         if (!existedComment) {
-            throw new CustomAPIError("Comment does not found", StatusCodes.NotFound404);
+            throw new CustomAPIError("Comment does not found / You Not Authorized", StatusCodes.NotFound404);
         }
-        const result = await commentService.edit(req.params.commentId, req.body);
+        const result = await commentService.edit(req.user.userId, req.params.commentId, req.body);
         res.status(StatusCodes.Ok200).send({ comment: result });
         return;
     }
@@ -52,9 +52,9 @@ export const removeComment = async (req, res) => {
         if (!req.params.commentId || req.params.commentId === "") {
             throw new CustomAPIError("CommentId must be provided", StatusCodes.BadRequest400);
         }
-        const result = await commentService.delete(req.params.commentId);
+        const result = await commentService.delete(req.user.userId, req.params.commentId);
         if (!result) {
-            throw new CustomAPIError("Comment does not found", StatusCodes.NotFound404);
+            throw new CustomAPIError("Comment does not found / You Not Authorized", StatusCodes.NotFound404);
         }
         res.status(StatusCodes.Ok200).send({
             message: "Your comment has been successfully deleted",

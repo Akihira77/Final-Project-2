@@ -60,16 +60,16 @@ export const updateComment = async (
 			throw new ZodSchemaError(validationResult.errors);
 		}
 
-		const existedComment = await commentService.findById(req.params.commentId);
+		const existedComment = await commentService.findById(req.params.commentId, req.user.userId);
 
 		if (!existedComment) {
 			throw new CustomAPIError(
-				"Comment does not found",
+				"Comment does not found / You Not Authorized",
 				StatusCodes.NotFound404
 			);
 		}
 
-		const result = await commentService.edit(req.params.commentId, req.body);
+		const result = await commentService.edit(req.user.userId, req.params.commentId, req.body);
 
 		res.status(StatusCodes.Ok200).send({ comment: result });
 		return;
@@ -90,10 +90,10 @@ export const removeComment = async (
 			);
 		}
 
-		const result = await commentService.delete(req.params.commentId);
+		const result = await commentService.delete(req.user.userId, req.params.commentId);
 		if (!result) {
 			throw new CustomAPIError(
-				"Comment does not found",
+				"Comment does not found / You Not Authorized",
 				StatusCodes.NotFound404
 			);
 		}
@@ -106,4 +106,3 @@ export const removeComment = async (
 		throw error;
 	}
 };
-

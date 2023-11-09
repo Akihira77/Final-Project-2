@@ -32,9 +32,14 @@ export class CommentService {
             throw error;
         }
     }
-    async findById(commentId) {
+    async findById(commentId, userId) {
         try {
-            const comment = await this._commentRepository.findByPk(commentId);
+            const comment = await this._commentRepository.findOne({
+                where: {
+                    id: commentId,
+                    UserId: userId
+                }
+            });
             return comment;
         }
         catch (error) {
@@ -61,11 +66,12 @@ export class CommentService {
             throw error;
         }
     }
-    async edit(commentId, request) {
+    async edit(userId, commentId, request) {
         try {
             const result = await this._commentRepository.update(request, {
                 where: {
                     id: commentId,
+                    UserId: userId,
                 },
                 returning: true,
             });
@@ -83,10 +89,13 @@ export class CommentService {
             throw error;
         }
     }
-    async delete(commentId) {
+    async delete(userId, commentId) {
         try {
             const result = await this._commentRepository.destroy({
-                where: { id: commentId },
+                where: {
+                    id: commentId,
+                    UserId: userId,
+                },
             });
             return Boolean(result);
         }

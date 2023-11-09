@@ -43,10 +43,15 @@ export class CommentService {
 		}
 	}
 
-	async findById(commentId: string): Promise<Comment | null> {
+	async findById(commentId: string, userId: string): Promise<Comment | null> {
 		try {
-			const comment = await this._commentRepository.findByPk(commentId);
-
+			const comment = await this._commentRepository.findOne({
+				where: {
+					id: commentId,
+					UserId: userId
+				}
+			});
+	
 			return comment;
 		} catch (error) {
 			throw error;
@@ -78,6 +83,7 @@ export class CommentService {
 	}
 
 	async edit(
+		userId: string,
 		commentId: string,
 		request: EditCommentRequestDtoType
 	): Promise<EditCommentResponseDtoType> {
@@ -85,6 +91,7 @@ export class CommentService {
 			const result = await this._commentRepository.update(request, {
 				where: {
 					id: commentId,
+					UserId: userId,				
 				},
 				returning: true,
 			});
@@ -104,10 +111,16 @@ export class CommentService {
 		}
 	}
 
-	async delete(commentId: string): Promise<boolean> {
+	async delete(
+		userId: string,
+		commentId: string
+	): Promise<boolean> {
 		try {
 			const result = await this._commentRepository.destroy({
-				where: { id: commentId },
+				where: { 
+					id: commentId,
+					UserId: userId,
+				},
 			});
 
 			return Boolean(result);
