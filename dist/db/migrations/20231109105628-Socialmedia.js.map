@@ -1,0 +1,1 @@
+{"version":3,"file":"20231109105628-Socialmedia.js","sourceRoot":"","sources":["../../../src/db/migrations/20231109105628-Socialmedia.js"],"names":[],"mappings":"AAAA,YAAY,CAAC;AAGb,MAAM,CAAC,OAAO,GAAG;IACf,KAAK,CAAC,EAAE,CAAE,cAAc,EAAE,SAAS;IAOnC,CAAC;IAED,KAAK,CAAC,IAAI,CAAE,cAAc,EAAE,SAAS;IAOrC,CAAC;CACF,CAAC"}
