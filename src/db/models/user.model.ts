@@ -26,6 +26,7 @@ export interface IUser {
 	profile_image_url: string;
 	age: number;
 	phone_number: string;
+	photos: Photo[];
 	createdAt: Date;
 	updatedAt: Date;
 }

@@ -1,0 +1,225 @@
+{
+	"info": {
+		"_postman_id": "39240d59-4b3c-412e-8795-b4ffe3444b44",
+		"name": "MBKM - Final Project 2",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "24368336"
+	},
+	"item": [
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "Get All User",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "{{SERVER_URL}}/users"
+					},
+					"response": []
+				},
+				{
+					"name": "Register",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\t\"email\" : \"user123@mail.com\",\r\n\t\"full_name\" : \"user\",\r\n\t\"username\" : \"user123\",\r\n\t\"password\" : \"user123\",\r\n\t\"profile_image_url\" : \"http://user-fake.com\",\r\n\t\"age\" : 20,\r\n\t\"phone_number\" : \"0823805930123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{SERVER_URL}}/users/auth/register"
+					},
+					"response": []
+				},
+				{
+					"name": "Remove User",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXJJZCI6IjFjNTRlNTM2LTA4OGEtNDlhMC04NDQyLTA5ZWIyODFiNzYyNCIsImVtYWlsIjoidXNlcjEyM0BtYWlsLmNvbSIsImZ1bGxfbmFtZSI6InVzZXJmdWxsIn0sImlhdCI6MTY5OTI0MTk3Nn0.d2s-HfAeE3Qtt3Y5FN4DMAcaAUmjzzDu8lkoNxuQFAQ",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{SERVER_URL}}/users/1c54e536-088a-49a0-8442-09eb281b7624",
+							"host": [
+								"{{SERVER_URL}}"
+							],
+							"path": [
+								"users",
+								"1c54e536-088a-49a0-8442-09eb281b7624"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": "",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\t\"email\" : \"user123@mail.com\",\r\n\t\"password\" : \"user123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{SERVER_URL}}/users/auth/login"
+					},
+					"response": []
+				},
+				{
+					"name": "Update User",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXJJZCI6IjFjNTRlNTM2LTA4OGEtNDlhMC04NDQyLTA5ZWIyODFiNzYyNCIsImVtYWlsIjoidXNlcjEyM0BtYWlsLmNvbSIsImZ1bGxfbmFtZSI6InVzZXJmdWxsIn0sImlhdCI6MTY5OTI0MTk3Nn0.d2s-HfAeE3Qtt3Y5FN4DMAcaAUmjzzDu8lkoNxuQFAQ",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\t\"email\" : \"user123@mail.com\",\r\n\t\"full_name\" : \"userfull\",\r\n\t\"username\" : \"user123\",\r\n\t\"profile_image_url\" : \"http://user-fake.com\",\r\n\t\"age\" : 20,\r\n\t\"phone_number\" : \"0823805930123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{SERVER_URL}}/users/1c54e536-088a-49a0-8442-09eb281b7624"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Photo",
+			"item": [
+				{
+					"name": "Get All Photo",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXJJZCI6ImEyZmIxYjBiLWVkNDMtNGQ3ZS1iYTkxLTYzNDdmNjYyNGUzOCIsImVtYWlsIjoidXNlcjEyM0BtYWlsLmNvbSIsImZ1bGxfbmFtZSI6InVzZXIifSwiaWF0IjoxNjk5MzY0Njc2fQ.OTRE3KIkTfZJwO8CUg35lblqxStVxPli4Kb6Czop_UE",
+								"type": "text"
+							}
+						],
+						"url": "{{SERVER_URL}}/photos"
+					},
+					"response": []
+				},
+				{
+					"name": "Add Photo",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXJJZCI6ImEyZmIxYjBiLWVkNDMtNGQ3ZS1iYTkxLTYzNDdmNjYyNGUzOCIsImVtYWlsIjoidXNlcjEyM0BtYWlsLmNvbSIsImZ1bGxfbmFtZSI6InVzZXIifSwiaWF0IjoxNjk5MzQyNDk1fQ.KKArtc3sOIRv8B5rgmUoxQzEMPSWVzUbwrW99c8nM8g",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\t\"poster_image_url\" : \"http://www.fake.com\",\r\n\t\"title\" : \"test\",\r\n\t\"caption\": \"test\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{SERVER_URL}}/photos"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Photo",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXJJZCI6ImEyZmIxYjBiLWVkNDMtNGQ3ZS1iYTkxLTYzNDdmNjYyNGUzOCIsImVtYWlsIjoidXNlcjEyM0BtYWlsLmNvbSIsImZ1bGxfbmFtZSI6InVzZXIifSwiaWF0IjoxNjk5MzY0Njc2fQ.OTRE3KIkTfZJwO8CUg35lblqxStVxPli4Kb6Czop_UE",
+								"type": "text"
+							}
+						],
+						"url": "{{SERVER_URL}}/photos/1"
+					},
+					"response": []
+				},
+				{
+					"name": "Update Photo",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXJJZCI6ImEyZmIxYjBiLWVkNDMtNGQ3ZS1iYTkxLTYzNDdmNjYyNGUzOCIsImVtYWlsIjoidXNlcjEyM0BtYWlsLmNvbSIsImZ1bGxfbmFtZSI6InVzZXIifSwiaWF0IjoxNjk5MzQyNDk1fQ.KKArtc3sOIRv8B5rgmUoxQzEMPSWVzUbwrW99c8nM8g",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\t\"poster_image_url\" : \"http://www.fake.com\",\r\n\t\"title\" : \"test123\",\r\n\t\"caption\": \"test\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{SERVER_URL}}/photos/2"
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "SERVER_URL",
+			"value": "localhost:7050/api",
+			"type": "string"
+		}
+	]
+}
