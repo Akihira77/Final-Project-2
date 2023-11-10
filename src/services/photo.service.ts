@@ -9,19 +9,32 @@ import {
 	EditPhotoRequestDtoType,
 	EditPhotoResponseDtoType,
 } from "../db/dtos/photos/edit.dto.js";
+import Comment from "../db/models/comment.model.js";
 
 export class PhotoService {
 	private readonly _photoRepository;
 	private readonly _userRepository;
+	private readonly _commentRepository;
 	constructor() {
 		this._photoRepository = sequelize.getRepository(Photo);
 		this._userRepository = sequelize.getRepository(User);
+		this._commentRepository = sequelize.getRepository(Comment);
 	}
 
 	async findAll(): Promise<Photo[]> {
 		try {
 			const photos = await this._photoRepository.findAll({
 				include: [
+					{
+						model: this._commentRepository,
+						attributes: ["comment"],
+						include: [
+							{
+								model: this._userRepository,
+								attributes: ["username"],
+							},
+						],
+					},
 					{
 						model: this._userRepository,
 						attributes: ["id", "username", "profile_image_url"],
@@ -109,4 +122,3 @@ export class PhotoService {
 		}
 	}
 }
-

@@ -37,7 +37,6 @@ class User extends Model implements IUser {
 	@Column(DataType.STRING)
 	declare id: string;
 
-	@IsAlpha
 	@AllowNull(false)
 	@Column(DataType.STRING)
 	declare full_name: string;

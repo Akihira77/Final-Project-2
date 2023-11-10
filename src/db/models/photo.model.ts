@@ -12,8 +12,10 @@ import {
 	Table,
 	UpdatedAt,
 	Model,
+	HasMany,
 } from "sequelize-typescript";
 import User from "./user.model.js";
+import Comment from "./comment.model.js";
 
 export interface IPhoto {
 	id: number;
@@ -22,6 +24,7 @@ export interface IPhoto {
 	poster_image_url: string;
 	UserId: string;
 	user: User;
+	comments: Comment[];
 	createdAt: Date;
 	updatedAt: Date;
 }
@@ -56,7 +59,10 @@ class Photo extends Model implements IPhoto {
 	declare UserId: string;
 
 	@BelongsTo(() => User)
-	declare user: User;
+	declare user: ReturnType<() => User>;
+
+	@HasMany(() => Comment)
+	declare comments: Comment[];
 
 	@AllowNull(false)
 	@CreatedAt

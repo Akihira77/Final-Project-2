@@ -45,15 +45,15 @@ class Comment extends Model implements IComment {
 	declare UserId: string;
 
 	@BelongsTo(() => User)
-	declare user: User;
+	declare user: ReturnType<() => User>;
 
-    @AllowNull(false)
+	@AllowNull(false)
 	@ForeignKey(() => Photo)
 	@Column(DataType.INTEGER)
 	declare PhotoId: number;
 
 	@BelongsTo(() => Photo)
-	declare photo: Photo;
+	declare photo: ReturnType<() => Photo>;
 
 	@AllowNull(false)
 	@CreatedAt

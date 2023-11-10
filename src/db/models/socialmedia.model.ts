@@ -36,8 +36,8 @@ class Socialmedia extends Model implements ISocialmedia {
 	@NotEmpty
 	@Column(DataType.STRING)
 	declare name: string;
-	
-    @AllowNull(false)
+
+	@AllowNull(false)
 	@NotEmpty
 	@Column(DataType.STRING)
 	declare social_media_url: string;
@@ -48,8 +48,8 @@ class Socialmedia extends Model implements ISocialmedia {
 	declare UserId: string;
 
 	@BelongsTo(() => User)
-	declare user: User;
-    
+	declare user: ReturnType<() => User>;
+
 	@AllowNull(false)
 	@CreatedAt
 	@Column(DataType.DATE)
