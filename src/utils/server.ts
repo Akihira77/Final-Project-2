@@ -4,11 +4,15 @@ import express from "express";
 import morgan from "morgan";
 import cors from "cors";
 import userEndpoints from "../api/users/endpoints.js";
+import commentEndpoints from "../api/comments/endpoints.js";
+import socialmediaEndpoints from "../api/socialmedias/endpoints.js";
 import { ErrorHandlerMiddleware } from "../api/middlewares/error-handler.middleware.js";
 import photoEndpoints from "../api/photos/endpoints.js";
 import authMiddleware from "../api/middlewares/auth.middleware.js";
+import { sequelize } from "../db/db.js";
 
-export const startServer = () => {
+export const startServer = async () => {
+	await sequelize.sync({});
 	const app = express();
 
 	// Middleware
@@ -20,6 +24,8 @@ export const startServer = () => {
 	// Routes
 	app.use("/api/users", userEndpoints);
 	app.use("/api/photos", authMiddleware, photoEndpoints);
+	app.use("/api/comments", authMiddleware, commentEndpoints);
+	app.use("/api/socialmedias", authMiddleware, socialmediaEndpoints);
 
 	app.all("*", (req, res) => {
 		res.status(StatusCodes.NotFound404).send({
