@@ -14,7 +14,7 @@ import {
 } from "sequelize-typescript";
 import User from "./user.model.js";
 
-export interface ISocialmedia {
+export interface ISocialMedia {
 	id: number;
 	name: string;
 	social_media_url: string;
@@ -25,7 +25,7 @@ export interface ISocialmedia {
 }
 
 @Table
-class Socialmedia extends Model implements ISocialmedia {
+class SocialMedia extends Model implements ISocialMedia {
 	@PrimaryKey
 	@AllowNull(false)
 	@AutoIncrement
@@ -61,4 +61,4 @@ class Socialmedia extends Model implements ISocialmedia {
 	declare updatedAt: Date;
 }
 
-export default Socialmedia;
+export default SocialMedia;

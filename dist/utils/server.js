@@ -9,7 +9,9 @@ import socialmediaEndpoints from "../api/socialmedias/endpoints.js";
 import { ErrorHandlerMiddleware } from "../api/middlewares/error-handler.middleware.js";
 import photoEndpoints from "../api/photos/endpoints.js";
 import authMiddleware from "../api/middlewares/auth.middleware.js";
-export const startServer = () => {
+import { sequelize } from "../db/db.js";
+export const startServer = async () => {
+    await sequelize.sync({});
     const app = express();
     app.use(express.json());
     app.use(express.urlencoded({ extended: false }));

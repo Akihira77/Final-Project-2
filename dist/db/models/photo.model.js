@@ -7,8 +7,9 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-import { AllowNull, AutoIncrement, BelongsTo, Column, CreatedAt, DataType, ForeignKey, IsUrl, NotEmpty, PrimaryKey, Table, UpdatedAt, Model, } from "sequelize-typescript";
+import { AllowNull, AutoIncrement, BelongsTo, Column, CreatedAt, DataType, ForeignKey, IsUrl, NotEmpty, PrimaryKey, Table, UpdatedAt, Model, HasMany, } from "sequelize-typescript";
 import User from "./user.model.js";
+import Comment from "./comment.model.js";
 let Photo = class Photo extends Model {
 };
 __decorate([
@@ -45,8 +46,12 @@ __decorate([
 ], Photo.prototype, "UserId", void 0);
 __decorate([
     BelongsTo(() => User),
-    __metadata("design:type", User)
+    __metadata("design:type", void 0)
 ], Photo.prototype, "user", void 0);
+__decorate([
+    HasMany(() => Comment),
+    __metadata("design:type", Array)
+], Photo.prototype, "comments", void 0);
 __decorate([
     AllowNull(false),
     CreatedAt,
