@@ -1,9 +1,10 @@
 {
 	"info": {
-		"_postman_id": "314285a2-aceb-453f-94c1-0e72bff7f9aa",
+		"_postman_id": "ee01b197-c89a-4b38-8d61-164256d65e0c",
 		"name": "MBKM - Final Project 2",
-		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
-		"_exporter_id": "24368336"
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "31135623",
+		"_collection_link": "https://crimson-star-882099.postman.co/workspace/MBKM-Final-Project-2~68237437-130b-4c66-9a06-152945108d50/collection/24368336-ee01b197-c89a-4b38-8d61-164256d65e0c?action=share&source=collection_link&creator=31135623"
 	},
 	"item": [
 		{
@@ -36,7 +37,15 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"url": "{{SERVER_URL}}/users"
+						"url": {
+							"raw": "{{SERVER_URL}}/users",
+							"host": [
+								"{{SERVER_URL}}"
+							],
+							"path": [
+								"users"
+							]
+						}
 					},
 					"response": []
 				},
@@ -88,7 +97,17 @@
 								}
 							}
 						},
-						"url": "{{SERVER_URL}}/users/auth/register"
+						"url": {
+							"raw": "{{SERVER_URL}}/users/auth/register",
+							"host": [
+								"{{SERVER_URL}}"
+							],
+							"path": [
+								"users",
+								"auth",
+								"register"
+							]
+						}
 					},
 					"response": []
 				},
@@ -178,7 +197,17 @@
 								}
 							}
 						},
-						"url": "{{SERVER_URL}}/users/auth/login"
+						"url": {
+							"raw": "{{SERVER_URL}}/users/auth/login",
+							"host": [
+								"{{SERVER_URL}}"
+							],
+							"path": [
+								"users",
+								"auth",
+								"login"
+							]
+						}
 					},
 					"response": []
 				},
@@ -236,7 +265,16 @@
 								}
 							}
 						},
-						"url": "{{SERVER_URL}}/users/41183c26-eaa5-49ba-a415-8cdaefb18c29"
+						"url": {
+							"raw": "{{SERVER_URL}}/users/41183c26-eaa5-49ba-a415-8cdaefb18c29",
+							"host": [
+								"{{SERVER_URL}}"
+							],
+							"path": [
+								"users",
+								"41183c26-eaa5-49ba-a415-8cdaefb18c29"
+							]
+						}
 					},
 					"response": []
 				}
@@ -305,7 +343,15 @@
 								"type": "text"
 							}
 						],
-						"url": "{{SERVER_URL}}/photos"
+						"url": {
+							"raw": "{{SERVER_URL}}/photos",
+							"host": [
+								"{{SERVER_URL}}"
+							],
+							"path": [
+								"photos"
+							]
+						}
 					},
 					"response": []
 				},
@@ -354,7 +400,15 @@
 								}
 							}
 						},
-						"url": "{{SERVER_URL}}/photos"
+						"url": {
+							"raw": "{{SERVER_URL}}/photos",
+							"host": [
+								"{{SERVER_URL}}"
+							],
+							"path": [
+								"photos"
+							]
+						}
 					},
 					"response": []
 				},
@@ -388,7 +442,16 @@
 								"type": "text"
 							}
 						],
-						"url": "{{SERVER_URL}}/photos/{{photoId}}"
+						"url": {
+							"raw": "{{SERVER_URL}}/photos/{{photoId}}",
+							"host": [
+								"{{SERVER_URL}}"
+							],
+							"path": [
+								"photos",
+								"{{photoId}}"
+							]
+						}
 					},
 					"response": []
 				},
@@ -437,7 +500,16 @@
 								}
 							}
 						},
-						"url": "{{SERVER_URL}}/photos/{{photoId}}"
+						"url": {
+							"raw": "{{SERVER_URL}}/photos/{{photoId}}",
+							"host": [
+								"{{SERVER_URL}}"
+							],
+							"path": [
+								"photos",
+								"{{photoId}}"
+							]
+						}
 					},
 					"response": []
 				}
@@ -456,20 +528,28 @@
 						"header": [
 							{
 								"key": "token",
-								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXJJZCI6IjliNjdjNmRlLTAwM2EtNDkxOS04Mjc3LWVkYzI4OGE4Y2UyNCIsImVtYWlsIjoidGVzMTIzQG1haWwuY29tIiwiZnVsbF9uYW1lIjoidXNlciB0ZXN0In0sImlhdCI6MTY5OTU3NzIzNn0.3hCQMTUn7Vg7rarJcNagQoUmrZ59iY6Q-fv3qU4r0s8",
+								"value": "{{accessToken}}",
 								"type": "text"
 							}
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"comment\": \"tes123\",\r\n    \"PhotoId\": 1\r\n}",
+							"raw": "{\r\n    \"comment\": \"{{commentRequest}}\",\r\n    \"PhotoId\": {{photoidRequest}}\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
 								}
 							}
 						},
-						"url": "{{SERVER_URL}}/comments"
+						"url": {
+							"raw": "{{SERVER_URL}}/comments",
+							"host": [
+								"{{SERVER_URL}}"
+							],
+							"path": [
+								"comments"
+							]
+						}
 					},
 					"response": []
 				},
@@ -480,11 +560,19 @@
 						"header": [
 							{
 								"key": "token",
-								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXJJZCI6IjliNjdjNmRlLTAwM2EtNDkxOS04Mjc3LWVkYzI4OGE4Y2UyNCIsImVtYWlsIjoidGVzMTIzQG1haWwuY29tIiwiZnVsbF9uYW1lIjoidXNlciB0ZXN0In0sImlhdCI6MTY5OTU3NzIzNn0.3hCQMTUn7Vg7rarJcNagQoUmrZ59iY6Q-fv3qU4r0s8",
+								"value": "{{accessToken}}",
 								"type": "text"
 							}
 						],
-						"url": "{{SERVER_URL}}/comments"
+						"url": {
+							"raw": "{{SERVER_URL}}/comments",
+							"host": [
+								"{{SERVER_URL}}"
+							],
+							"path": [
+								"comments"
+							]
+						}
 					},
 					"response": []
 				},
@@ -495,20 +583,29 @@
 						"header": [
 							{
 								"key": "token",
-								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXJJZCI6IjRkN2IwY2JjLWExMmEtNDRjNy05MWI1LTBmYTliN2NmMjQwMyIsImVtYWlsIjoibmF6d2FAbWFpbC5jb20iLCJmdWxsX25hbWUiOiJuYXp3YSJ9LCJpYXQiOjE2OTk1MjU2NTV9.ejDjrfHCUJUAtHM3vdskIUDm9RA6pzHfgyBBhwSie_g",
+								"value": "{{accessToken}}",
 								"type": "text"
 							}
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"comment\": \"hey\"\r\n}",
+							"raw": "{\r\n    \"comment\": \"{{newComment}}\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
 								}
 							}
 						},
-						"url": "{{SERVER_URL}}/comments/8"
+						"url": {
+							"raw": "{{SERVER_URL}}/comments/{{commentId}}",
+							"host": [
+								"{{SERVER_URL}}"
+							],
+							"path": [
+								"comments",
+								"{{commentId}}"
+							]
+						}
 					},
 					"response": []
 				},
@@ -519,11 +616,20 @@
 						"header": [
 							{
 								"key": "token",
-								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXJJZCI6ImIwYTg1OTg0LTRlMjItNGVhNS1iZmE3LTM0ZThiODVlOTY0ZiIsImVtYWlsIjoidXNlcjEyM0BtYWlsLmNvbSIsImZ1bGxfbmFtZSI6InVzZXIifSwiaWF0IjoxNjk5NDM4MjM5fQ.aWA0M1gWVs36fFwv8qJyCzj9vrE_iWQrEUhX0CvPuLM",
+								"value": "{{accessToken}}",
 								"type": "text"
 							}
 						],
-						"url": "{{SERVER_URL}}/comments/4"
+						"url": {
+							"raw": "{{SERVER_URL}}/comments/{{commnetId}}",
+							"host": [
+								"{{SERVER_URL}}"
+							],
+							"path": [
+								"comments",
+								"{{commnetId}}"
+							]
+						}
 					},
 					"response": []
 				}
@@ -539,20 +645,28 @@
 						"header": [
 							{
 								"key": "token",
-								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXJJZCI6ImIwYTg1OTg0LTRlMjItNGVhNS1iZmE3LTM0ZThiODVlOTY0ZiIsImVtYWlsIjoidXNlcjEyM0BtYWlsLmNvbSIsImZ1bGxfbmFtZSI6InVzZXIifSwiaWF0IjoxNjk5NDM4MjM5fQ.aWA0M1gWVs36fFwv8qJyCzj9vrE_iWQrEUhX0CvPuLM",
+								"value": "{{accessToken}}",
 								"type": "text"
 							}
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\": \"ucok\",\r\n    \"social_media_url\": \"https://www.instagram.com/\"\r\n}",
+							"raw": "{\r\n    \"name\": \"{{socialMediaNameRequest}}\",\r\n    \"social_media_url\": \"{{socialMediaUrlRequest}}\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
 								}
 							}
 						},
-						"url": "{{SERVER_URL}}/socialmedias"
+						"url": {
+							"raw": "{{SERVER_URL}}/socialmedias",
+							"host": [
+								"{{SERVER_URL}}"
+							],
+							"path": [
+								"socialmedias"
+							]
+						}
 					},
 					"response": []
 				},
@@ -563,11 +677,19 @@
 						"header": [
 							{
 								"key": "token",
-								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXJJZCI6IjliNjdjNmRlLTAwM2EtNDkxOS04Mjc3LWVkYzI4OGE4Y2UyNCIsImVtYWlsIjoidGVzMTIzQG1haWwuY29tIiwiZnVsbF9uYW1lIjoidXNlciB0ZXN0In0sImlhdCI6MTY5OTU3NzIzNn0.3hCQMTUn7Vg7rarJcNagQoUmrZ59iY6Q-fv3qU4r0s8",
+								"value": "{{accessToken}}",
 								"type": "text"
 							}
 						],
-						"url": "{{SERVER_URL}}/socialmedias"
+						"url": {
+							"raw": "{{SERVER_URL}}/socialmedias",
+							"host": [
+								"{{SERVER_URL}}"
+							],
+							"path": [
+								"socialmedias"
+							]
+						}
 					},
 					"response": []
 				},
@@ -578,20 +700,29 @@
 						"header": [
 							{
 								"key": "token",
-								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXJJZCI6ImIwYTg1OTg0LTRlMjItNGVhNS1iZmE3LTM0ZThiODVlOTY0ZiIsImVtYWlsIjoidXNlcjEyM0BtYWlsLmNvbSIsImZ1bGxfbmFtZSI6InVzZXIifSwiaWF0IjoxNjk5NDM4MjM5fQ.aWA0M1gWVs36fFwv8qJyCzj9vrE_iWQrEUhX0CvPuLM",
+								"value": "{{accessToken}}",
 								"type": "text"
 							}
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\": \"udin\",\r\n    \"social_media_url\": \"https://www.instagram.com/\"\r\n}",
+							"raw": "{\r\n    \"name\": \"{{newSocialMediaName}}\",\r\n    \"social_media_url\": \"{{newSocialMediaUrl}}\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
 								}
 							}
 						},
-						"url": "{{SERVER_URL}}/socialmedias/1"
+						"url": {
+							"raw": "{{SERVER_URL}}/socialmedias/{{socialmediaId}}",
+							"host": [
+								"{{SERVER_URL}}"
+							],
+							"path": [
+								"socialmedias",
+								"{{socialmediaId}}"
+							]
+						}
 					},
 					"response": []
 				},
@@ -602,11 +733,20 @@
 						"header": [
 							{
 								"key": "token",
-								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXJJZCI6ImQyMjEwZGZmLTJjY2EtNDMyMy1hM2EzLTc3MzIxYWUzNzUzZSIsImVtYWlsIjoib3lAbWFpbC5jb20iLCJmdWxsX25hbWUiOiJveSJ9LCJpYXQiOjE2OTk1MjkxODB9.8cwfsLFGlIcNK2oyQjNUGsKXPmK342U0Ryq7-G9EAi8",
+								"value": "{{accessToken}}",
 								"type": "text"
 							}
 						],
-						"url": "{{SERVER_URL}}/socialmedias/2"
+						"url": {
+							"raw": "{{SERVER_URL}}/socialmedias/{{socialmediaId}}",
+							"host": [
+								"{{SERVER_URL}}"
+							],
+							"path": [
+								"socialmedias",
+								"{{socialmediaId}}"
+							]
+						}
 					},
 					"response": []
 				}
