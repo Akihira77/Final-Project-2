@@ -520,6 +520,30 @@
 			"item": [
 				{
 					"name": "Add Comment",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"RESPONSE STATUS 201\", () => {\r",
+									"\tpm.response.to.have.status(201);\r",
+									"})\r",
+									"\r",
+									"pm.test(\"PROPERTI SESUAI\", () => {\r",
+									"\tconst responseJson = pm.response.json();\r",
+									"\r",
+									"\tpm.expect(responseJson).to.haveOwnProperty(\"id\");\r",
+									"\tpm.expect(responseJson).to.haveOwnProperty(\"comment\");\r",
+									"\tpm.expect(responseJson).to.haveOwnProperty(\"PhotoId\");\r",
+									"\tpm.expect(responseJson).to.haveOwnProperty(\"UserId\");\r",
+									"\r",
+									"\tpm.environment.set(\"commentId\", responseJson.id);\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"auth": {
 							"type": "noauth"
@@ -555,6 +579,58 @@
 				},
 				{
 					"name": "Get All Comments",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"RESPONSE 200\", () => {\r",
+									"\tpm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"PROPERTI SESUAI\", () => {\r",
+									"\tconst responseJson = pm.response.json();\r",
+									"\r",
+									"\tpm.expect(responseJson).to.haveOwnProperty(\"comments\");\r",
+									"\r",
+									"\tpm.expect(responseJson.comments).to.be.an(\"array\");\r",
+									"})\r",
+									"\r",
+									"pm.test(\"PROPERTI COMMENTS RESPONSE SESUAI, COMMENT, PHOTO, USER\", () => {\r",
+									"\tconst responseJson = pm.response.json();\r",
+									"\r",
+									"\tconst comment = responseJson.comments[0];\r",
+									"\r",
+									"\tpm.expect(comment).to.haveOwnProperty(\"id\");\r",
+									"\tpm.expect(comment).to.haveOwnProperty(\"comment\");\r",
+									"\tpm.expect(comment).to.haveOwnProperty(\"UserId\");\r",
+									"\tpm.expect(comment).to.haveOwnProperty(\"PhotoId\");\r",
+									"\tpm.expect(comment).to.haveOwnProperty(\"createdAt\");\r",
+									"\tpm.expect(comment).to.haveOwnProperty(\"updatedAt\");\r",
+									"\r",
+									"\tpm.expect(comment).to.haveOwnProperty(\"photo\");\r",
+									"\tconst photo = comment.photo;\r",
+									"\r",
+									"\tpm.expect(photo).to.haveOwnProperty(\"id\");\r",
+									"\tpm.expect(photo).to.haveOwnProperty(\"title\");\r",
+									"\tpm.expect(photo).to.haveOwnProperty(\"caption\");\r",
+									"\tpm.expect(photo).to.haveOwnProperty(\"poster_image_url\");\r",
+									"    \r",
+									"    pm.expect(comment).to.haveOwnProperty(\"user\");\r",
+									"\tconst user = comment.user;\r",
+									"\r",
+									"\tpm.expect(user).to.haveOwnProperty(\"id\");\r",
+									"\tpm.expect(user).to.haveOwnProperty(\"username\");\r",
+									"\tpm.expect(user).to.haveOwnProperty(\"profile_image_url\");\r",
+									"\tpm.expect(user).to.haveOwnProperty(\"phone_number\");\r",
+									"\r",
+									"\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "GET",
 						"header": [
@@ -578,6 +654,29 @@
 				},
 				{
 					"name": "Comment",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"RESPONSE STATUS 200\", () => {\r",
+									"\tpm.response.to.have.status(200);\r",
+									"})\r",
+									"\r",
+									"pm.test(\"PROPERTI SESUAI\", () => {\r",
+									"\tconst responseJson = pm.response.json();\r",
+									"\r",
+									"\tpm.expect(responseJson).to.haveOwnProperty(\"comment\");\r",
+									"\r",
+									"\tconst comment = responseJson.comment;\r",
+									"\tpm.expect(comment.id).to.equals(pm.environment.get(\"commentId\"));\r",
+									"\tpm.expect(comment.comment).to.equals(pm.environment.get(\"newComment\"));\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "PUT",
 						"header": [
@@ -611,6 +710,25 @@
 				},
 				{
 					"name": "Comment",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"STATUS CODE 200\", () => {\r",
+									"\tpm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"RESPONSE BODY MESSAGE\", () => {\r",
+									"\tconst responseJson = pm.response.json();\r",
+									"\r",
+									"\tpm.expect(responseJson.message).to.equals('Your comment has been successfully deleted');\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "DELETE",
 						"header": [
@@ -640,6 +758,30 @@
 			"item": [
 				{
 					"name": "socialmedia",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"RESPONSE STATUS 201\", () => {\r",
+									"\tpm.response.to.have.status(201);\r",
+									"})\r",
+									"\r",
+									"pm.test(\"PROPERTI SESUAI\", () => {\r",
+									"\tconst responseJson = pm.response.json();\r",
+									"\r",
+									"\tpm.expect(responseJson).to.haveOwnProperty(\"id\");\r",
+									"\tpm.expect(responseJson).to.haveOwnProperty(\"name\");\r",
+									"\tpm.expect(responseJson).to.haveOwnProperty(\"social_media_url\");\r",
+									"\tpm.expect(responseJson).to.haveOwnProperty(\"UserId\");\r",
+									"\r",
+									"\tpm.environment.set(\"socialmediaId\", responseJson.id);\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "POST",
 						"header": [
@@ -672,6 +814,49 @@
 				},
 				{
 					"name": "socialmedia",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"RESPONSE 200\", () => {\r",
+									"\tpm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"PROPERTI SESUAI\", () => {\r",
+									"\tconst responseJson = pm.response.json();\r",
+									"\r",
+									"\tpm.expect(responseJson).to.haveOwnProperty(\"socialmedias\");\r",
+									"\r",
+									"\tpm.expect(responseJson.socialmedias).to.be.an(\"array\");\r",
+									"})\r",
+									"\r",
+									"pm.test(\"PROPERTI SOCIALMEDIAS RESPONSE SESUAI, SOCIALMEDIA, USER\", () => {\r",
+									"\tconst responseJson = pm.response.json();\r",
+									"\r",
+									"\tconst socialmedia = responseJson.socialmedia[0];\r",
+									"\r",
+									"\tpm.expect(socialmedia).to.haveOwnProperty(\"id\");\r",
+									"\tpm.expect(socialmedia).to.haveOwnProperty(\"name\");\r",
+									"\tpm.expect(socialmedia).to.haveOwnProperty(\"social_media_url\");\r",
+									"\tpm.expect(socialmedia).to.haveOwnProperty(\"UserId\");\r",
+									"\tpm.expect(socialmedia).to.haveOwnProperty(\"createdAt\");\r",
+									"\tpm.expect(socialmedia).to.haveOwnProperty(\"updatedAt\");\r",
+									"    \r",
+									"    pm.expect(socialmedia).to.haveOwnProperty(\"user\");\r",
+									"\tconst user = socialmedia.user;\r",
+									"\r",
+									"\tpm.expect(user).to.haveOwnProperty(\"id\");\r",
+									"\tpm.expect(user).to.haveOwnProperty(\"username\");\r",
+									"\tpm.expect(user).to.haveOwnProperty(\"profile_image_url\");\r",
+									"\r",
+									"\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "GET",
 						"header": [
@@ -695,6 +880,30 @@
 				},
 				{
 					"name": "socialmedia",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"RESPONSE STATUS 200\", () => {\r",
+									"\tpm.response.to.have.status(200);\r",
+									"})\r",
+									"\r",
+									"pm.test(\"PROPERTI SESUAI\", () => {\r",
+									"\tconst responseJson = pm.response.json();\r",
+									"\r",
+									"\tpm.expect(responseJson).to.haveOwnProperty(\"socialmedia\");\r",
+									"\r",
+									"\tconst socialmedia = responseJson.socialmedia;\r",
+									"\tpm.expect(socialmedia.id).to.equals(pm.environment.get(\"socialmediaId\"));\r",
+									"\tpm.expect(socialmedia.name).to.equals(pm.environment.get(\"newSocialMediaName\"));\r",
+									"\tpm.expect(socialmedia.social_media_url).to.equals(pm.environment.get(\"newSocialMediaUrl\"));\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "PUT",
 						"header": [
@@ -728,6 +937,25 @@
 				},
 				{
 					"name": "socialmedia",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"STATUS CODE 200\", () => {\r",
+									"\tpm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"RESPONSE BODY MESSAGE\", () => {\r",
+									"\tconst responseJson = pm.response.json();\r",
+									"\r",
+									"\tpm.expect(responseJson.message).to.equals('Your socialmedia has been successfully deleted');\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "DELETE",
 						"header": [
