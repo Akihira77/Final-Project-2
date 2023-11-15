@@ -58,7 +58,7 @@ __decorate([
     __metadata("design:type", Date)
 ], Comment.prototype, "updatedAt", void 0);
 Comment = __decorate([
-    Table
+    Table({ tableName: "Comments" })
 ], Comment);
 export default Comment;
 //# sourceMappingURL=comment.model.js.map

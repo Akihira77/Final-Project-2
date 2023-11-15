@@ -53,7 +53,7 @@ __decorate([
     __metadata("design:type", Date)
 ], SocialMedia.prototype, "updatedAt", void 0);
 SocialMedia = __decorate([
-    Table
+    Table({ tableName: "SocialMedias" })
 ], SocialMedia);
 export default SocialMedia;
 //# sourceMappingURL=socialmedia.model.js.map

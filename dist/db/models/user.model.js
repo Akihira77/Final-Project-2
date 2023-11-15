@@ -73,7 +73,7 @@ __decorate([
     __metadata("design:type", Date)
 ], User.prototype, "updatedAt", void 0);
 User = __decorate([
-    Table
+    Table({ tableName: "Users" })
 ], User);
 export default User;
 //# sourceMappingURL=user.model.js.map
