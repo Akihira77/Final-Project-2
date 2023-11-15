@@ -1,17 +1,21 @@
 import {
+	AllowNull,
 	Column,
 	CreatedAt,
 	DataType,
+	HasMany,
 	IsAlpha,
 	IsEmail,
 	IsInt,
 	IsNumeric,
 	IsUrl,
-	Model,
 	PrimaryKey,
 	Table,
 	UpdatedAt,
+	Model,
+	Unique,
 } from "sequelize-typescript";
+import Photo from "./photo.model.js";
 
 export interface IUser {
 	id: string;
@@ -29,36 +33,46 @@ export interface IUser {
 @Table
 class User extends Model implements IUser {
 	@PrimaryKey
+	@AllowNull(false)
 	@Column(DataType.STRING)
 	declare id: string;
 
-	@IsAlpha
+	@AllowNull(false)
 	@Column(DataType.STRING)
 	declare full_name: string;
 
 	@IsEmail
+	@AllowNull(false)
+	@Unique
 	@Column(DataType.STRING)
 	declare email: string;
 
-	@IsAlpha
+	@AllowNull(false)
+	@Unique
 	@Column(DataType.STRING)
 	declare username: string;
 
-	@IsAlpha
+	@AllowNull(false)
 	@Column(DataType.STRING)
 	declare password: string;
 
 	@IsUrl
+	@AllowNull(false)
 	@Column(DataType.TEXT)
 	declare profile_image_url: string;
 
 	@IsInt
+	@AllowNull(false)
 	@Column(DataType.INTEGER)
 	declare age: number;
 
 	@IsNumeric
+	@AllowNull(false)
 	@Column(DataType.STRING)
 	declare phone_number: string;
+
+	@HasMany(() => Photo)
+	declare photos: Photo[];
 
 	@CreatedAt
 	@Column(DataType.DATE)
@@ -70,4 +84,3 @@ class User extends Model implements IUser {
 }
 
 export default User;
-

@@ -1,0 +1,1 @@
+{"version":3,"file":"custom.error.js","sourceRoot":"","sources":["../../src/errors/custom.error.ts"],"names":[],"mappings":"AAAA,MAAM,cAAe,SAAQ,KAAK;IACZ;IAAkC;IAAvD,YAAqB,OAAe,EAAmB,UAAkB;QACxE,KAAK,CAAC,OAAO,CAAC,CAAC;QADK,YAAO,GAAP,OAAO,CAAQ;QAAmB,eAAU,GAAV,UAAU,CAAQ;IAEzE,CAAC;CACD;AAED,eAAe,cAAc,CAAC"}
