@@ -30,7 +30,7 @@ export interface IUser {
 	updatedAt: Date;
 }
 
-@Table
+@Table({ tableName: "Users" })
 class User extends Model implements IUser {
 	@PrimaryKey
 	@AllowNull(false)

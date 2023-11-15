@@ -29,7 +29,7 @@ export interface IPhoto {
 	updatedAt: Date;
 }
 
-@Table
+@Table({ tableName: "Photos" })
 class Photo extends Model implements IPhoto {
 	@PrimaryKey
 	@AllowNull(false)

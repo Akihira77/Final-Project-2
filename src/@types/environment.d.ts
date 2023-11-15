@@ -20,7 +20,13 @@ declare global {
 			DB_NAME_TEST: string;
 			DB_HOST_TEST: number;
 			DB_DIALECT_TEST: string;
+
+			// production
+			DB_USERNAME: string;
+			DB_PASSWORD: string;
+			DB_NAME: string;
+			DB_HOST: number;
+			DB_DIALECT: string;
 		}
 	}
 }
-

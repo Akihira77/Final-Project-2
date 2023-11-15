@@ -18,4 +18,3 @@ export function jwtVerify(token: string) {
 
 	return payload;
 }
-

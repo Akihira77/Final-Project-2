@@ -26,7 +26,7 @@ export interface IComment {
 	updatedAt: Date;
 }
 
-@Table
+@Table({ tableName: "Comments" })
 class Comment extends Model implements IComment {
 	@PrimaryKey
 	@AllowNull(false)
