@@ -65,7 +65,7 @@ __decorate([
     __metadata("design:type", Date)
 ], Photo.prototype, "updatedAt", void 0);
 Photo = __decorate([
-    Table
+    Table({ tableName: "Photos" })
 ], Photo);
 export default Photo;
 //# sourceMappingURL=photo.model.js.map

@@ -18,15 +18,18 @@ declare global {
 			DB_USERNAME_TEST: string;
 			DB_PASSWORD_TEST: string;
 			DB_NAME_TEST: string;
-			DB_HOST_TEST: number;
+			DB_HOST_TEST: string;
+			DB_PORT: number;
 			DB_DIALECT_TEST: string;
 
 			// production
 			DB_USERNAME: string;
 			DB_PASSWORD: string;
 			DB_NAME: string;
-			DB_HOST: number;
+			DB_HOST: string;
+			DB_PORT: number;
 			DB_DIALECT: string;
+			DB_POSTGRES: string;
 		}
 	}
 }
