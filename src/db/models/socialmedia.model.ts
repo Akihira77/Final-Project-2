@@ -24,7 +24,7 @@ export interface ISocialMedia {
 	updatedAt: Date;
 }
 
-@Table
+@Table({ tableName: "SocialMedias" })
 class SocialMedia extends Model implements ISocialMedia {
 	@PrimaryKey
 	@AllowNull(false)
