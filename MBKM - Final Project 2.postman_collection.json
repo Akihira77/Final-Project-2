@@ -1,9 +1,10 @@
 {
 	"info": {
-		"_postman_id": "314285a2-aceb-453f-94c1-0e72bff7f9aa",
+		"_postman_id": "ee01b197-c89a-4b38-8d61-164256d65e0c",
 		"name": "MBKM - Final Project 2",
-		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
-		"_exporter_id": "24368336"
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "31135623",
+		"_collection_link": "https://crimson-star-882099.postman.co/workspace/MBKM-Final-Project-2~68237437-130b-4c66-9a06-152945108d50/collection/24368336-ee01b197-c89a-4b38-8d61-164256d65e0c?action=share&source=collection_link&creator=31135623"
 	},
 	"item": [
 		{
@@ -36,7 +37,15 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"url": "{{SERVER_URL}}/users"
+						"url": {
+							"raw": "{{SERVER_URL}}/users",
+							"host": [
+								"{{SERVER_URL}}"
+							],
+							"path": [
+								"users"
+							]
+						}
 					},
 					"response": []
 				},
@@ -88,7 +97,17 @@
 								}
 							}
 						},
-						"url": "{{SERVER_URL}}/users/auth/register"
+						"url": {
+							"raw": "{{SERVER_URL}}/users/auth/register",
+							"host": [
+								"{{SERVER_URL}}"
+							],
+							"path": [
+								"users",
+								"auth",
+								"register"
+							]
+						}
 					},
 					"response": []
 				},
@@ -178,7 +197,17 @@
 								}
 							}
 						},
-						"url": "{{SERVER_URL}}/users/auth/login"
+						"url": {
+							"raw": "{{SERVER_URL}}/users/auth/login",
+							"host": [
+								"{{SERVER_URL}}"
+							],
+							"path": [
+								"users",
+								"auth",
+								"login"
+							]
+						}
 					},
 					"response": []
 				},
@@ -236,7 +265,16 @@
 								}
 							}
 						},
-						"url": "{{SERVER_URL}}/users/41183c26-eaa5-49ba-a415-8cdaefb18c29"
+						"url": {
+							"raw": "{{SERVER_URL}}/users/41183c26-eaa5-49ba-a415-8cdaefb18c29",
+							"host": [
+								"{{SERVER_URL}}"
+							],
+							"path": [
+								"users",
+								"41183c26-eaa5-49ba-a415-8cdaefb18c29"
+							]
+						}
 					},
 					"response": []
 				}
@@ -305,7 +343,15 @@
 								"type": "text"
 							}
 						],
-						"url": "{{SERVER_URL}}/photos"
+						"url": {
+							"raw": "{{SERVER_URL}}/photos",
+							"host": [
+								"{{SERVER_URL}}"
+							],
+							"path": [
+								"photos"
+							]
+						}
 					},
 					"response": []
 				},
@@ -354,7 +400,15 @@
 								}
 							}
 						},
-						"url": "{{SERVER_URL}}/photos"
+						"url": {
+							"raw": "{{SERVER_URL}}/photos",
+							"host": [
+								"{{SERVER_URL}}"
+							],
+							"path": [
+								"photos"
+							]
+						}
 					},
 					"response": []
 				},
@@ -388,7 +442,16 @@
 								"type": "text"
 							}
 						],
-						"url": "{{SERVER_URL}}/photos/{{photoId}}"
+						"url": {
+							"raw": "{{SERVER_URL}}/photos/{{photoId}}",
+							"host": [
+								"{{SERVER_URL}}"
+							],
+							"path": [
+								"photos",
+								"{{photoId}}"
+							]
+						}
 					},
 					"response": []
 				},
@@ -437,7 +500,16 @@
 								}
 							}
 						},
-						"url": "{{SERVER_URL}}/photos/{{photoId}}"
+						"url": {
+							"raw": "{{SERVER_URL}}/photos/{{photoId}}",
+							"host": [
+								"{{SERVER_URL}}"
+							],
+							"path": [
+								"photos",
+								"{{photoId}}"
+							]
+						}
 					},
 					"response": []
 				}
@@ -448,6 +520,30 @@
 			"item": [
 				{
 					"name": "Add Comment",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"RESPONSE STATUS 201\", () => {\r",
+									"\tpm.response.to.have.status(201);\r",
+									"})\r",
+									"\r",
+									"pm.test(\"PROPERTI SESUAI\", () => {\r",
+									"\tconst responseJson = pm.response.json();\r",
+									"\r",
+									"\tpm.expect(responseJson).to.haveOwnProperty(\"id\");\r",
+									"\tpm.expect(responseJson).to.haveOwnProperty(\"comment\");\r",
+									"\tpm.expect(responseJson).to.haveOwnProperty(\"PhotoId\");\r",
+									"\tpm.expect(responseJson).to.haveOwnProperty(\"UserId\");\r",
+									"\r",
+									"\tpm.environment.set(\"commentId\", responseJson.id);\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"auth": {
 							"type": "noauth"
@@ -456,74 +552,202 @@
 						"header": [
 							{
 								"key": "token",
-								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXJJZCI6IjliNjdjNmRlLTAwM2EtNDkxOS04Mjc3LWVkYzI4OGE4Y2UyNCIsImVtYWlsIjoidGVzMTIzQG1haWwuY29tIiwiZnVsbF9uYW1lIjoidXNlciB0ZXN0In0sImlhdCI6MTY5OTU3NzIzNn0.3hCQMTUn7Vg7rarJcNagQoUmrZ59iY6Q-fv3qU4r0s8",
+								"value": "{{accessToken}}",
 								"type": "text"
 							}
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"comment\": \"tes123\",\r\n    \"PhotoId\": 1\r\n}",
+							"raw": "{\r\n    \"comment\": \"{{commentRequest}}\",\r\n    \"PhotoId\": {{photoidRequest}}\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
 								}
 							}
 						},
-						"url": "{{SERVER_URL}}/comments"
+						"url": {
+							"raw": "{{SERVER_URL}}/comments",
+							"host": [
+								"{{SERVER_URL}}"
+							],
+							"path": [
+								"comments"
+							]
+						}
 					},
 					"response": []
 				},
 				{
 					"name": "Get All Comments",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"RESPONSE 200\", () => {\r",
+									"\tpm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"PROPERTI SESUAI\", () => {\r",
+									"\tconst responseJson = pm.response.json();\r",
+									"\r",
+									"\tpm.expect(responseJson).to.haveOwnProperty(\"comments\");\r",
+									"\r",
+									"\tpm.expect(responseJson.comments).to.be.an(\"array\");\r",
+									"})\r",
+									"\r",
+									"pm.test(\"PROPERTI COMMENTS RESPONSE SESUAI, COMMENT, PHOTO, USER\", () => {\r",
+									"\tconst responseJson = pm.response.json();\r",
+									"\r",
+									"\tconst comment = responseJson.comments[0];\r",
+									"\r",
+									"\tpm.expect(comment).to.haveOwnProperty(\"id\");\r",
+									"\tpm.expect(comment).to.haveOwnProperty(\"comment\");\r",
+									"\tpm.expect(comment).to.haveOwnProperty(\"UserId\");\r",
+									"\tpm.expect(comment).to.haveOwnProperty(\"PhotoId\");\r",
+									"\tpm.expect(comment).to.haveOwnProperty(\"createdAt\");\r",
+									"\tpm.expect(comment).to.haveOwnProperty(\"updatedAt\");\r",
+									"\r",
+									"\tpm.expect(comment).to.haveOwnProperty(\"photo\");\r",
+									"\tconst photo = comment.photo;\r",
+									"\r",
+									"\tpm.expect(photo).to.haveOwnProperty(\"id\");\r",
+									"\tpm.expect(photo).to.haveOwnProperty(\"title\");\r",
+									"\tpm.expect(photo).to.haveOwnProperty(\"caption\");\r",
+									"\tpm.expect(photo).to.haveOwnProperty(\"poster_image_url\");\r",
+									"    \r",
+									"    pm.expect(comment).to.haveOwnProperty(\"user\");\r",
+									"\tconst user = comment.user;\r",
+									"\r",
+									"\tpm.expect(user).to.haveOwnProperty(\"id\");\r",
+									"\tpm.expect(user).to.haveOwnProperty(\"username\");\r",
+									"\tpm.expect(user).to.haveOwnProperty(\"profile_image_url\");\r",
+									"\tpm.expect(user).to.haveOwnProperty(\"phone_number\");\r",
+									"\r",
+									"\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "GET",
 						"header": [
 							{
 								"key": "token",
-								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXJJZCI6IjliNjdjNmRlLTAwM2EtNDkxOS04Mjc3LWVkYzI4OGE4Y2UyNCIsImVtYWlsIjoidGVzMTIzQG1haWwuY29tIiwiZnVsbF9uYW1lIjoidXNlciB0ZXN0In0sImlhdCI6MTY5OTU3NzIzNn0.3hCQMTUn7Vg7rarJcNagQoUmrZ59iY6Q-fv3qU4r0s8",
+								"value": "{{accessToken}}",
 								"type": "text"
 							}
 						],
-						"url": "{{SERVER_URL}}/comments"
+						"url": {
+							"raw": "{{SERVER_URL}}/comments",
+							"host": [
+								"{{SERVER_URL}}"
+							],
+							"path": [
+								"comments"
+							]
+						}
 					},
 					"response": []
 				},
 				{
 					"name": "Comment",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"RESPONSE STATUS 200\", () => {\r",
+									"\tpm.response.to.have.status(200);\r",
+									"})\r",
+									"\r",
+									"pm.test(\"PROPERTI SESUAI\", () => {\r",
+									"\tconst responseJson = pm.response.json();\r",
+									"\r",
+									"\tpm.expect(responseJson).to.haveOwnProperty(\"comment\");\r",
+									"\r",
+									"\tconst comment = responseJson.comment;\r",
+									"\tpm.expect(comment.id).to.equals(pm.environment.get(\"commentId\"));\r",
+									"\tpm.expect(comment.comment).to.equals(pm.environment.get(\"newComment\"));\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "PUT",
 						"header": [
 							{
 								"key": "token",
-								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXJJZCI6IjRkN2IwY2JjLWExMmEtNDRjNy05MWI1LTBmYTliN2NmMjQwMyIsImVtYWlsIjoibmF6d2FAbWFpbC5jb20iLCJmdWxsX25hbWUiOiJuYXp3YSJ9LCJpYXQiOjE2OTk1MjU2NTV9.ejDjrfHCUJUAtHM3vdskIUDm9RA6pzHfgyBBhwSie_g",
+								"value": "{{accessToken}}",
 								"type": "text"
 							}
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"comment\": \"hey\"\r\n}",
+							"raw": "{\r\n    \"comment\": \"{{newComment}}\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
 								}
 							}
 						},
-						"url": "{{SERVER_URL}}/comments/8"
+						"url": {
+							"raw": "{{SERVER_URL}}/comments/{{commentId}}",
+							"host": [
+								"{{SERVER_URL}}"
+							],
+							"path": [
+								"comments",
+								"{{commentId}}"
+							]
+						}
 					},
 					"response": []
 				},
 				{
 					"name": "Comment",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"STATUS CODE 200\", () => {\r",
+									"\tpm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"RESPONSE BODY MESSAGE\", () => {\r",
+									"\tconst responseJson = pm.response.json();\r",
+									"\r",
+									"\tpm.expect(responseJson.message).to.equals('Your comment has been successfully deleted');\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "DELETE",
 						"header": [
 							{
 								"key": "token",
-								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXJJZCI6ImIwYTg1OTg0LTRlMjItNGVhNS1iZmE3LTM0ZThiODVlOTY0ZiIsImVtYWlsIjoidXNlcjEyM0BtYWlsLmNvbSIsImZ1bGxfbmFtZSI6InVzZXIifSwiaWF0IjoxNjk5NDM4MjM5fQ.aWA0M1gWVs36fFwv8qJyCzj9vrE_iWQrEUhX0CvPuLM",
+								"value": "{{accessToken}}",
 								"type": "text"
 							}
 						],
-						"url": "{{SERVER_URL}}/comments/4"
+						"url": {
+							"raw": "{{SERVER_URL}}/comments/{{commnetId}}",
+							"host": [
+								"{{SERVER_URL}}"
+							],
+							"path": [
+								"comments",
+								"{{commnetId}}"
+							]
+						}
 					},
 					"response": []
 				}
@@ -534,79 +758,223 @@
 			"item": [
 				{
 					"name": "socialmedia",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"RESPONSE STATUS 201\", () => {\r",
+									"\tpm.response.to.have.status(201);\r",
+									"})\r",
+									"\r",
+									"pm.test(\"PROPERTI SESUAI\", () => {\r",
+									"\tconst responseJson = pm.response.json();\r",
+									"\r",
+									"\tpm.expect(responseJson).to.haveOwnProperty(\"id\");\r",
+									"\tpm.expect(responseJson).to.haveOwnProperty(\"name\");\r",
+									"\tpm.expect(responseJson).to.haveOwnProperty(\"social_media_url\");\r",
+									"\tpm.expect(responseJson).to.haveOwnProperty(\"UserId\");\r",
+									"\r",
+									"\tpm.environment.set(\"socialmediaId\", responseJson.id);\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "POST",
 						"header": [
 							{
 								"key": "token",
-								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXJJZCI6ImIwYTg1OTg0LTRlMjItNGVhNS1iZmE3LTM0ZThiODVlOTY0ZiIsImVtYWlsIjoidXNlcjEyM0BtYWlsLmNvbSIsImZ1bGxfbmFtZSI6InVzZXIifSwiaWF0IjoxNjk5NDM4MjM5fQ.aWA0M1gWVs36fFwv8qJyCzj9vrE_iWQrEUhX0CvPuLM",
+								"value": "{{accessToken}}",
 								"type": "text"
 							}
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\": \"ucok\",\r\n    \"social_media_url\": \"https://www.instagram.com/\"\r\n}",
+							"raw": "{\r\n    \"name\": \"{{socialMediaNameRequest}}\",\r\n    \"social_media_url\": \"{{socialMediaUrlRequest}}\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
 								}
 							}
 						},
-						"url": "{{SERVER_URL}}/socialmedias"
+						"url": {
+							"raw": "{{SERVER_URL}}/socialmedias",
+							"host": [
+								"{{SERVER_URL}}"
+							],
+							"path": [
+								"socialmedias"
+							]
+						}
 					},
 					"response": []
 				},
 				{
 					"name": "socialmedia",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"RESPONSE 200\", () => {\r",
+									"\tpm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"PROPERTI SESUAI\", () => {\r",
+									"\tconst responseJson = pm.response.json();\r",
+									"\r",
+									"\tpm.expect(responseJson).to.haveOwnProperty(\"socialmedias\");\r",
+									"\r",
+									"\tpm.expect(responseJson.socialmedias).to.be.an(\"array\");\r",
+									"})\r",
+									"\r",
+									"pm.test(\"PROPERTI SOCIALMEDIAS RESPONSE SESUAI, SOCIALMEDIA, USER\", () => {\r",
+									"\tconst responseJson = pm.response.json();\r",
+									"\r",
+									"\tconst socialmedia = responseJson.socialmedia[0];\r",
+									"\r",
+									"\tpm.expect(socialmedia).to.haveOwnProperty(\"id\");\r",
+									"\tpm.expect(socialmedia).to.haveOwnProperty(\"name\");\r",
+									"\tpm.expect(socialmedia).to.haveOwnProperty(\"social_media_url\");\r",
+									"\tpm.expect(socialmedia).to.haveOwnProperty(\"UserId\");\r",
+									"\tpm.expect(socialmedia).to.haveOwnProperty(\"createdAt\");\r",
+									"\tpm.expect(socialmedia).to.haveOwnProperty(\"updatedAt\");\r",
+									"    \r",
+									"    pm.expect(socialmedia).to.haveOwnProperty(\"user\");\r",
+									"\tconst user = socialmedia.user;\r",
+									"\r",
+									"\tpm.expect(user).to.haveOwnProperty(\"id\");\r",
+									"\tpm.expect(user).to.haveOwnProperty(\"username\");\r",
+									"\tpm.expect(user).to.haveOwnProperty(\"profile_image_url\");\r",
+									"\r",
+									"\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "GET",
 						"header": [
 							{
 								"key": "token",
-								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXJJZCI6IjliNjdjNmRlLTAwM2EtNDkxOS04Mjc3LWVkYzI4OGE4Y2UyNCIsImVtYWlsIjoidGVzMTIzQG1haWwuY29tIiwiZnVsbF9uYW1lIjoidXNlciB0ZXN0In0sImlhdCI6MTY5OTU3NzIzNn0.3hCQMTUn7Vg7rarJcNagQoUmrZ59iY6Q-fv3qU4r0s8",
+								"value": "{{accessToken}}",
 								"type": "text"
 							}
 						],
-						"url": "{{SERVER_URL}}/socialmedias"
+						"url": {
+							"raw": "{{SERVER_URL}}/socialmedias",
+							"host": [
+								"{{SERVER_URL}}"
+							],
+							"path": [
+								"socialmedias"
+							]
+						}
 					},
 					"response": []
 				},
 				{
 					"name": "socialmedia",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"RESPONSE STATUS 200\", () => {\r",
+									"\tpm.response.to.have.status(200);\r",
+									"})\r",
+									"\r",
+									"pm.test(\"PROPERTI SESUAI\", () => {\r",
+									"\tconst responseJson = pm.response.json();\r",
+									"\r",
+									"\tpm.expect(responseJson).to.haveOwnProperty(\"socialmedia\");\r",
+									"\r",
+									"\tconst socialmedia = responseJson.socialmedia;\r",
+									"\tpm.expect(socialmedia.id).to.equals(pm.environment.get(\"socialmediaId\"));\r",
+									"\tpm.expect(socialmedia.name).to.equals(pm.environment.get(\"newSocialMediaName\"));\r",
+									"\tpm.expect(socialmedia.social_media_url).to.equals(pm.environment.get(\"newSocialMediaUrl\"));\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "PUT",
 						"header": [
 							{
 								"key": "token",
-								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXJJZCI6ImIwYTg1OTg0LTRlMjItNGVhNS1iZmE3LTM0ZThiODVlOTY0ZiIsImVtYWlsIjoidXNlcjEyM0BtYWlsLmNvbSIsImZ1bGxfbmFtZSI6InVzZXIifSwiaWF0IjoxNjk5NDM4MjM5fQ.aWA0M1gWVs36fFwv8qJyCzj9vrE_iWQrEUhX0CvPuLM",
+								"value": "{{accessToken}}",
 								"type": "text"
 							}
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\": \"udin\",\r\n    \"social_media_url\": \"https://www.instagram.com/\"\r\n}",
+							"raw": "{\r\n    \"name\": \"{{newSocialMediaName}}\",\r\n    \"social_media_url\": \"{{newSocialMediaUrl}}\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
 								}
 							}
 						},
-						"url": "{{SERVER_URL}}/socialmedias/1"
+						"url": {
+							"raw": "{{SERVER_URL}}/socialmedias/{{socialmediaId}}",
+							"host": [
+								"{{SERVER_URL}}"
+							],
+							"path": [
+								"socialmedias",
+								"{{socialmediaId}}"
+							]
+						}
 					},
 					"response": []
 				},
 				{
 					"name": "socialmedia",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"STATUS CODE 200\", () => {\r",
+									"\tpm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"RESPONSE BODY MESSAGE\", () => {\r",
+									"\tconst responseJson = pm.response.json();\r",
+									"\r",
+									"\tpm.expect(responseJson.message).to.equals('Your socialmedia has been successfully deleted');\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "DELETE",
 						"header": [
 							{
 								"key": "token",
-								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXJJZCI6ImQyMjEwZGZmLTJjY2EtNDMyMy1hM2EzLTc3MzIxYWUzNzUzZSIsImVtYWlsIjoib3lAbWFpbC5jb20iLCJmdWxsX25hbWUiOiJveSJ9LCJpYXQiOjE2OTk1MjkxODB9.8cwfsLFGlIcNK2oyQjNUGsKXPmK342U0Ryq7-G9EAi8",
+								"value": "{{accessToken}}",
 								"type": "text"
 							}
 						],
-						"url": "{{SERVER_URL}}/socialmedias/2"
+						"url": {
+							"raw": "{{SERVER_URL}}/socialmedias/{{socialmediaId}}",
+							"host": [
+								"{{SERVER_URL}}"
+							],
+							"path": [
+								"socialmedias",
+								"{{socialmediaId}}"
+							]
+						}
 					},
 					"response": []
 				}
