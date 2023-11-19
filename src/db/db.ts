@@ -1,7 +1,9 @@
 import { Sequelize } from "sequelize-typescript";
 import { entities } from "./entities.js";
+import { DB_POSTGRES } from "../config/config.js";
 
-export const sequelize = new Sequelize(process.env.DB_POSTGRES, {
+const connectionString = DB_POSTGRES!;
+export const sequelize = new Sequelize(connectionString, {
 	// database: process.env.DB_NAME ?? process.env.DB_NAME_DEV,
 	// dialect: "postgres",
 	// username: process.env.DB_USERNAME ?? process.env.DB_USERNAME_DEV,
