@@ -12,4 +12,3 @@ export async function validate(
 ) {
 	return await bcrypt.compare(requestPassword, actualPassword);
 }
-

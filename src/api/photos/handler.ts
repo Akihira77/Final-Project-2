@@ -1,16 +1,14 @@
 import { Request, Response } from "express";
 import { PhotoService } from "../../services/photo.service.js";
 import { StatusCodes } from "../../utils/constants.js";
-import {
-	CreatePhotoRequestDTO,
-	CreatePhotoRequestDtoType,
-} from "../../db/dtos/photos/create.dto.js";
 import { validateZodSchema } from "../../utils/validateZodSchema.js";
 import { CustomAPIError, ZodSchemaError } from "../../errors/main.error.js";
 import {
 	EditPhotoRequestDTO,
 	EditPhotoRequestDtoType,
-} from "../../db/dtos/photos/edit.dto.js";
+	CreatePhotoRequestDTO,
+	CreatePhotoRequestDtoType
+} from "../../db/dtos/photos/index.dto.js";
 
 const photoService = new PhotoService();
 
@@ -99,11 +97,10 @@ export const removePhoto = async (
 		}
 
 		res.status(StatusCodes.Ok200).send({
-			message: "Your photo has been successfully deleted",
+			message: "Your photo has been successfully deleted"
 		});
 		return;
 	} catch (error) {
 		throw error;
 	}
 };
-

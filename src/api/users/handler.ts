@@ -1,24 +1,18 @@
 import { Request, Response } from "express";
 import UserService from "../../services/user.service.js";
 import { StatusCodes } from "../../utils/constants.js";
-import {
-	RegisterRequestDTO,
-	RegisterRequestDtoType,
-} from "../../db/dtos/users/register.dto.js";
-import {
-	DeleteUserDTO,
-	DeleteUserDtoType,
-} from "../../db/dtos/users/delete.dto.js";
 import { CustomAPIError, ZodSchemaError } from "../../errors/main.error.js";
 import { validateZodSchema } from "../../utils/validateZodSchema.js";
 import {
-	LoginRequestDTO,
-	LoginRequestDtoType,
-} from "../../db/dtos/users/login.dto.js";
-import {
 	EditUserRequestDTO,
 	EditUserRequestDtoType,
-} from "../../db/dtos/users/edit.dto.js";
+	DeleteUserDTO,
+	DeleteUserDtoType,
+	LoginRequestDTO,
+	LoginRequestDtoType,
+	RegisterRequestDTO,
+	RegisterRequestDtoType
+} from "../../db/dtos/users/index.dto.js";
 
 const userService = new UserService();
 
@@ -65,7 +59,12 @@ export const login = async (
 			throw new ZodSchemaError(validationResult.errors);
 		}
 
-		const result = await userService.login(req.body);
+		const user = await userService.findByEmail(req.body.email);
+		if (!user) {
+			throw new CustomAPIError("User not found", StatusCodes.NotFound404);
+		}
+
+		const result = await userService.login(user, req.body);
 
 		if (typeof result === "string") {
 			throw new CustomAPIError(result, StatusCodes.BadRequest400);
@@ -88,8 +87,9 @@ export const removeUser = async (
 			throw new ZodSchemaError(validationResult.errors);
 		}
 
-		const { userId } = req.params;
+		const userId = parseInt(req.params.userId.toString());
 		const userIdFromPayload = req.user.userId;
+		console.log(typeof userId, typeof userIdFromPayload);
 
 		if (userId !== userIdFromPayload) {
 			throw new CustomAPIError(
@@ -108,7 +108,7 @@ export const removeUser = async (
 		}
 
 		res.status(StatusCodes.Ok200).send({
-			message: "Your account has been successfully deleted",
+			message: "Your account has been successfully deleted"
 		});
 		return;
 	} catch (error) {
@@ -117,11 +117,11 @@ export const removeUser = async (
 };
 
 export const updateUser = async (
-	req: Request<{ userId: string }, never, EditUserRequestDtoType, never>,
+	req: Request<{ userId: number }, never, EditUserRequestDtoType, never>,
 	res: Response
 ) => {
 	try {
-		if (!req.params.userId || req.params.userId === "") {
+		if (!req.params.userId) {
 			throw new CustomAPIError(
 				"User Id must be provided",
 				StatusCodes.BadRequest400

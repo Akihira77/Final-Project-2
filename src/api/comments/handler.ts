@@ -1,16 +1,14 @@
 import { Request, Response } from "express";
 import { CommentService } from "../../services/comment.service.js";
 import { StatusCodes } from "../../utils/constants.js";
-import {
-	CreateCommentRequestDTO,
-	CreateCommentRequestDtoType,
-} from "../../db/dtos/comments/create.dto.js";
 import { validateZodSchema } from "../../utils/validateZodSchema.js";
 import { CustomAPIError, ZodSchemaError } from "../../errors/main.error.js";
 import {
 	EditCommentRequestDTO,
 	EditCommentRequestDtoType,
-} from "../../db/dtos/comments/edit.dto.js";
+	CreateCommentRequestDTO,
+	CreateCommentRequestDtoType
+} from "../../db/dtos/comments/index.dto.js";
 
 const commentService = new CommentService();
 
@@ -48,7 +46,12 @@ export const addComment = async (
 };
 
 export const updateComment = async (
-	req: Request<{ commentId: string }, never, EditCommentRequestDtoType, never>,
+	req: Request<
+		{ commentId: string },
+		never,
+		EditCommentRequestDtoType,
+		never
+	>,
 	res: Response
 ) => {
 	try {
@@ -60,7 +63,10 @@ export const updateComment = async (
 			throw new ZodSchemaError(validationResult.errors);
 		}
 
-		const existedComment = await commentService.findById(req.params.commentId, req.user.userId);
+		const existedComment = await commentService.findById(
+			req.params.commentId,
+			req.user.userId
+		);
 
 		if (!existedComment) {
 			throw new CustomAPIError(
@@ -69,7 +75,11 @@ export const updateComment = async (
 			);
 		}
 
-		const result = await commentService.edit(req.user.userId, req.params.commentId, req.body);
+		const result = await commentService.edit(
+			req.user.userId,
+			req.params.commentId,
+			req.body
+		);
 
 		res.status(StatusCodes.Ok200).send({ comment: result });
 		return;
@@ -90,7 +100,10 @@ export const removeComment = async (
 			);
 		}
 
-		const result = await commentService.delete(req.user.userId, req.params.commentId);
+		const result = await commentService.delete(
+			req.user.userId,
+			req.params.commentId
+		);
 		if (!result) {
 			throw new CustomAPIError(
 				"Comment does not found / You Not Authorized",
@@ -99,7 +112,7 @@ export const removeComment = async (
 		}
 
 		res.status(StatusCodes.Ok200).send({
-			message: "Your comment has been successfully deleted",
+			message: "Your comment has been successfully deleted"
 		});
 		return;
 	} catch (error) {

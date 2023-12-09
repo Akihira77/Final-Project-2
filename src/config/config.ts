@@ -6,5 +6,4 @@ if (process.env.NODE_ENV !== "production") {
 	dotenv.config();
 }
 
-export const { PORT, JWT_SECRET } = process.env;
-
+export const { PORT, JWT_SECRET, DB_POSTGRES, NODE_ENV } = process.env;

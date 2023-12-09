@@ -1,8 +1,9 @@
 import { z } from "zod";
 
+type ErrorObject = Record<string, string[]>;
 type ValidationResult = {
 	success: boolean;
-	errors: string[];
+	errors: ErrorObject;
 };
 
 export function validateZodSchema(
@@ -10,16 +11,18 @@ export function validateZodSchema(
 	data: unknown
 ): ValidationResult {
 	const validationResult = schema.safeParse(data);
+	let errors: ErrorObject = {};
 
 	if (!validationResult.success) {
-		return {
-			success: false,
-			errors: validationResult.error.issues.map(
-				(issue) => `${issue.path} - ${issue.message}`
-			),
-		};
+		for (const { path, message } of validationResult.error.issues) {
+			const key = String(path[0]);
+			if (key in errors) {
+				errors[key]!.push(message);
+			} else {
+				errors[key] = [message];
+			}
+		}
 	}
 
-	return { success: true, errors: [] };
+	return { success: validationResult.success, errors };
 }
-

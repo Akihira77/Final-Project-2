@@ -1,17 +1,30 @@
 import Photo from "../db/models/photo.model.js";
 import User from "../db/models/user.model.js";
 import { sequelize } from "../db/db.js";
+import Comment from "../db/models/comment.model.js";
 export class PhotoService {
     _photoRepository;
     _userRepository;
+    _commentRepository;
     constructor() {
         this._photoRepository = sequelize.getRepository(Photo);
         this._userRepository = sequelize.getRepository(User);
+        this._commentRepository = sequelize.getRepository(Comment);
     }
     async findAll() {
         try {
             const photos = await this._photoRepository.findAll({
                 include: [
+                    {
+                        model: this._commentRepository,
+                        attributes: ["comment"],
+                        include: [
+                            {
+                                model: this._userRepository,
+                                attributes: ["username"],
+                            },
+                        ],
+                    },
                     {
                         model: this._userRepository,
                         attributes: ["id", "username", "profile_image_url"],

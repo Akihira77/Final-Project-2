@@ -14,11 +14,15 @@ import {
 	UpdatedAt,
 	Model,
 	Unique,
+	BeforeCreate,
+	BeforeBulkCreate,
+	AutoIncrement
 } from "sequelize-typescript";
 import Photo from "./photo.model.js";
+import { hashPassword } from "../../utils/bcrypt.js";
 
 export interface IUser {
-	id: string;
+	id: number;
 	email: string;
 	full_name: string;
 	username: string;
@@ -31,12 +35,13 @@ export interface IUser {
 	updatedAt: Date;
 }
 
-@Table
+@Table({ tableName: "Users" })
 class User extends Model implements IUser {
 	@PrimaryKey
+	@AutoIncrement
 	@AllowNull(false)
-	@Column(DataType.STRING)
-	declare id: string;
+	@Column(DataType.INTEGER)
+	declare id: number;
 
 	@AllowNull(false)
 	@Column(DataType.STRING)
@@ -82,6 +87,12 @@ class User extends Model implements IUser {
 	@UpdatedAt
 	@Column(DataType.DATE)
 	declare updatedAt: Date;
+
+	@BeforeCreate
+	@BeforeBulkCreate
+	static async hashingPassword(instance: User) {
+		instance.password = await hashPassword(instance.password);
+	}
 }
 
 export default User;

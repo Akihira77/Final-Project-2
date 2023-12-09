@@ -33,7 +33,7 @@ __decorate([
 ], Comment.prototype, "UserId", void 0);
 __decorate([
     BelongsTo(() => User),
-    __metadata("design:type", User)
+    __metadata("design:type", void 0)
 ], Comment.prototype, "user", void 0);
 __decorate([
     AllowNull(false),
@@ -43,7 +43,7 @@ __decorate([
 ], Comment.prototype, "PhotoId", void 0);
 __decorate([
     BelongsTo(() => Photo),
-    __metadata("design:type", Photo)
+    __metadata("design:type", void 0)
 ], Comment.prototype, "photo", void 0);
 __decorate([
     AllowNull(false),
@@ -58,7 +58,7 @@ __decorate([
     __metadata("design:type", Date)
 ], Comment.prototype, "updatedAt", void 0);
 Comment = __decorate([
-    Table
+    Table({ tableName: "Comments" })
 ], Comment);
 export default Comment;
 //# sourceMappingURL=comment.model.js.map

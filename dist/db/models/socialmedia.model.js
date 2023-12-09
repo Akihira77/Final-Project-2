@@ -9,7 +9,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 import { AllowNull, AutoIncrement, BelongsTo, Column, CreatedAt, DataType, ForeignKey, NotEmpty, PrimaryKey, Table, UpdatedAt, Model, } from "sequelize-typescript";
 import User from "./user.model.js";
-let Socialmedia = class Socialmedia extends Model {
+let SocialMedia = class SocialMedia extends Model {
 };
 __decorate([
     PrimaryKey,
@@ -17,43 +17,43 @@ __decorate([
     AutoIncrement,
     Column(DataType.INTEGER),
     __metadata("design:type", Number)
-], Socialmedia.prototype, "id", void 0);
+], SocialMedia.prototype, "id", void 0);
 __decorate([
     AllowNull(false),
     NotEmpty,
     Column(DataType.STRING),
     __metadata("design:type", String)
-], Socialmedia.prototype, "name", void 0);
+], SocialMedia.prototype, "name", void 0);
 __decorate([
     AllowNull(false),
     NotEmpty,
     Column(DataType.STRING),
     __metadata("design:type", String)
-], Socialmedia.prototype, "social_media_url", void 0);
+], SocialMedia.prototype, "social_media_url", void 0);
 __decorate([
     AllowNull(false),
     ForeignKey(() => User),
     Column(DataType.STRING),
     __metadata("design:type", String)
-], Socialmedia.prototype, "UserId", void 0);
+], SocialMedia.prototype, "UserId", void 0);
 __decorate([
     BelongsTo(() => User),
-    __metadata("design:type", User)
-], Socialmedia.prototype, "user", void 0);
+    __metadata("design:type", void 0)
+], SocialMedia.prototype, "user", void 0);
 __decorate([
     AllowNull(false),
     CreatedAt,
     Column(DataType.DATE),
     __metadata("design:type", Date)
-], Socialmedia.prototype, "createdAt", void 0);
+], SocialMedia.prototype, "createdAt", void 0);
 __decorate([
     AllowNull(false),
     UpdatedAt,
     Column(DataType.DATE),
     __metadata("design:type", Date)
-], Socialmedia.prototype, "updatedAt", void 0);
-Socialmedia = __decorate([
-    Table
-], Socialmedia);
-export default Socialmedia;
+], SocialMedia.prototype, "updatedAt", void 0);
+SocialMedia = __decorate([
+    Table({ tableName: "SocialMedias" })
+], SocialMedia);
+export default SocialMedia;
 //# sourceMappingURL=socialmedia.model.js.map

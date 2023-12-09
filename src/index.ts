@@ -1,5 +1,5 @@
 import { PORT } from "./config/config.js";
-import { startServer } from "./utils/server.js";
+import { startServer } from "./server.js";
 
 const app = await startServer();
 const port = Number(PORT || 7000);

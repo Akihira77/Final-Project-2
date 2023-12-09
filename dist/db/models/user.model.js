@@ -7,7 +7,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-import { AllowNull, Column, CreatedAt, DataType, HasMany, IsAlpha, IsEmail, IsInt, IsNumeric, IsUrl, PrimaryKey, Table, UpdatedAt, Model, Unique, } from "sequelize-typescript";
+import { AllowNull, Column, CreatedAt, DataType, HasMany, IsEmail, IsInt, IsNumeric, IsUrl, PrimaryKey, Table, UpdatedAt, Model, Unique, } from "sequelize-typescript";
 import Photo from "./photo.model.js";
 let User = class User extends Model {
 };
@@ -18,7 +18,6 @@ __decorate([
     __metadata("design:type", String)
 ], User.prototype, "id", void 0);
 __decorate([
-    IsAlpha,
     AllowNull(false),
     Column(DataType.STRING),
     __metadata("design:type", String)
@@ -74,7 +73,7 @@ __decorate([
     __metadata("design:type", Date)
 ], User.prototype, "updatedAt", void 0);
 User = __decorate([
-    Table
+    Table({ tableName: "Users" })
 ], User);
 export default User;
 //# sourceMappingURL=user.model.js.map
