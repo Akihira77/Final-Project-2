@@ -4,7 +4,7 @@ export const CreatePhotoRequestDTO = z
 	.object({
 		poster_image_url: z.string().url().trim(),
 		title: z.string().trim(),
-		caption: z.string().trim(),
+		caption: z.string().trim()
 	})
 	.strict();
 
@@ -16,9 +16,8 @@ export const CreatePhotoResponseDTO = z
 		poster_image_url: z.string(),
 		title: z.string(),
 		caption: z.string(),
-		UserId: z.string(),
+		UserId: z.number()
 	})
 	.strict();
 
 export type CreatePhotoResponseDtoType = z.infer<typeof CreatePhotoResponseDTO>;
-

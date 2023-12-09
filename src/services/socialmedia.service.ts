@@ -1,14 +1,12 @@
-import {
-	CreateSocialmediaRequestDtoType,
-	CreateSocialmediaResponseDtoType,
-} from "./../db/dtos/socialmedias/create.dto";
 import Socialmedia from "../db/models/socialmedia.model.js";
 import User from "../db/models/user.model.js";
 import { sequelize } from "../db/db.js";
 import {
 	EditSocialmediaRequestDtoType,
 	EditSocialmediaResponseDtoType,
-} from "../db/dtos/socialmedias/edit.dto.js";
+	CreateSocialmediaRequestDtoType,
+	CreateSocialmediaResponseDtoType
+} from "../db/dtos/socialmedias/index.dto.js";
 
 export class SocialmediaService {
 	private readonly _socialmediaRepository;
@@ -18,16 +16,16 @@ export class SocialmediaService {
 		this._userRepository = sequelize.getRepository(User);
 	}
 
-	async findAll(userId: string): Promise<Socialmedia[]> {
+	async findAll(userId: number): Promise<Socialmedia[]> {
 		try {
 			const socialmedia = await this._socialmediaRepository.findAll({
 				include: [
 					{
 						model: this._userRepository,
 						attributes: ["id", "username", "profile_image_url"],
-						where: { id: userId } 
-					},
-				],
+						where: { id: userId }
+					}
+				]
 			});
 
 			return socialmedia;
@@ -36,7 +34,10 @@ export class SocialmediaService {
 		}
 	}
 
-	async findById(socialmediaId: string, userId: string): Promise<Socialmedia | null> {
+	async findById(
+		socialmediaId: string,
+		userId: number
+	): Promise<Socialmedia | null> {
 		try {
 			const socialmedia = await this._socialmediaRepository.findOne({
 				where: {
@@ -44,7 +45,7 @@ export class SocialmediaService {
 					UserId: userId
 				}
 			});
-	
+
 			return socialmedia;
 		} catch (error) {
 			throw error;
@@ -52,23 +53,23 @@ export class SocialmediaService {
 	}
 
 	async add(
-		userId: string,
+		userId: number,
 		{ name, social_media_url }: CreateSocialmediaRequestDtoType
 	): Promise<CreateSocialmediaResponseDtoType> {
 		try {
 			const socialmedia = await this._socialmediaRepository.create({
 				UserId: userId,
 				name,
-				social_media_url,
+				social_media_url
 			});
 
 			return {
 				id: socialmedia.id,
 				name: socialmedia.name,
-                social_media_url: socialmedia.social_media_url,
+				social_media_url: socialmedia.social_media_url,
 				UserId: socialmedia.UserId,
-                createdAt: socialmedia.createdAt,
-                updatedAt: socialmedia.updatedAt
+				createdAt: socialmedia.createdAt,
+				updatedAt: socialmedia.updatedAt
 			};
 		} catch (error) {
 			throw error;
@@ -76,7 +77,7 @@ export class SocialmediaService {
 	}
 
 	async edit(
-		userId: string,
+		userId: number,
 		socialmediaId: string,
 		request: EditSocialmediaRequestDtoType
 	): Promise<EditSocialmediaResponseDtoType> {
@@ -84,9 +85,9 @@ export class SocialmediaService {
 			const result = await this._socialmediaRepository.update(request, {
 				where: {
 					id: socialmediaId,
-					UserId: userId,				
+					UserId: userId
 				},
-				returning: true,
+				returning: true
 			});
 
 			const socialmedia = result[1][0]!;
@@ -95,25 +96,22 @@ export class SocialmediaService {
 				id: socialmedia.id,
 				name: socialmedia.name,
 				social_media_url: socialmedia.social_media_url,
-                UserId: socialmedia.UserId,
+				UserId: socialmedia.UserId,
 				updatedAt: socialmedia.updatedAt,
-				createdAt: socialmedia.createdAt,
+				createdAt: socialmedia.createdAt
 			};
 		} catch (error) {
 			throw error;
 		}
 	}
 
-	async delete(
-		userId: string,
-		socialmediaId: string
-	): Promise<boolean> {
+	async delete(userId: number, socialmediaId: string): Promise<boolean> {
 		try {
 			const result = await this._socialmediaRepository.destroy({
-				where: { 
+				where: {
 					id: socialmediaId,
-					UserId: userId,
-				},
+					UserId: userId
+				}
 			});
 
 			return Boolean(result);
@@ -122,4 +120,3 @@ export class SocialmediaService {
 		}
 	}
 }
-

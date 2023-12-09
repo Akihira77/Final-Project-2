@@ -10,7 +10,7 @@ import {
 	PrimaryKey,
 	Table,
 	UpdatedAt,
-	Model,
+	Model
 } from "sequelize-typescript";
 import User from "./user.model.js";
 import Photo from "./photo.model.js";
@@ -18,7 +18,7 @@ import Photo from "./photo.model.js";
 export interface IComment {
 	id: number;
 	comment: string;
-	UserId: string;
+	UserId: number;
 	user: User;
 	PhotoId: number;
 	photo: Photo;
@@ -41,8 +41,8 @@ class Comment extends Model implements IComment {
 
 	@AllowNull(false)
 	@ForeignKey(() => User)
-	@Column(DataType.STRING)
-	declare UserId: string;
+	@Column(DataType.INTEGER)
+	declare UserId: number;
 
 	@BelongsTo(() => User)
 	declare user: ReturnType<() => User>;

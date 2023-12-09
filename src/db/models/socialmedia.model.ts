@@ -10,7 +10,7 @@ import {
 	PrimaryKey,
 	Table,
 	UpdatedAt,
-	Model,
+	Model
 } from "sequelize-typescript";
 import User from "./user.model.js";
 
@@ -18,7 +18,7 @@ export interface ISocialMedia {
 	id: number;
 	name: string;
 	social_media_url: string;
-	UserId: string;
+	UserId: number;
 	user: User;
 	createdAt: Date;
 	updatedAt: Date;
@@ -44,8 +44,8 @@ class SocialMedia extends Model implements ISocialMedia {
 
 	@AllowNull(false)
 	@ForeignKey(() => User)
-	@Column(DataType.STRING)
-	declare UserId: string;
+	@Column(DataType.INTEGER)
+	declare UserId: number;
 
 	@BelongsTo(() => User)
 	declare user: ReturnType<() => User>;

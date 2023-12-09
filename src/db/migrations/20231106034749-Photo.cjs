@@ -13,39 +13,39 @@ module.exports = {
 				primaryKey: true,
 				allowNull: false,
 				autoIncrement: true,
-				type: Sequelize.INTEGER,
+				type: Sequelize.INTEGER
 			},
 			title: {
 				allowNull: false,
-				type: Sequelize.STRING,
+				type: Sequelize.STRING
 			},
 			caption: {
 				allowNull: false,
-				type: Sequelize.TEXT,
+				type: Sequelize.TEXT
 			},
 			poster_image_url: {
 				allowNull: false,
-				type: Sequelize.TEXT,
+				type: Sequelize.TEXT
 			},
 			UserId: {
-				type: Sequelize.STRING,
+				type: Sequelize.INTEGER,
 				allowNull: false,
 				references: {
 					model: "Users",
-					key: "id",
+					key: "id"
 				},
 				onDelete: "CASCADE",
-				onUpdate: "CASCADE",
+				onUpdate: "CASCADE"
 			},
 			createdAt: {
 				allowNull: false,
-				type: Sequelize.DATE,
+				type: Sequelize.DATE
 			},
 			updatedAt: {
 				allowNull: false,
 				type: Sequelize.DATE,
-				defaultValue: Date.now(),
-			},
+				defaultValue: Date.now()
+			}
 		});
 	},
 
@@ -57,5 +57,5 @@ module.exports = {
 		 * await queryInterface.dropTable('users');
 		 */
 		await queryInterface.dropTable("Photos");
-	},
+	}
 };

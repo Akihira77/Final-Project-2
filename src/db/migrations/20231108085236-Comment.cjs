@@ -13,41 +13,41 @@ module.exports = {
 				primaryKey: true,
 				allowNull: false,
 				autoIncrement: true,
-				type: Sequelize.INTEGER,
+				type: Sequelize.INTEGER
 			},
 			comment: {
 				allowNull: false,
-				type: Sequelize.STRING,
+				type: Sequelize.STRING
 			},
 			UserId: {
-				type: Sequelize.STRING,
+				type: Sequelize.INTEGER,
 				allowNull: false,
 				references: {
 					model: "Users",
-					key: "id",
+					key: "id"
 				},
 				onDelete: "CASCADE",
-				onUpdate: "CASCADE",
+				onUpdate: "CASCADE"
 			},
 			PhotoId: {
 				type: Sequelize.INTEGER,
 				allowNull: false,
 				references: {
 					model: "Photos",
-					key: "id",
+					key: "id"
 				},
 				onDelete: "CASCADE",
-				onUpdate: "CASCADE",
+				onUpdate: "CASCADE"
 			},
 			createdAt: {
 				allowNull: false,
-				type: Sequelize.DATE,
+				type: Sequelize.DATE
 			},
 			updatedAt: {
 				allowNull: false,
 				type: Sequelize.DATE,
-				defaultValue: Date.now(),
-			},
+				defaultValue: Date.now()
+			}
 		});
 	},
 
@@ -59,6 +59,5 @@ module.exports = {
 		 * await queryInterface.dropTable('users');
 		 */
 		await queryInterface.dropTable("Comments");
-	},
+	}
 };
-
