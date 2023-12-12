@@ -1,3 +1,4 @@
+import { UserIdParams, UserIdParamsType } from "./shared.dto.js";
 import {
 	EditUserRequestDTO,
 	EditUserRequestDtoType,
@@ -14,7 +15,6 @@ import {
 	RegisterRequestDtoType,
 	RegisterResponseDtoType
 } from "./register.dto.js";
-import { DeleteUserDTO, DeleteUserDtoType } from "./delete.dto.js";
 
 export {
 	RegisterRequestDTO,
@@ -27,6 +27,6 @@ export {
 	EditUserRequestDTO,
 	EditUserRequestDtoType,
 	EditUserResponseDtoType,
-	DeleteUserDTO,
-	DeleteUserDtoType
+	UserIdParams,
+	UserIdParamsType
 };
