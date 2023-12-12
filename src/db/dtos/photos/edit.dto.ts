@@ -1,10 +1,14 @@
 import { z } from "zod";
 
-export const EditPhotoRequestDTO = z.object({
-	title: z.string().trim(),
-	caption: z.string().trim(),
-	poster_image_url: z.string().url().trim()
-});
+export const EditPhotoRequestDTO = z
+	.object({
+		title: z.string({ invalid_type_error: "Must be a string" }),
+		caption: z.string({ invalid_type_error: "Must be a string" }),
+		poster_image_url: z
+			.string({ invalid_type_error: "Must be a string" })
+			.url()
+	})
+	.strict();
 
 export type EditPhotoRequestDtoType = z.infer<typeof EditPhotoRequestDTO>;
 

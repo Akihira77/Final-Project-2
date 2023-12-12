@@ -13,7 +13,7 @@ type TUser = {
 	phone_number: string;
 };
 
-const KUser: Record<keyof TUser, string> = {
+const KUser: Record<keyof TUser, keyof TUser> = {
 	age: "age",
 	email: "email",
 	full_name: "full_name",
@@ -29,9 +29,9 @@ beforeAll(async () => {
 	await sequelize.sync({ force: true });
 });
 
-// afterAll(async () => {
-// 	await sequelize.sync({ force: true });
-// });
+afterAll(async () => {
+	await sequelize.sync({ force: true });
+});
 
 const user1: TUser = {
 	email: "iniuser1@example.com",

@@ -2,8 +2,13 @@ import { z } from "zod";
 
 export const LoginRequestDTO = z
 	.object({
-		email: z.string().min(1, { message: "Cannot be empty" }).email(),
-		password: z.string().min(1, { message: "Cannot be empty" })
+		email: z
+			.string({ invalid_type_error: "Must be a string" })
+			.min(1, { message: "Cannot be empty" })
+			.email(),
+		password: z
+			.string({ invalid_type_error: "Must be a string" })
+			.min(1, { message: "Cannot be empty" })
 	})
 	.strict();
 
