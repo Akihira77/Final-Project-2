@@ -1,3 +1,4 @@
+import validator from "validator";
 import { z } from "zod";
 
 export const LoginRequestDTO = z
@@ -9,6 +10,9 @@ export const LoginRequestDTO = z
 		password: z
 			.string({ invalid_type_error: "Must be a string" })
 			.min(1, { message: "Cannot be empty" })
+			.refine((val) => !validator.contains(val, " "), {
+				message: "Cannot contain whitespace"
+			})
 	})
 	.strict();
 

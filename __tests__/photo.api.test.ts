@@ -123,3 +123,21 @@ describe("POST /api/photos", () => {
 		expect(body).toHaveProperty("UserId");
 	});
 });
+
+describe("GET /api/photos", () => {
+	it("1. Error 403 - Authentication Failed", async () => {
+		const { body, statusCode } = await supertest(server).get(photoApiUrl);
+
+		expect(statusCode).toBe(403);
+		expect(body).toHaveProperty("message", "Authentication Failed");
+	});
+
+	it("2. Success 200", async () => {
+		const { body, statusCode } = await supertest(server)
+			.get(photoApiUrl)
+			.set("token", token);
+
+		expect(statusCode).toBe(200);
+		expect(body).toHaveProperty("photos");
+	});
+});
