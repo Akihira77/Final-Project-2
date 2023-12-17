@@ -46,12 +46,12 @@ const userApiUrl = "/api/users";
 const server = startServer();
 
 beforeAll(async () => {
-	await sequelize.sync({ force: true });
+		await sequelize.sync({force: true});
 });
 
-// afterAll(async () => {
-// 	await sequelize.sync({ force: true });
-// });
+afterAll(async () => {
+		await sequelize.sync({force: true});
+});
 
 describe("POST api/users/register", () => {
 	const registerUrl = `${userApiUrl}/register`;
@@ -279,7 +279,7 @@ describe("POST api/users/register", () => {
 			password: "IniPasswordUser",
 			phone_number: "082380539018",
 			username: "IniUsername",
-			profile_image_url: "http://www.ini-url.ex.com"
+			profile_image_url: "http://www.ini-url.ex.co.id"
 		};
 		const { body, statusCode } = await supertest(server)
 			.post(registerUrl)
@@ -302,7 +302,7 @@ describe("POST api/users/register", () => {
 			password: "nkri12345",
 			phone_number: "082380539018",
 			username: "username1231412",
-			profile_image_url: "http://www.ini-url.ex.com"
+			profile_image_url: "http://www.ini-url.ex.dot.id"
 		};
 		const { body, statusCode } = await supertest(server)
 			.post(registerUrl)
@@ -327,7 +327,7 @@ describe("POST api/users/register", () => {
 			password: "nkri12345@@@>>>{{{'hayo_inipassword'",
 			phone_number: "082380539018",
 			username: "username123<><>",
-			profile_image_url: "http://www.ini-url-awdwa-awdad.ex.com"
+			profile_image_url: "http://www.ini-url-awdwa-awdad.ex.dot.indo"
 		};
 
 		const { body, statusCode } = await supertest(server)
@@ -353,7 +353,7 @@ describe("POST api/users/register", () => {
 			password: "nkri12345_____{}",
 			phone_number: "082380539018",
 			username: "<src>alert('Hello_World');</src>",
-			profile_image_url: "http://www.ini-url-awdwa-awdad.ex.com"
+			profile_image_url: "http://www.ini-url-awdwa-awdad.ex.dot.ea"
 		};
 
 		const { body, statusCode } = await supertest(server)
@@ -560,6 +560,18 @@ describe("PUT api/users/:id", () => {
 		username: "iniusernamebaru",
 		profile_image_url: "http://www.2.com"
 	};
+
+	it("0. Error 500 - Jwt Malformed", async () => {
+		const { statusCode, body } = await supertest(server)
+			.put(`${userApiUrl}/1`)
+			.set("token", "token");
+
+		// expect(body).toBe(11);
+		expect(statusCode).toBe(500);
+		expect(body).toHaveProperty("err");
+		expect(body.err).toHaveProperty("message", "jwt malformed");
+		expect(body.err).toHaveProperty("name", "JsonWebTokenError");
+	});
 
 	it("1. Error 403 - authentication failed", async () => {
 		const { body, statusCode } = await supertest(server)
@@ -795,6 +807,18 @@ describe("PUT api/users/:id", () => {
 });
 
 describe("DELETE api/users/:id", () => {
+	it("0. Error 500 - Jwt Malformed", async () => {
+		const { statusCode, body } = await supertest(server)
+			.put(`${userApiUrl}/1`)
+			.set("token", "token");
+
+		// expect(body).toBe(11);
+		expect(statusCode).toBe(500);
+		expect(body).toHaveProperty("err");
+		expect(body.err).toHaveProperty("message", "jwt malformed");
+		expect(body.err).toHaveProperty("name", "JsonWebTokenError");
+	});
+
 	it("1. Error 403 - authentication failed", async () => {
 		const { body, statusCode } = await supertest(server).delete(
 			`${userApiUrl}/1`

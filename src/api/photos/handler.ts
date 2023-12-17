@@ -7,7 +7,9 @@ import {
 	EditPhotoRequestDTO,
 	EditPhotoRequestDtoType,
 	CreatePhotoRequestDTO,
-	CreatePhotoRequestDtoType
+	CreatePhotoRequestDtoType,
+	PhotoIdParamsType,
+	PhotoIdParams
 } from "../../db/dtos/photos/index.dto.js";
 
 const photoService = new PhotoService();
@@ -46,19 +48,24 @@ export const addPhoto = async (
 };
 
 export const updatePhoto = async (
-	req: Request<{ photoId: string }, never, EditPhotoRequestDtoType, never>,
+	req: Request<PhotoIdParamsType, never, EditPhotoRequestDtoType, never>,
 	res: Response
 ) => {
 	try {
-		const validationResult = validateZodSchema(
-			EditPhotoRequestDTO,
-			req.body
-		);
+		let validationResult = validateZodSchema(PhotoIdParams, req.params);
+		if (validationResult.success) {
+			validationResult = validateZodSchema(EditPhotoRequestDTO, req.body);
+		}
+
 		if (!validationResult.success) {
 			throw new ZodSchemaError(validationResult.errors);
 		}
 
-		const existedPhoto = await photoService.findById(req.params.photoId);
+		const photoId = parseInt(req.params.photoId.toString());
+		const existedPhoto = await photoService.findByUserIdAndPhotoId(
+			photoId,
+			req.user.userId
+		);
 
 		if (!existedPhoto) {
 			throw new CustomAPIError(
@@ -67,7 +74,7 @@ export const updatePhoto = async (
 			);
 		}
 
-		const result = await photoService.edit(req.params.photoId, req.body);
+		const result = await photoService.edit(photoId, req.body);
 
 		res.status(StatusCodes.Ok200).send({ photo: result });
 		return;
@@ -77,24 +84,29 @@ export const updatePhoto = async (
 };
 
 export const removePhoto = async (
-	req: Request<{ photoId: string }, never, never, never>,
+	req: Request<PhotoIdParamsType, never, never, never>,
 	res: Response
 ) => {
 	try {
-		if (!req.params.photoId || req.params.photoId === "") {
-			throw new CustomAPIError(
-				"PhotoId must be provided",
-				StatusCodes.BadRequest400
-			);
+		const validationResult = validateZodSchema(PhotoIdParams, req.params);
+		if (!validationResult.success) {
+			throw new ZodSchemaError(validationResult.errors);
 		}
 
-		const result = await photoService.delete(req.params.photoId);
-		if (!result) {
+		const photoId = parseInt(req.params.photoId.toString());
+		const existedPhoto = await photoService.findByUserIdAndPhotoId(
+			photoId,
+			req.user.userId
+		);
+
+		if (!existedPhoto) {
 			throw new CustomAPIError(
 				"Photo does not found",
 				StatusCodes.NotFound404
 			);
 		}
+
+		await photoService.delete(photoId);
 
 		res.status(StatusCodes.Ok200).send({
 			message: "Your photo has been successfully deleted"

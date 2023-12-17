@@ -11,33 +11,56 @@ module.exports = {
 			},
 			full_name: {
 				allowNull: false,
-				type: Sequelize.STRING
+				type: Sequelize.STRING,
+				validate: {
+					notEmpty: true
+				}
 			},
 			email: {
 				unique: true,
 				allowNull: false,
-				type: Sequelize.STRING
+				type: Sequelize.STRING,
+				validate: {
+					notEmpty: true,
+					isEmail: true
+				}
 			},
 			username: {
 				unique: true,
 				allowNull: false,
-				type: Sequelize.STRING
+				type: Sequelize.STRING,
+				validate: {
+					notEmpty: true
+				}
 			},
 			password: {
 				allowNull: false,
-				type: Sequelize.STRING
+				type: Sequelize.STRING,
+				validate: {
+					notEmpty: true
+				}
 			},
 			profile_image_url: {
 				allowNull: false,
-				type: Sequelize.TEXT
+				type: Sequelize.TEXT,
+				validate: {
+					notEmpty: true,
+					isUrl: true
+				}
 			},
 			age: {
 				allowNull: false,
-				type: Sequelize.INTEGER
+				type: Sequelize.INTEGER,
+				validate: {
+					notEmpty: true
+				}
 			},
 			phone_number: {
 				allowNull: false,
-				type: Sequelize.STRING
+				type: Sequelize.STRING,
+				validate: {
+					notEmpty: true
+				}
 			},
 			createdAt: {
 				allowNull: false,

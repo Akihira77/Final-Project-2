@@ -6,25 +6,30 @@ export const RegisterRequestDTO = z
 		email: z
 			.string({ invalid_type_error: "Must be a string" })
 			.min(1, { message: "Cannot be empty" })
+			.max(255, { message: "Value is too long" })
 			.email(),
 		full_name: z
 			.string({ invalid_type_error: "Must be a string" })
-			.min(1, { message: "Cannot be empty" }),
+			.min(1, { message: "Cannot be empty" })
+			.max(255, { message: "Value is too long" }),
 		username: z
 			.string({ invalid_type_error: "Must be a string" })
 			.min(1, { message: "Cannot be empty" })
+			.max(255, { message: "Value is too long" })
 			.refine((val) => !validator.contains(val, " "), {
 				message: "Cannot contain whitespace"
 			}),
 		password: z
 			.string({ invalid_type_error: "Must be a string" })
 			.min(1, { message: "Cannot be empty" })
+			.max(255, { message: "Value is too long" })
 			.refine((val) => !validator.contains(val, " "), {
 				message: "Cannot contain whitespace"
 			}),
 		profile_image_url: z
 			.string({ invalid_type_error: "Must be a string" })
 			.min(1, { message: "Cannot be empty" })
+			.max(255, { message: "Value is too long" })
 			.url(),
 		age: z
 			.number({ invalid_type_error: "Must be a number" })

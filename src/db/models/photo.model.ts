@@ -23,8 +23,8 @@ export interface IPhoto {
 	caption: string;
 	poster_image_url: string;
 	UserId: number;
-	user: User;
-	comments: Comment[];
+	User: User;
+	Comments: Comment[];
 	createdAt: Date;
 	updatedAt: Date;
 }
@@ -59,10 +59,10 @@ class Photo extends Model implements IPhoto {
 	declare UserId: number;
 
 	@BelongsTo(() => User)
-	declare user: ReturnType<() => User>;
+	declare User: ReturnType<() => User>;
 
 	@HasMany(() => Comment)
-	declare comments: Comment[];
+	declare Comments: Comment[];
 
 	@AllowNull(false)
 	@CreatedAt

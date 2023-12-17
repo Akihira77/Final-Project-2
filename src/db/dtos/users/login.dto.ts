@@ -6,10 +6,12 @@ export const LoginRequestDTO = z
 		email: z
 			.string({ invalid_type_error: "Must be a string" })
 			.min(1, { message: "Cannot be empty" })
+			.max(255, { message: "Value is too long" })
 			.email(),
 		password: z
 			.string({ invalid_type_error: "Must be a string" })
 			.min(1, { message: "Cannot be empty" })
+			.max(255, { message: "Value is too long" })
 			.refine((val) => !validator.contains(val, " "), {
 				message: "Cannot contain whitespace"
 			})

@@ -2,10 +2,15 @@ import { z } from "zod";
 
 export const EditPhotoRequestDTO = z
 	.object({
-		title: z.string({ invalid_type_error: "Must be a string" }),
-		caption: z.string({ invalid_type_error: "Must be a string" }),
+		title: z
+			.string({ invalid_type_error: "Must be a string" })
+			.max(255, { message: "Value is too long" }),
+		caption: z
+			.string({ invalid_type_error: "Must be a string" })
+			.max(255, { message: "Value is too long" }),
 		poster_image_url: z
 			.string({ invalid_type_error: "Must be a string" })
+			.max(255, { message: "Value is too long" })
 			.url()
 	})
 	.strict();

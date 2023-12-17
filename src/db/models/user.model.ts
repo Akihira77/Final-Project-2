@@ -31,7 +31,7 @@ export interface IUser {
 	profile_image_url: string;
 	age: number;
 	phone_number: string;
-	photos: Photo[];
+	Photos: Photo[];
 	createdAt: Date;
 	updatedAt: Date;
 }
@@ -74,17 +74,19 @@ class User extends Model implements IUser {
 	declare profile_image_url: string;
 
 	@IsInt
+	@NotEmpty
 	@AllowNull(false)
 	@Column(DataType.INTEGER)
 	declare age: number;
 
 	@IsNumeric
+	@NotEmpty
 	@AllowNull(false)
 	@Column(DataType.STRING)
 	declare phone_number: string;
 
 	@HasMany(() => Photo)
-	declare photos: Photo[];
+	declare Photos: Photo[];
 
 	@CreatedAt
 	@Column(DataType.DATE)
