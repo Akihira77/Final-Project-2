@@ -19,7 +19,7 @@ export interface IComment {
 	id: number;
 	comment: string;
 	UserId: number;
-	user: User;
+	User: User;
 	PhotoId: number;
 	photo: Photo;
 	createdAt: Date;
@@ -45,7 +45,7 @@ class Comment extends Model implements IComment {
 	declare UserId: number;
 
 	@BelongsTo(() => User)
-	declare user: ReturnType<() => User>;
+	declare User: ReturnType<() => User>;
 
 	@AllowNull(false)
 	@ForeignKey(() => Photo)

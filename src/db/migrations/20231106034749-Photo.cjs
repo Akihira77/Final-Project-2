@@ -17,15 +17,25 @@ module.exports = {
 			},
 			title: {
 				allowNull: false,
-				type: Sequelize.STRING
+				type: Sequelize.STRING,
+				validate: {
+					notEmpty: true
+				}
 			},
 			caption: {
 				allowNull: false,
-				type: Sequelize.TEXT
+				type: Sequelize.TEXT,
+				validate: {
+					notEmpty: true
+				}
 			},
 			poster_image_url: {
 				allowNull: false,
-				type: Sequelize.TEXT
+				type: Sequelize.TEXT,
+				validate: {
+					notEmpty: true,
+					isUrl: true
+				}
 			},
 			UserId: {
 				type: Sequelize.INTEGER,

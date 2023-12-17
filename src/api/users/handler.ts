@@ -6,13 +6,14 @@ import { validateZodSchema } from "../../utils/validateZodSchema.js";
 import {
 	EditUserRequestDTO,
 	EditUserRequestDtoType,
-	DeleteUserDTO,
-	DeleteUserDtoType,
 	LoginRequestDTO,
 	LoginRequestDtoType,
 	RegisterRequestDTO,
-	RegisterRequestDtoType
+	RegisterRequestDtoType,
+	UserIdParams,
+	UserIdParamsType
 } from "../../db/dtos/users/index.dto.js";
+import { isPositiveInteger } from "../../utils/validateType.js";
 
 const userService = new UserService();
 
@@ -78,18 +79,23 @@ export const login = async (
 };
 
 export const removeUser = async (
-	req: Request<DeleteUserDtoType, never, never, never>,
+	req: Request<UserIdParamsType, never, never, never>,
 	res: Response
 ) => {
 	try {
-		const validationResult = validateZodSchema(DeleteUserDTO, req.params);
+		// if (!isPositiveInteger(req.params.userId)) {
+		// 	throw new CustomAPIError(
+		// 		"Invalid User Id",
+		// 		StatusCodes.BadRequest400
+		// 	);
+		// }
+		const validationResult = validateZodSchema(UserIdParams, req.params);
 		if (!validationResult.success) {
 			throw new ZodSchemaError(validationResult.errors);
 		}
 
 		const userId = parseInt(req.params.userId.toString());
 		const userIdFromPayload = req.user.userId;
-		console.log(typeof userId, typeof userIdFromPayload);
 
 		if (userId !== userIdFromPayload) {
 			throw new CustomAPIError(
@@ -98,7 +104,7 @@ export const removeUser = async (
 			);
 		}
 
-		const result = await userService.delete({ userId });
+		const result = await userService.delete(userId);
 
 		if (!result) {
 			throw new CustomAPIError(
@@ -117,42 +123,45 @@ export const removeUser = async (
 };
 
 export const updateUser = async (
-	req: Request<{ userId: number }, never, EditUserRequestDtoType, never>,
+	req: Request<UserIdParamsType, never, EditUserRequestDtoType, never>,
 	res: Response
 ) => {
 	try {
-		if (!req.params.userId) {
-			throw new CustomAPIError(
-				"User Id must be provided",
-				StatusCodes.BadRequest400
-			);
-		}
+		// if (!isPositiveInteger(req.params.userId)) {
+		// 	throw new CustomAPIError(
+		// 		"Invalid User Id",
+		// 		StatusCodes.BadRequest400
+		// 	);
+		// }
 
-		const validationResult = validateZodSchema(
-			EditUserRequestDTO,
-			req.body
-		);
+		let validationResult = validateZodSchema(UserIdParams, req.params);
 		if (!validationResult.success) {
 			throw new ZodSchemaError(validationResult.errors);
 		}
 
-		const existedUser = await userService.findById(req.params.userId);
-		if (!existedUser) {
-			throw new CustomAPIError(
-				"User does not found",
-				StatusCodes.BadRequest400
-			);
-		}
-
 		const userIdFromPayload = req.user.userId;
-		if (req.params.userId !== userIdFromPayload) {
+		const userIdParams = parseInt(req.params.userId.toString());
+		if (userIdParams !== userIdFromPayload) {
 			throw new CustomAPIError(
 				"Invalid Credentials",
 				StatusCodes.Forbidden403
 			);
 		}
 
-		const result = await userService.edit(req.params.userId, req.body);
+		validationResult = validateZodSchema(EditUserRequestDTO, req.body);
+		if (!validationResult.success) {
+			throw new ZodSchemaError(validationResult.errors);
+		}
+
+		// const existedUser = await userService.findById(req.params.userId);
+		// if (!existedUser) {
+		// 	throw new CustomAPIError(
+		// 		"User does not found",
+		// 		StatusCodes.NotFound404
+		// 	);
+		// }
+
+		const result = await userService.edit(userIdParams, req.body);
 
 		res.status(StatusCodes.Ok200).send({ user: result.user });
 		return;

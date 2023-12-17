@@ -19,7 +19,7 @@ export interface ISocialMedia {
 	name: string;
 	social_media_url: string;
 	UserId: number;
-	user: User;
+	User: User;
 	createdAt: Date;
 	updatedAt: Date;
 }
@@ -48,7 +48,7 @@ class SocialMedia extends Model implements ISocialMedia {
 	declare UserId: number;
 
 	@BelongsTo(() => User)
-	declare user: ReturnType<() => User>;
+	declare User: ReturnType<() => User>;
 
 	@AllowNull(false)
 	@CreatedAt

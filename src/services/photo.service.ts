@@ -46,9 +46,27 @@ export class PhotoService {
 		}
 	}
 
-	async findById(photoId: string): Promise<Photo | null> {
+	async findById(photoId: number): Promise<Photo | null> {
 		try {
 			const photo = await this._photoRepository.findByPk(photoId);
+
+			return photo;
+		} catch (error) {
+			throw error;
+		}
+	}
+
+	async findByUserIdAndPhotoId(
+		photoId: number,
+		userId: number
+	): Promise<Photo | null> {
+		try {
+			const photo = await this._photoRepository.findOne({
+				where: {
+					id: photoId,
+					UserId: userId
+				}
+			});
 
 			return photo;
 		} catch (error) {
@@ -81,7 +99,7 @@ export class PhotoService {
 	}
 
 	async edit(
-		photoId: string,
+		photoId: number,
 		request: EditPhotoRequestDtoType
 	): Promise<EditPhotoResponseDtoType> {
 		try {
@@ -108,7 +126,7 @@ export class PhotoService {
 		}
 	}
 
-	async delete(photoId: string): Promise<boolean> {
+	async delete(photoId: number): Promise<boolean> {
 		try {
 			const result = await this._photoRepository.destroy({
 				where: { id: photoId }

@@ -1,7 +1,6 @@
 import User from "../db/models/user.model.js";
 import { v4 as uuidv4 } from "uuid";
 import { hashPassword, validate } from "../utils/bcrypt.js";
-import { DeleteUserDtoType } from "../db/dtos/users/delete.dto.js";
 import {
 	EditUserRequestDtoType,
 	EditUserResponseDtoType,
@@ -111,7 +110,7 @@ class UserService {
 		}
 	}
 
-	async delete({ userId }: DeleteUserDtoType): Promise<boolean> {
+	async delete(userId: number): Promise<boolean> {
 		try {
 			const result = await this._userRepository.destroy({
 				where: {

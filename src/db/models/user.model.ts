@@ -16,7 +16,8 @@ import {
 	Unique,
 	BeforeCreate,
 	BeforeBulkCreate,
-	AutoIncrement
+	AutoIncrement,
+	NotEmpty
 } from "sequelize-typescript";
 import Photo from "./photo.model.js";
 import { hashPassword } from "../../utils/bcrypt.js";
@@ -30,6 +31,7 @@ export interface IUser {
 	profile_image_url: string;
 	age: number;
 	phone_number: string;
+	Photos: Photo[];
 	createdAt: Date;
 	updatedAt: Date;
 }
@@ -43,41 +45,48 @@ class User extends Model implements IUser {
 	declare id: number;
 
 	@AllowNull(false)
+	@NotEmpty
 	@Column(DataType.STRING)
 	declare full_name: string;
 
 	@IsEmail
 	@AllowNull(false)
+	@NotEmpty
 	@Unique
 	@Column(DataType.STRING)
 	declare email: string;
 
 	@AllowNull(false)
+	@NotEmpty
 	@Unique
 	@Column(DataType.STRING)
 	declare username: string;
 
 	@AllowNull(false)
+	@NotEmpty
 	@Column(DataType.STRING)
 	declare password: string;
 
 	@IsUrl
 	@AllowNull(false)
+	@NotEmpty
 	@Column(DataType.TEXT)
 	declare profile_image_url: string;
 
 	@IsInt
+	@NotEmpty
 	@AllowNull(false)
 	@Column(DataType.INTEGER)
 	declare age: number;
 
 	@IsNumeric
+	@NotEmpty
 	@AllowNull(false)
 	@Column(DataType.STRING)
 	declare phone_number: string;
 
 	@HasMany(() => Photo)
-	declare photos: Photo[];
+	declare Photos: Photo[];
 
 	@CreatedAt
 	@Column(DataType.DATE)

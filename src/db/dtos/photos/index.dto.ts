@@ -1,3 +1,4 @@
+import { PhotoIdParams, PhotoIdParamsType } from "./shared.dto.js";
 import {
 	EditPhotoRequestDTO,
 	EditPhotoRequestDtoType,
@@ -19,5 +20,7 @@ export {
 	EditPhotoRequestDTO,
 	EditPhotoRequestDtoType,
 	EditPhotoResponseDTO,
-	EditPhotoResponseDtoType
+	EditPhotoResponseDtoType,
+	PhotoIdParams,
+	PhotoIdParamsType
 };
