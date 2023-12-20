@@ -12,7 +12,7 @@ import {
 	Table,
 	UpdatedAt,
 	Model,
-	HasMany,
+	HasMany
 } from "sequelize-typescript";
 import User from "./user.model.js";
 import Comment from "./comment.model.js";
@@ -22,9 +22,9 @@ export interface IPhoto {
 	title: string;
 	caption: string;
 	poster_image_url: string;
-	UserId: string;
-	user: User;
-	comments: Comment[];
+	UserId: number;
+	User: User;
+	Comments: Comment[];
 	createdAt: Date;
 	updatedAt: Date;
 }
@@ -55,14 +55,14 @@ class Photo extends Model implements IPhoto {
 
 	@AllowNull(false)
 	@ForeignKey(() => User)
-	@Column(DataType.STRING)
-	declare UserId: string;
+	@Column(DataType.INTEGER)
+	declare UserId: number;
 
 	@BelongsTo(() => User)
-	declare user: ReturnType<() => User>;
+	declare User: ReturnType<() => User>;
 
 	@HasMany(() => Comment)
-	declare comments: Comment[];
+	declare Comments: Comment[];
 
 	@AllowNull(false)
 	@CreatedAt

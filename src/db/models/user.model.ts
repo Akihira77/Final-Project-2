@@ -14,11 +14,16 @@ import {
 	UpdatedAt,
 	Model,
 	Unique,
+	BeforeCreate,
+	BeforeBulkCreate,
+	AutoIncrement,
+	NotEmpty
 } from "sequelize-typescript";
 import Photo from "./photo.model.js";
+import { hashPassword } from "../../utils/bcrypt.js";
 
 export interface IUser {
-	id: string;
+	id: number;
 	email: string;
 	full_name: string;
 	username: string;
@@ -26,6 +31,7 @@ export interface IUser {
 	profile_image_url: string;
 	age: number;
 	phone_number: string;
+	Photos: Photo[];
 	createdAt: Date;
 	updatedAt: Date;
 }
@@ -33,46 +39,54 @@ export interface IUser {
 @Table({ tableName: "Users" })
 class User extends Model implements IUser {
 	@PrimaryKey
+	@AutoIncrement
 	@AllowNull(false)
-	@Column(DataType.STRING)
-	declare id: string;
+	@Column(DataType.INTEGER)
+	declare id: number;
 
 	@AllowNull(false)
+	@NotEmpty
 	@Column(DataType.STRING)
 	declare full_name: string;
 
 	@IsEmail
 	@AllowNull(false)
+	@NotEmpty
 	@Unique
 	@Column(DataType.STRING)
 	declare email: string;
 
 	@AllowNull(false)
+	@NotEmpty
 	@Unique
 	@Column(DataType.STRING)
 	declare username: string;
 
 	@AllowNull(false)
+	@NotEmpty
 	@Column(DataType.STRING)
 	declare password: string;
 
 	@IsUrl
 	@AllowNull(false)
+	@NotEmpty
 	@Column(DataType.TEXT)
 	declare profile_image_url: string;
 
 	@IsInt
+	@NotEmpty
 	@AllowNull(false)
 	@Column(DataType.INTEGER)
 	declare age: number;
 
 	@IsNumeric
+	@NotEmpty
 	@AllowNull(false)
 	@Column(DataType.STRING)
 	declare phone_number: string;
 
 	@HasMany(() => Photo)
-	declare photos: Photo[];
+	declare Photos: Photo[];
 
 	@CreatedAt
 	@Column(DataType.DATE)
@@ -81,6 +95,12 @@ class User extends Model implements IUser {
 	@UpdatedAt
 	@Column(DataType.DATE)
 	declare updatedAt: Date;
+
+	@BeforeCreate
+	@BeforeBulkCreate
+	static async hashingPassword(instance: User) {
+		instance.password = await hashPassword(instance.password);
+	}
 }
 
 export default User;

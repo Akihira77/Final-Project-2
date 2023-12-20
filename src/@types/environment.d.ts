@@ -7,28 +7,6 @@ declare global {
 			JWT_SECRET: string;
 			POSTGRESS: string;
 			NODE_ENV: string;
-			// dev
-			DB_USERNAME_DEV: string;
-			DB_PASSWORD_DEV: string;
-			DB_NAME_DEV: string;
-			DB_HOST_DEV: number;
-			DB_DIALECT_DEV: string;
-
-			// test
-			DB_USERNAME_TEST: string;
-			DB_PASSWORD_TEST: string;
-			DB_NAME_TEST: string;
-			DB_HOST_TEST: string;
-			DB_PORT: number;
-			DB_DIALECT_TEST: string;
-
-			// production
-			DB_USERNAME: string;
-			DB_PASSWORD: string;
-			DB_NAME: string;
-			DB_HOST: string;
-			DB_PORT: number;
-			DB_DIALECT: string;
 			DB_POSTGRES: string;
 		}
 	}

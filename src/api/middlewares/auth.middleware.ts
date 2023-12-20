@@ -4,7 +4,7 @@ import { StatusCodes } from "../../utils/constants.js";
 import { jwtVerify } from "../../utils/jwt.js";
 
 const authMiddleware = async (
-	req: Request,
+	req: Request<never, never, never, never>,
 	res: Response,
 	next: NextFunction
 ) => {
@@ -13,7 +13,7 @@ const authMiddleware = async (
 
 		if (!token || token === "" || Array.isArray(token)) {
 			throw new CustomAPIError(
-				"Authorization Failed",
+				"Authentication Failed",
 				StatusCodes.Forbidden403
 			);
 		}
@@ -29,4 +29,3 @@ const authMiddleware = async (
 };
 
 export default authMiddleware;
-

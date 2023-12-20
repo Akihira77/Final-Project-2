@@ -1,14 +1,12 @@
-import {
-	CreatePhotoRequestDtoType,
-	CreatePhotoResponseDtoType,
-} from "./../db/dtos/photos/create.dto";
 import Photo from "../db/models/photo.model.js";
 import User from "../db/models/user.model.js";
 import { sequelize } from "../db/db.js";
 import {
 	EditPhotoRequestDtoType,
 	EditPhotoResponseDtoType,
-} from "../db/dtos/photos/edit.dto.js";
+	CreatePhotoRequestDtoType,
+	CreatePhotoResponseDtoType
+} from "../db/dtos/photos/index.dto.js";
 import Comment from "../db/models/comment.model.js";
 
 export class PhotoService {
@@ -31,15 +29,15 @@ export class PhotoService {
 						include: [
 							{
 								model: this._userRepository,
-								attributes: ["username"],
-							},
-						],
+								attributes: ["username"]
+							}
+						]
 					},
 					{
 						model: this._userRepository,
-						attributes: ["id", "username", "profile_image_url"],
-					},
-				],
+						attributes: ["id", "username", "profile_image_url"]
+					}
+				]
 			});
 
 			return photos;
@@ -48,7 +46,7 @@ export class PhotoService {
 		}
 	}
 
-	async findById(photoId: string): Promise<Photo | null> {
+	async findById(photoId: number): Promise<Photo | null> {
 		try {
 			const photo = await this._photoRepository.findByPk(photoId);
 
@@ -58,8 +56,26 @@ export class PhotoService {
 		}
 	}
 
+	async findByUserIdAndPhotoId(
+		photoId: number,
+		userId: number
+	): Promise<Photo | null> {
+		try {
+			const photo = await this._photoRepository.findOne({
+				where: {
+					id: photoId,
+					UserId: userId
+				}
+			});
+
+			return photo;
+		} catch (error) {
+			throw error;
+		}
+	}
+
 	async add(
-		userId: string,
+		userId: number,
 		{ caption, title, poster_image_url }: CreatePhotoRequestDtoType
 	): Promise<CreatePhotoResponseDtoType> {
 		try {
@@ -67,7 +83,7 @@ export class PhotoService {
 				UserId: userId,
 				title,
 				caption,
-				poster_image_url,
+				poster_image_url
 			});
 
 			return {
@@ -75,7 +91,7 @@ export class PhotoService {
 				caption: photo.caption,
 				poster_image_url: photo.poster_image_url,
 				title: photo.title,
-				UserId: photo.UserId,
+				UserId: photo.UserId
 			};
 		} catch (error) {
 			throw error;
@@ -83,15 +99,15 @@ export class PhotoService {
 	}
 
 	async edit(
-		photoId: string,
+		photoId: number,
 		request: EditPhotoRequestDtoType
 	): Promise<EditPhotoResponseDtoType> {
 		try {
 			const result = await this._photoRepository.update(request, {
 				where: {
-					id: photoId,
+					id: photoId
 				},
-				returning: true,
+				returning: true
 			});
 
 			const photo = result[1][0]!;
@@ -103,17 +119,17 @@ export class PhotoService {
 				poster_image_url: photo.poster_image_url,
 				UserId: photo.UserId,
 				createdAt: photo.createdAt,
-				updatedAt: photo.updatedAt,
+				updatedAt: photo.updatedAt
 			};
 		} catch (error) {
 			throw error;
 		}
 	}
 
-	async delete(photoId: string): Promise<boolean> {
+	async delete(photoId: number): Promise<boolean> {
 		try {
 			const result = await this._photoRepository.destroy({
-				where: { id: photoId },
+				where: { id: photoId }
 			});
 
 			return Boolean(result);

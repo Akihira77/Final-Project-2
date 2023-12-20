@@ -1,1 +1,0 @@
-{"version":3,"file":"delete.dto.js","sourceRoot":"","sources":["../../../../src/db/dtos/users/delete.dto.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,CAAC,EAAE,MAAM,KAAK,CAAC;AAExB,MAAM,CAAC,MAAM,aAAa,GAAG,CAAC,CAAC,MAAM,CAAC;IACrC,MAAM,EAAE,CAAC,CAAC,MAAM,EAAE;CAClB,CAAC,CAAC"}

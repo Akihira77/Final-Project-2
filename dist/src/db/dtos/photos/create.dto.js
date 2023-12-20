@@ -1,0 +1,28 @@
+import { z } from "zod";
+export const CreatePhotoRequestDTO = z
+    .object({
+    poster_image_url: z
+        .string({ invalid_type_error: "Must be a string" })
+        .min(1, { message: "Cannot be empty" })
+        .max(255, { message: "Value is too long" })
+        .url(),
+    title: z
+        .string({ invalid_type_error: "Must be a string" })
+        .max(255, { message: "Value is too long" })
+        .min(1, { message: "Cannot be empty" }),
+    caption: z
+        .string({ invalid_type_error: "Must be a string" })
+        .max(255, { message: "Value is too long" })
+        .min(1, { message: "Cannot be empty" })
+})
+    .strict();
+export const CreatePhotoResponseDTO = z
+    .object({
+    id: z.number(),
+    poster_image_url: z.string(),
+    title: z.string(),
+    caption: z.string(),
+    UserId: z.number()
+})
+    .strict();
+//# sourceMappingURL=create.dto.js.map

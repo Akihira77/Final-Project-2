@@ -2,7 +2,7 @@ import jwt from "jsonwebtoken";
 import { JWT_SECRET } from "../config/config.js";
 
 type AuthPayload = {
-	userId: string;
+	userId: number;
 	email: string;
 	full_name: string;
 };

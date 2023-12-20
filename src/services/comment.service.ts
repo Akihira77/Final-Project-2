@@ -1,7 +1,3 @@
-import {
-	CreateCommentRequestDtoType,
-	CreateCommentResponseDtoType,
-} from "./../db/dtos/comments/create.dto";
 import Comment from "../db/models/comment.model.js";
 import Photo from "../db/models/photo.model.js";
 import User from "../db/models/user.model.js";
@@ -9,7 +5,9 @@ import { sequelize } from "../db/db.js";
 import {
 	EditCommentRequestDtoType,
 	EditCommentResponseDtoType,
-} from "../db/dtos/comments/edit.dto.js";
+	CreateCommentRequestDtoType,
+	CreateCommentResponseDtoType
+} from "../db/dtos/comments/index.dto.js";
 
 export class CommentService {
 	private readonly _commentRepository;
@@ -21,20 +19,30 @@ export class CommentService {
 		this._photoRepository = sequelize.getRepository(Photo);
 	}
 
-	async findAll(userId: string): Promise<Comment[]> {
+	async findAll(userId: number): Promise<Comment[]> {
 		try {
 			const comment = await this._commentRepository.findAll({
 				include: [
 					{
 						model: this._userRepository,
-						attributes: ["id", "username", "profile_image_url", "phone_number"],
-						where: { id: userId } 
+						attributes: [
+							"id",
+							"username",
+							"profile_image_url",
+							"phone_number"
+						],
+						where: { id: userId }
 					},
 					{
 						model: this._photoRepository,
-						attributes: ["id", "title", "caption", "poster_image_url"],
-					},
-				],
+						attributes: [
+							"id",
+							"title",
+							"caption",
+							"poster_image_url"
+						]
+					}
+				]
 			});
 
 			return comment;
@@ -43,7 +51,7 @@ export class CommentService {
 		}
 	}
 
-	async findById(commentId: string, userId: string): Promise<Comment | null> {
+	async findById(commentId: number, userId: number): Promise<Comment | null> {
 		try {
 			const comment = await this._commentRepository.findOne({
 				where: {
@@ -51,7 +59,7 @@ export class CommentService {
 					UserId: userId
 				}
 			});
-	
+
 			return comment;
 		} catch (error) {
 			throw error;
@@ -59,23 +67,23 @@ export class CommentService {
 	}
 
 	async add(
-		userId: string,
+		userId: number,
 		{ comment, PhotoId }: CreateCommentRequestDtoType
 	): Promise<CreateCommentResponseDtoType> {
 		try {
 			const komen = await this._commentRepository.create({
 				UserId: userId,
 				comment,
-				PhotoId,
+				PhotoId
 			});
 
 			return {
 				id: komen.id,
 				comment: komen.comment,
-                PhotoId: komen.PhotoId,
+				PhotoId: komen.PhotoId,
 				UserId: komen.UserId,
-                createdAt: komen.createdAt,
-                updatedAt: komen.updatedAt
+				createdAt: komen.createdAt,
+				updatedAt: komen.updatedAt
 			};
 		} catch (error) {
 			throw error;
@@ -83,17 +91,17 @@ export class CommentService {
 	}
 
 	async edit(
-		userId: string,
-		commentId: string,
+		userId: number,
+		commentId: number,
 		request: EditCommentRequestDtoType
 	): Promise<EditCommentResponseDtoType> {
 		try {
 			const result = await this._commentRepository.update(request, {
 				where: {
 					id: commentId,
-					UserId: userId,				
+					UserId: userId
 				},
-				returning: true,
+				returning: true
 			});
 
 			const comment = result[1][0]!;
@@ -104,23 +112,20 @@ export class CommentService {
 				UserId: comment.UserId,
 				PhotoId: comment.PhotoId,
 				updatedAt: comment.updatedAt,
-				createdAt: comment.createdAt,
+				createdAt: comment.createdAt
 			};
 		} catch (error) {
 			throw error;
 		}
 	}
 
-	async delete(
-		userId: string,
-		commentId: string
-	): Promise<boolean> {
+	async delete(userId: number, commentId: string): Promise<boolean> {
 		try {
 			const result = await this._commentRepository.destroy({
-				where: { 
+				where: {
 					id: commentId,
-					UserId: userId,
-				},
+					UserId: userId
+				}
 			});
 
 			return Boolean(result);
@@ -129,4 +134,3 @@ export class CommentService {
 		}
 	}
 }
-
