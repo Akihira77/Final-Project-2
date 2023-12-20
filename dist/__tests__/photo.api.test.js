@@ -38,6 +38,7 @@ beforeAll(async () => {
     token = body.token;
 });
 afterAll(async () => {
+    await sequelize.sync({ force: true });
 });
 describe("POST /api/photos", () => {
     it("0. Error 500 - Jwt Malformed", async () => {

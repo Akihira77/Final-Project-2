@@ -49,6 +49,7 @@ beforeAll(async () => {
     console.log("photoId:", photoId);
 });
 afterAll(async () => {
+    await sequelize.sync({ force: true });
 });
 describe("POST api/comments", () => {
     const createCommentUrl = `${commentApiUrl}/`;

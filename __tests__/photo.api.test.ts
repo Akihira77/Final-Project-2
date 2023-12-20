@@ -47,7 +47,7 @@ beforeAll(async () => {
 });
 
 afterAll(async () => {
-	// await sequelize.sync({ force: true });
+	await sequelize.sync({ force: true });
 });
 
 describe("POST /api/photos", () => {

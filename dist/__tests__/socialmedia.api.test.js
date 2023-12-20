@@ -1,4 +1,4 @@
-import { beforeAll, describe, expect, it } from "@jest/globals";
+import { afterAll, beforeAll, describe, expect, it } from "@jest/globals";
 import { startServer } from "../src/server.js";
 import { sequelize } from "../src/db/db.js";
 import supertest from "supertest";
@@ -6,11 +6,11 @@ const server = startServer();
 const socialmediaApiUrl = "/api/socialmedias";
 const KSocialmedia = {
     name: "name",
-    social_media_url: "social_media_url",
+    social_media_url: "social_media_url"
 };
 const socialmedia = {
     name: "Onic Kiboy",
-    social_media_url: "https://www.instagram.com/onic_kiboy/",
+    social_media_url: "https://www.instagram.com/onic_kiboy/"
 };
 const user = {
     email: "iniuser@example.com",
@@ -34,6 +34,9 @@ beforeAll(async () => {
         .post("/api/users/login")
         .send({ email: user.email, password: user.password });
     token = body.token;
+});
+afterAll(async () => {
+    await sequelize.sync({ force: true });
 });
 describe("POST api/socialmedias", () => {
     const createSocialmediaUrl = `${socialmediaApiUrl}/`;
@@ -66,7 +69,7 @@ describe("POST api/socialmedias", () => {
     it("3. Error 400 - Invalid Request Body", async () => {
         const invalidSocialmediaRequest = {
             name: "",
-            social_media_url: "",
+            social_media_url: ""
         };
         const { body, statusCode } = await supertest(server)
             .post(createSocialmediaUrl)
@@ -84,7 +87,7 @@ describe("POST api/socialmedias", () => {
         const { body, statusCode } = await supertest(server)
             .post(createSocialmediaUrl)
             .send({
-            name: 12345,
+            name: 12345
         })
             .set("token", token);
         expect(statusCode).toBe(400);
@@ -95,7 +98,7 @@ describe("POST api/socialmedias", () => {
         const { body, statusCode } = await supertest(server)
             .post(createSocialmediaUrl)
             .send({
-            social_media_url: "www.awikwok.bdo.ad.com",
+            social_media_url: "www.awikwok.bdo.ad.com"
         })
             .set("token", token);
         expect(statusCode).toBe(400);
@@ -107,7 +110,7 @@ describe("POST api/socialmedias", () => {
             .post(socialmediaApiUrl)
             .send({
             name: "Onic Kairi",
-            social_media_url: "https://www.instagram.com/onic_kairi/",
+            social_media_url: "https://www.instagram.com/onic_kairi/"
         })
             .set("token", token);
         console.log("Response Body:", body);
@@ -121,7 +124,7 @@ describe("POST api/socialmedias", () => {
     it("7. Success 201 - Socialmedia Created Successful (2)", async () => {
         const socialmedia = {
             name: "0n1c_S4nz",
-            social_media_url: "https://www.instagram.com/onic_sanz/",
+            social_media_url: "https://www.instagram.com/onic_sanz/"
         };
         const { body, statusCode } = await supertest(server)
             .post(socialmediaApiUrl)
@@ -137,7 +140,7 @@ describe("POST api/socialmedias", () => {
     it("8. Success 201 - Socialmedia Created Successful (3)", async () => {
         const socialmedia = {
             name: "0n1c_CW",
-            social_media_url: "https://www.instagram.com/onic_cw/",
+            social_media_url: "https://www.instagram.com/onic_cw/"
         };
         const { body, statusCode } = await supertest(server)
             .post(socialmediaApiUrl)
@@ -153,7 +156,7 @@ describe("POST api/socialmedias", () => {
     it("9. Success 201 - Socialmedia Created Successful (4)", async () => {
         const socialmedia = {
             name: "0n1c_Butss",
-            social_media_url: "https://www.instagram.com/onic_butss/",
+            social_media_url: "https://www.instagram.com/onic_butss/"
         };
         const { body, statusCode } = await supertest(server)
             .post(socialmediaApiUrl)
@@ -169,7 +172,7 @@ describe("POST api/socialmedias", () => {
     it("10. Success 201 - Socialmedia Created Successful (5)", async () => {
         const socialmedia = {
             name: "0n1c_Albert",
-            social_media_url: "https://www.instagram.com/onic_Albert/",
+            social_media_url: "https://www.instagram.com/onic_Albert/"
         };
         const { body, statusCode } = await supertest(server)
             .post(socialmediaApiUrl)
@@ -328,7 +331,7 @@ describe("PUT /api/socialmedias/:id", () => {
             .set("token", anotherToken)
             .send({
             name: "",
-            social_media_url: "https://www.instagram.com/RRQ_Albert/",
+            social_media_url: "https://www.instagram.com/RRQ_Albert/"
         });
         expect(statusCode).toBe(404);
         expect(body).toHaveProperty("message", "Socialmedia does not found");
@@ -339,7 +342,7 @@ describe("PUT /api/socialmedias/:id", () => {
             .set("token", token)
             .send({
             name: "RRQ Albert",
-            social_media_url: "https://www.instagram.com/RRQ_Albert/",
+            social_media_url: "https://www.instagram.com/RRQ_Albert/"
         });
         expect(statusCode).toBe(404);
         expect(body).toHaveProperty("message", "Socialmedia does not found");
@@ -350,11 +353,13 @@ describe("PUT /api/socialmedias/:id", () => {
             .set("token", token)
             .send({
             name: "RRQ R7",
-            social_media_url: "https://www.instagram.com/R7/",
+            social_media_url: "https://www.instagram.com/R7/"
         });
         expect(statusCode).toBe(400);
         expect(body).toHaveProperty("errors");
-        expect(body.errors).toHaveProperty("socialmediaId", ["Invalid SocialmediaId"]);
+        expect(body.errors).toHaveProperty("socialmediaId", [
+            "Invalid SocialmediaId"
+        ]);
     });
     it("5. Error 400 - Invalid PhotoId (2)", async () => {
         const { body, statusCode } = await supertest(server)
@@ -362,11 +367,13 @@ describe("PUT /api/socialmedias/:id", () => {
             .set("token", token)
             .send({
             name: "RRQ Oura",
-            social_media_url: "https://www.instagram.com/RRQ_oura/",
+            social_media_url: "https://www.instagram.com/RRQ_oura/"
         });
         expect(statusCode).toBe(400);
         expect(body).toHaveProperty("errors");
-        expect(body.errors).toHaveProperty("socialmediaId", ["Invalid SocialmediaId"]);
+        expect(body.errors).toHaveProperty("socialmediaId", [
+            "Invalid SocialmediaId"
+        ]);
     });
     it("6. Error 400 - Invalid PhotoId (3)", async () => {
         const { body, statusCode } = await supertest(server)
@@ -374,11 +381,13 @@ describe("PUT /api/socialmedias/:id", () => {
             .set("token", token)
             .send({
             name: "RRQ Next Jack",
-            social_media_url: "https://www.instagram.com/RRQ_Next_Jack/",
+            social_media_url: "https://www.instagram.com/RRQ_Next_Jack/"
         });
         expect(statusCode).toBe(400);
         expect(body).toHaveProperty("errors");
-        expect(body.errors).toHaveProperty("socialmediaId", ["Invalid SocialmediaId"]);
+        expect(body.errors).toHaveProperty("socialmediaId", [
+            "Invalid SocialmediaId"
+        ]);
     });
     it("7. Error 400 - Invalid Request Body", async () => {
         const { body, statusCode } = await supertest(server)
@@ -386,11 +395,13 @@ describe("PUT /api/socialmedias/:id", () => {
             .set("token", token)
             .send({
             name: 12121,
-            social_media_url: "www.instagram.comsadasdasd",
+            social_media_url: "www.instagram.comsadasdasd"
         });
         expect(statusCode).toBe(400);
         expect(body).toHaveProperty("errors");
-        expect(body.errors).toHaveProperty("name", ["Expected string, received number"]);
+        expect(body.errors).toHaveProperty("name", [
+            "Expected string, received number"
+        ]);
         expect(body.errors).toHaveProperty("social_media_url", ["Invalid url"]);
     });
     it("8. Success 200 - SocialmediaId 1 Found (search by UserId and SocialmediaId)", async () => {
@@ -399,7 +410,7 @@ describe("PUT /api/socialmedias/:id", () => {
             .set("token", token)
             .send({
             name: "EVOS JESS NO LIMIT",
-            social_media_url: "https://www.instagram.com/EVOS_jeSs/",
+            social_media_url: "https://www.instagram.com/EVOS_jeSs/"
         });
         expect(statusCode).toBe(200);
         expect(body).toHaveProperty("socialmedia");
@@ -413,7 +424,7 @@ describe("PUT /api/socialmedias/:id", () => {
             .set("token", token)
             .send({
             name: "BTR UJANG",
-            social_media_url: "https://www.instagram.com/BTR_UJANG/",
+            social_media_url: "https://www.instagram.com/BTR_UJANG/"
         });
         expect(statusCode).toBe(200);
         expect(body).toHaveProperty("socialmedia");
@@ -427,7 +438,7 @@ describe("PUT /api/socialmedias/:id", () => {
             .set("token", token)
             .send({
             name: "BTR ASEP",
-            social_media_url: "https://www.instagram.com/BTR_ASEP/",
+            social_media_url: "https://www.instagram.com/BTR_ASEP/"
         });
         expect(statusCode).toBe(200);
         expect(body).toHaveProperty("socialmedia");
@@ -441,7 +452,7 @@ describe("PUT /api/socialmedias/:id", () => {
             .set("token", token)
             .send({
             name: "BTR JAJANG",
-            social_media_url: "https://www.instagram.com/BTR_JAJANG/",
+            social_media_url: "https://www.instagram.com/BTR_JAJANG/"
         });
         expect(statusCode).toBe(200);
         expect(body).toHaveProperty("socialmedia");
@@ -455,7 +466,7 @@ describe("PUT /api/socialmedias/:id", () => {
             .set("token", token)
             .send({
             name: "BTR SODIKIN",
-            social_media_url: "https://www.instagram.com/BTR_SODIKIN/",
+            social_media_url: "https://www.instagram.com/BTR_SODIKIN/"
         });
         expect(statusCode).toBe(200);
         expect(body).toHaveProperty("socialmedia");
