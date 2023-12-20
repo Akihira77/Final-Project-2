@@ -7,7 +7,9 @@ import {
 	EditCommentRequestDTO,
 	EditCommentRequestDtoType,
 	CreateCommentRequestDTO,
-	CreateCommentRequestDtoType
+	CreateCommentRequestDtoType,
+	CommentIdParamsType,
+	CommentIdParams
 } from "../../db/dtos/comments/index.dto.js";
 
 const commentService = new CommentService();
@@ -46,40 +48,36 @@ export const addComment = async (
 };
 
 export const updateComment = async (
-	req: Request<
-		{ commentId: string },
-		never,
-		EditCommentRequestDtoType,
-		never
-	>,
+	req: Request<CommentIdParamsType,never,EditCommentRequestDtoType,never>,
 	res: Response
 ) => {
 	try {
-		const validationResult = validateZodSchema(
-			EditCommentRequestDTO,
-			req.body
-		);
+		let validationResult = validateZodSchema(CommentIdParams, req.params);
+		if (validationResult.success) {
+			validationResult = validateZodSchema(EditCommentRequestDTO, req.body);
+		}
+
 		if (!validationResult.success) {
 			throw new ZodSchemaError(validationResult.errors);
 		}
 
+		const commentId = parseInt(req.params.commentId.toString());
 		const existedComment = await commentService.findById(
-			req.params.commentId,
+			commentId,
 			req.user.userId
 		);
 
 		if (!existedComment) {
 			throw new CustomAPIError(
-				"Comment does not found / You Not Authorized",
+				"Comment does not found",
 				StatusCodes.NotFound404
 			);
 		}
 
 		const result = await commentService.edit(
 			req.user.userId,
-			req.params.commentId,
-			req.body
-		);
+			commentId,
+			req.body);
 
 		res.status(StatusCodes.Ok200).send({ comment: result });
 		return;

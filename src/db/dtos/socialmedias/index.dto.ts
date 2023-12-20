@@ -10,6 +10,8 @@ import {
 	CreateSocialmediaResponseDTO,
 	CreateSocialmediaResponseDtoType
 } from "./create.dto.js";
+import { SocialMediaIdParams, SocialMediaIdParamsType } from "./shared.dto.js";
+
 
 export {
 	CreateSocialmediaRequestDTO,
@@ -19,5 +21,7 @@ export {
 	EditSocialmediaRequestDTO,
 	EditSocialmediaRequestDtoType,
 	EditSocialmediaResponseDTO,
-	EditSocialmediaResponseDtoType
+	EditSocialmediaResponseDtoType,
+	SocialMediaIdParams,
+	SocialMediaIdParamsType,
 };

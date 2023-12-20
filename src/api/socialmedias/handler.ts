@@ -7,7 +7,9 @@ import {
 	EditSocialmediaRequestDTO,
 	EditSocialmediaRequestDtoType,
 	CreateSocialmediaRequestDTO,
-	CreateSocialmediaRequestDtoType
+	CreateSocialmediaRequestDtoType,
+	SocialMediaIdParamsType,
+	SocialMediaIdParams
 } from "../../db/dtos/socialmedias/index.dto.js";
 
 const socialmediaService = new SocialmediaService();
@@ -46,38 +48,34 @@ export const addSocialmedia = async (
 };
 
 export const updateSocialmedia = async (
-	req: Request<
-		{ socialmediaId: string },
-		never,
-		EditSocialmediaRequestDtoType,
-		never
-	>,
+	req: Request<SocialMediaIdParamsType,never,EditSocialmediaRequestDtoType,never>,
 	res: Response
 ) => {
 	try {
-		const validationResult = validateZodSchema(
-			EditSocialmediaRequestDTO,
-			req.body
-		);
+		let validationResult = validateZodSchema(SocialMediaIdParams, req.params);
+		if (validationResult.success) {
+			validationResult = validateZodSchema(EditSocialmediaRequestDTO, req.body);
+		}
+
 		if (!validationResult.success) {
 			throw new ZodSchemaError(validationResult.errors);
 		}
 
-		const existedSocialmedia = await socialmediaService.findById(
-			req.params.socialmediaId,
+		const socialmediaId = parseInt(req.params.socialmediaId.toString());
+		const existedSocialMedia = await socialmediaService.findById(
+			socialmediaId,
 			req.user.userId
 		);
-
-		if (!existedSocialmedia) {
+		if (!existedSocialMedia) {
 			throw new CustomAPIError(
-				"Socialmedia does not found / You Not Authorized",
+				"Socialmedia does not found",
 				StatusCodes.NotFound404
 			);
 		}
 
 		const result = await socialmediaService.edit(
 			req.user.userId,
-			req.params.socialmediaId,
+			socialmediaId,
 			req.body
 		);
 
@@ -106,7 +104,7 @@ export const removeSocialmedia = async (
 		);
 		if (!result) {
 			throw new CustomAPIError(
-				"Socialmedia does not found / You Not Authorized",
+				"Socialmedia does not found",
 				StatusCodes.NotFound404
 			);
 		}

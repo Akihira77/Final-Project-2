@@ -2,8 +2,13 @@ import { z } from "zod";
 
 export const CreateCommentRequestDTO = z
 	.object({
-		comment: z.string().trim(),
-		PhotoId: z.number()
+		comment: z
+		.string({ invalid_type_error: "Must be a string" })
+		.min(1, { message: "Cannot be empty" }),
+		PhotoId: z
+		.number({ invalid_type_error: "Must be a number" })
+		.max(255, { message: "Value is too long" })
+		.min(1, { message: "Cannot be empty" })
 	})
 	.strict();
 

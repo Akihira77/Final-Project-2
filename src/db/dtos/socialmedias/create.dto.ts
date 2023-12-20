@@ -2,8 +2,15 @@ import { z } from "zod";
 
 export const CreateSocialmediaRequestDTO = z
 	.object({
-		name: z.string().trim(),
-		social_media_url: z.string().trim()
+		name: z
+			.string({ invalid_type_error: "Must be a string" })
+			.min(1, { message: "Cannot be empty" })
+			.max(255, { message: "Value is too long" }),
+		social_media_url: z
+			.string({ invalid_type_error: "Must be a string" })
+			.min(1, { message: "Cannot be empty" })
+			.max(255, { message: "Value is too long" })
+			.url(),
 	})
 	.strict();
 

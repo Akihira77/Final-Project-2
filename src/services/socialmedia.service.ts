@@ -35,7 +35,7 @@ export class SocialmediaService {
 	}
 
 	async findById(
-		socialmediaId: string,
+		socialmediaId: number,
 		userId: number
 	): Promise<Socialmedia | null> {
 		try {
@@ -78,7 +78,7 @@ export class SocialmediaService {
 
 	async edit(
 		userId: number,
-		socialmediaId: string,
+		socialmediaId: number,
 		request: EditSocialmediaRequestDtoType
 	): Promise<EditSocialmediaResponseDtoType> {
 		try {

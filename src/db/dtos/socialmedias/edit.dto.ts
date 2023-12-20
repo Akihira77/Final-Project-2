@@ -2,7 +2,7 @@ import { z } from "zod";
 
 export const EditSocialmediaRequestDTO = z.object({
 	name: z.string().trim(),
-	social_media_url: z.string().trim()
+	social_media_url: z.string().trim().url()
 });
 
 export type EditSocialmediaRequestDtoType = z.infer<

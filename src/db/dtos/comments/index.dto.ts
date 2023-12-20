@@ -10,6 +10,8 @@ import {
 	CreateCommentResponseDTO,
 	CreateCommentResponseDtoType
 } from "./create.dto.js";
+import { CommentIdParams, CommentIdParamsType } from "./shared.dto.js";
+
 
 export {
 	CreateCommentRequestDTO,
@@ -19,5 +21,7 @@ export {
 	EditCommentRequestDTO,
 	EditCommentRequestDtoType,
 	EditCommentResponseDTO,
-	EditCommentResponseDtoType
+	EditCommentResponseDtoType,
+	CommentIdParams,
+	CommentIdParamsType
 };

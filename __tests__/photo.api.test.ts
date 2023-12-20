@@ -322,7 +322,36 @@ describe("GET /api/photos", () => {
 		expect(body).toHaveProperty("message", "Authentication Failed");
 	});
 
-	it("2. Success 200 - different user get the same response", async () => {
+	it("2. Error 404 - Missing PhotoId", async () => {
+		const { body, statusCode } = await supertest(server)
+		  .get(`${photoApiUrl}/asdnakjdn`)
+		  .set("token", token);
+	
+		expect(statusCode).toBe(404);
+		expect(body).toHaveProperty("msg", "Route does not match anything");
+	  });
+
+	  it("3. Error 404 - Invalid Limit Parameter", async () => {
+		const invalidLimit = "invalid";
+		const response = await supertest(server)
+		  .get(`${photoApiUrl}/limit=${invalidLimit}`)
+		  .set("token", token);
+	  
+		expect(response.statusCode).toBe(404);
+		expect(response.body).toHaveProperty("msg", "Route does not match anything");
+	  });
+	  
+	  it("4. Error 404 - Invalid Page Parameter", async () => {
+		const invalidPage = "invalid";
+		const response = await supertest(server)
+		  .get(`${photoApiUrl}/page=${invalidPage}`)
+		  .set("token", token);
+	  
+		expect(response.statusCode).toBe(404);
+		expect(response.body).toHaveProperty("msg", "Route does not match anything");
+	  });
+
+	it("5. Success 200 - different user get the same response", async () => {
 		const response1 = await supertest(server)
 			.get(photoApiUrl)
 			.set("token", token);
@@ -335,7 +364,7 @@ describe("GET /api/photos", () => {
 		expect(response1.body).toEqual(response2.body);
 	});
 
-	it("3. Success 200 - match property", async () => {
+	it("6. Success 200 - match property", async () => {
 		const { body, statusCode } = await supertest(server)
 			.get(photoApiUrl)
 			.set("token", token);
@@ -359,7 +388,7 @@ describe("GET /api/photos", () => {
 		});
 	});
 
-	it("4. Success 200 - match property data type (empty comments)", async () => {
+	it("7. Success 200 - match property data type (empty comments)", async () => {
 		const { body, statusCode } = await supertest(server)
 			.get(photoApiUrl)
 			.set("token", token);
@@ -396,7 +425,7 @@ describe("GET /api/photos", () => {
 		);
 	});
 
-	it("5. Success 200 - match property data type (have comments)", async () => {
+	it("8. Success 200 - match property data type (have comments)", async () => {
 		const comment = {
 			comment: "this is comment",
 			PhotoId: photoId1

@@ -51,7 +51,7 @@ export class CommentService {
 		}
 	}
 
-	async findById(commentId: string, userId: number): Promise<Comment | null> {
+	async findById(commentId: number, userId: number): Promise<Comment | null> {
 		try {
 			const comment = await this._commentRepository.findOne({
 				where: {
@@ -92,7 +92,7 @@ export class CommentService {
 
 	async edit(
 		userId: number,
-		commentId: string,
+		commentId: number,
 		request: EditCommentRequestDtoType
 	): Promise<EditCommentResponseDtoType> {
 		try {
